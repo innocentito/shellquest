@@ -1,0 +1,33 @@
+[project]
+name = "shellquest"
+version = "1.0.0"
+description = "A beautiful terminal-based learning game for bash/zsh commands"
+authors = [{name = "ShellQuest Team"}]
+readme = "README.md"
+requires-python = ">=3.8"
+license = "MIT"
+
+dependencies = [
+    "rich>=13.0.0,<14.0.0",
+    "pyyaml>=6.0,<7.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=22.0.0",
+]
+
+[project.scripts]
+shellquest = "shellquest.__main__:main"
+
+[build-system]
+requires = ["setuptools>=65.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["shellquest", "shellquest.core", "shellquest.models", "shellquest.ui", "shellquest.data", "shellquest.utils"]
+
+[tool.setuptools.package-data]
+shellquest = ["../data/**/*.yaml"]

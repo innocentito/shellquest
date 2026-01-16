@@ -1,0 +1,3220 @@
+# ShellQuest - Advanced Commands Questions
+# Commands: tar, curl, wget, ssh, awk, sed, cut, ps, kill, df, du, pipes, redirects
+
+questions:
+  # ============================================================
+  # TAR COMMAND - 50 Questions
+  # ============================================================
+
+  - id: "tar_mc_001"
+    type: "multiple_choice"
+    command: "tar"
+    difficulty: "advanced"
+    question_text: "What does 'tar' stand for?"
+    options:
+      - "Tape Archive"
+      - "Text Archive"
+      - "Transfer Archive"
+      - "Terminal Archive"
+    correct_answer: "Tape Archive"
+    explanation: "tar was originally designed for writing data to sequential I/O devices like tapes."
+    points: 10
+    hint: "Think about old storage media."
+
+  - id: "tar_mc_002"
+    type: "multiple_choice"
+    command: "tar"
+    difficulty: "advanced"
+    question_text: "What does the 'c' flag in tar mean?"
+    options:
+      - "Create a new archive"
+      - "Compress the archive"
+      - "Check the archive"
+      - "Copy to archive"
+    correct_answer: "Create a new archive"
+    explanation: "c stands for create - it creates a new tar archive."
+    points: 15
+    hint: "It's about making something new."
+
+  - id: "tar_mc_003"
+    type: "multiple_choice"
+    command: "tar"
+    difficulty: "advanced"
+    question_text: "What does the 'x' flag in tar mean?"
+    options:
+      - "Extract files from archive"
+      - "Execute archive"
+      - "eXamine archive"
+      - "eXclude files"
+    correct_answer: "Extract files from archive"
+    explanation: "x extracts (unpacks) files from an archive."
+    points: 15
+    hint: "Opposite of creating."
+
+  - id: "tar_mc_004"
+    type: "multiple_choice"
+    command: "tar"
+    difficulty: "advanced"
+    question_text: "What does the 'z' flag in tar do?"
+    options:
+      - "Compress/decompress using gzip"
+      - "Zero out the archive"
+      - "Zip the archive"
+      - "Zone the archive"
+    correct_answer: "Compress/decompress using gzip"
+    explanation: "z filters the archive through gzip for compression."
+    points: 20
+    hint: "It's about compression."
+
+  - id: "tar_mc_005"
+    type: "multiple_choice"
+    command: "tar"
+    difficulty: "advanced"
+    question_text: "What does the 'j' flag in tar do?"
+    options:
+      - "Compress/decompress using bzip2"
+      - "Join archives together"
+      - "Just list contents"
+      - "Jump to position"
+    correct_answer: "Compress/decompress using bzip2"
+    explanation: "j uses bzip2 compression, which is better than gzip but slower."
+    points: 20
+    hint: "Another compression method."
+
+  - id: "tar_mc_006"
+    type: "multiple_choice"
+    command: "tar"
+    difficulty: "advanced"
+    question_text: "What does 'tar -tvf archive.tar' do?"
+    options:
+      - "Lists archive contents with details"
+      - "Tests archive integrity"
+      - "Transfers archive to device"
+      - "Creates verbose archive"
+    correct_answer: "Lists archive contents with details"
+    explanation: "t=list, v=verbose, f=file. Shows what's inside without extracting."
+    points: 20
+    hint: "t is for table of contents."
+
+  - id: "tar_mc_007"
+    type: "multiple_choice"
+    command: "tar"
+    difficulty: "advanced"
+    question_text: "What's the difference between .tar.gz and .tar.bz2?"
+    options:
+      - "bz2 has better compression but is slower"
+      - "gz has better compression"
+      - "They are identical"
+      - "bz2 is for Windows only"
+    correct_answer: "bz2 has better compression but is slower"
+    explanation: "bzip2 achieves smaller files but takes more CPU time."
+    points: 25
+    hint: "Trade-off between size and speed."
+
+  - id: "tar_mc_008"
+    type: "multiple_choice"
+    command: "tar"
+    difficulty: "advanced"
+    question_text: "What does 'tar -xzf archive.tar.gz -C /target' do?"
+    options:
+      - "Extracts to /target directory"
+      - "Creates archive in /target"
+      - "Copies archive to /target"
+      - "Changes archive to /target"
+    correct_answer: "Extracts to /target directory"
+    explanation: "-C changes to the directory before extracting."
+    points: 25
+    hint: "-C changes the target directory."
+
+  - id: "tar_cb_001"
+    type: "command_builder"
+    command: "tar"
+    difficulty: "advanced"
+    question_text: "Create a gzip compressed archive of folder/ named backup.tar.gz"
+    correct_answer:
+      - "tar -czf backup.tar.gz folder/"
+      - "tar czf backup.tar.gz folder/"
+      - "tar -czvf backup.tar.gz folder/"
+    explanation: "c=create, z=gzip, f=file."
+    points: 20
+    hint: "Use czf flags."
+
+  - id: "tar_cb_002"
+    type: "command_builder"
+    command: "tar"
+    difficulty: "advanced"
+    question_text: "Extract backup.tar.gz to current directory"
+    correct_answer:
+      - "tar -xzf backup.tar.gz"
+      - "tar xzf backup.tar.gz"
+      - "tar -xzvf backup.tar.gz"
+    explanation: "x=extract, z=gzip, f=file."
+    points: 15
+    hint: "Use xzf flags."
+
+  - id: "tar_cb_003"
+    type: "command_builder"
+    command: "tar"
+    difficulty: "advanced"
+    question_text: "List contents of archive.tar without extracting"
+    correct_answer:
+      - "tar -tf archive.tar"
+      - "tar tf archive.tar"
+      - "tar -tvf archive.tar"
+    explanation: "t lists the contents, f specifies the file."
+    points: 15
+    hint: "Use t flag to list."
+
+  - id: "tar_wd_001"
+    type: "what_does_it_do"
+    command: "tar"
+    difficulty: "advanced"
+    question_text: "What does 'tar -cJf backup.tar.xz folder/' do?"
+    options:
+      - "Creates xz compressed archive (best compression)"
+      - "Creates zip archive"
+      - "Creates json backup"
+      - "Joins multiple folders"
+    correct_answer: "Creates xz compressed archive (best compression)"
+    explanation: "J uses xz compression, which has the best ratio but is slowest."
+    points: 25
+    hint: "Capital J is for xz."
+
+  # ============================================================
+  # CURL COMMAND - 50 Questions
+  # ============================================================
+
+  - id: "curl_mc_001"
+    type: "multiple_choice"
+    command: "curl"
+    difficulty: "advanced"
+    question_text: "What does 'curl' stand for?"
+    options:
+      - "Client URL"
+      - "Copy URL"
+      - "Command URL"
+      - "Create URL"
+    correct_answer: "Client URL"
+    explanation: "curl = Client URL, it's a tool to transfer data from/to a server."
+    points: 10
+    hint: "It's a client that works with URLs."
+
+  - id: "curl_mc_002"
+    type: "multiple_choice"
+    command: "curl"
+    difficulty: "advanced"
+    question_text: "What does 'curl -O url' do?"
+    options:
+      - "Saves file with its original name"
+      - "Opens in browser"
+      - "Outputs to screen"
+      - "Overwrites existing file"
+    correct_answer: "Saves file with its original name"
+    explanation: "-O saves the file with the same name as in the URL."
+    points: 20
+    hint: "Capital O keeps original name."
+
+  - id: "curl_mc_003"
+    type: "multiple_choice"
+    command: "curl"
+    difficulty: "advanced"
+    question_text: "What does 'curl -o output.html url' do?"
+    options:
+      - "Saves content to output.html"
+      - "Opens URL in output.html"
+      - "Outputs URL to screen"
+      - "Only downloads html files"
+    correct_answer: "Saves content to output.html"
+    explanation: "-o lets you specify the output filename."
+    points: 15
+    hint: "Lowercase o with custom name."
+
+  - id: "curl_mc_004"
+    type: "multiple_choice"
+    command: "curl"
+    difficulty: "advanced"
+    question_text: "What does 'curl -I url' show?"
+    options:
+      - "Only HTTP headers"
+      - "IP address"
+      - "Information about curl"
+      - "Interactive mode"
+    correct_answer: "Only HTTP headers"
+    explanation: "-I (uppercase i) fetches only the HTTP headers."
+    points: 20
+    hint: "Just the head, not the body."
+
+  - id: "curl_mc_005"
+    type: "multiple_choice"
+    command: "curl"
+    difficulty: "advanced"
+    question_text: "What does 'curl -L url' do?"
+    options:
+      - "Follows redirects"
+      - "Lists URL contents"
+      - "Shows location"
+      - "Limits download speed"
+    correct_answer: "Follows redirects"
+    explanation: "-L follows HTTP redirects (301, 302, etc.)."
+    points: 20
+    hint: "L for 'Location' header redirects."
+
+  - id: "curl_mc_006"
+    type: "multiple_choice"
+    command: "curl"
+    difficulty: "advanced"
+    question_text: "How do you send a POST request with curl?"
+    options:
+      - "curl -X POST url"
+      - "curl --post url"
+      - "curl -P url"
+      - "curl POST url"
+    correct_answer: "curl -X POST url"
+    explanation: "-X specifies the HTTP method to use."
+    points: 20
+    hint: "-X for method."
+
+  - id: "curl_mc_007"
+    type: "multiple_choice"
+    command: "curl"
+    difficulty: "advanced"
+    question_text: "How do you send JSON data with curl?"
+    options:
+      - "curl -d '{\"key\":\"value\"}' -H 'Content-Type: application/json' url"
+      - "curl --json '{\"key\":\"value\"}' url"
+      - "curl -j '{\"key\":\"value\"}' url"
+      - "curl json:'{\"key\":\"value\"}' url"
+    correct_answer: "curl -d '{\"key\":\"value\"}' -H 'Content-Type: application/json' url"
+    explanation: "-d for data, -H for header specifying JSON content type."
+    points: 30
+    hint: "Need both data and content-type header."
+
+  - id: "curl_mc_008"
+    type: "multiple_choice"
+    command: "curl"
+    difficulty: "advanced"
+    question_text: "What does 'curl -s url' do?"
+    options:
+      - "Silent mode - no progress meter"
+      - "Secure mode - HTTPS only"
+      - "Speed mode - faster download"
+      - "Save mode - saves to file"
+    correct_answer: "Silent mode - no progress meter"
+    explanation: "-s runs curl quietly without showing progress."
+    points: 15
+    hint: "s for silent."
+
+  - id: "curl_cb_001"
+    type: "command_builder"
+    command: "curl"
+    difficulty: "advanced"
+    question_text: "Download a file and save it as 'data.json'"
+    correct_answer:
+      - "curl -o data.json url"
+    explanation: "-o specifies the output filename."
+    points: 15
+    hint: "Use -o for output file."
+
+  - id: "curl_cb_002"
+    type: "command_builder"
+    command: "curl"
+    difficulty: "advanced"
+    question_text: "Send a POST request with form data 'name=John'"
+    correct_answer:
+      - "curl -X POST -d 'name=John' url"
+      - "curl -d 'name=John' url"
+    explanation: "-d automatically implies POST for form data."
+    points: 20
+    hint: "-d for data."
+
+  - id: "curl_cb_003"
+    type: "command_builder"
+    command: "curl"
+    difficulty: "advanced"
+    question_text: "Check only the HTTP headers of a URL"
+    correct_answer:
+      - "curl -I url"
+      - "curl --head url"
+    explanation: "-I or --head fetches only headers."
+    points: 15
+    hint: "Use capital I."
+
+  - id: "curl_wd_001"
+    type: "what_does_it_do"
+    command: "curl"
+    difficulty: "advanced"
+    question_text: "What does 'curl ifconfig.me' do?"
+    options:
+      - "Shows your public IP address"
+      - "Shows network configuration"
+      - "Configures network interface"
+      - "Shows curl configuration"
+    correct_answer: "Shows your public IP address"
+    explanation: "ifconfig.me is a service that returns your public IP."
+    points: 20
+    hint: "A handy web service."
+
+  # ============================================================
+  # WGET COMMAND - 30 Questions
+  # ============================================================
+
+  - id: "wget_mc_001"
+    type: "multiple_choice"
+    command: "wget"
+    difficulty: "advanced"
+    question_text: "What is wget primarily used for?"
+    options:
+      - "Downloading files from the web"
+      - "Getting system information"
+      - "Writing to files"
+      - "Editing files"
+    correct_answer: "Downloading files from the web"
+    explanation: "wget is a non-interactive network downloader."
+    points: 10
+    hint: "Web get."
+
+  - id: "wget_mc_002"
+    type: "multiple_choice"
+    command: "wget"
+    difficulty: "advanced"
+    question_text: "What does 'wget -c url' do?"
+    options:
+      - "Continues a partially downloaded file"
+      - "Checks if file exists"
+      - "Copies file locally"
+      - "Compresses download"
+    correct_answer: "Continues a partially downloaded file"
+    explanation: "-c resumes a download that was interrupted."
+    points: 20
+    hint: "c for continue."
+
+  - id: "wget_mc_003"
+    type: "multiple_choice"
+    command: "wget"
+    difficulty: "advanced"
+    question_text: "What does 'wget -r url' do?"
+    options:
+      - "Downloads recursively (whole website)"
+      - "Removes after download"
+      - "Reads from file"
+      - "Retries on failure"
+    correct_answer: "Downloads recursively (whole website)"
+    explanation: "-r downloads the page and follows links recursively."
+    points: 25
+    hint: "r for recursive."
+
+  - id: "wget_mc_004"
+    type: "multiple_choice"
+    command: "wget"
+    difficulty: "advanced"
+    question_text: "What does 'wget -q url' do?"
+    options:
+      - "Quiet mode - no output"
+      - "Quick mode - faster download"
+      - "Query mode"
+      - "Queue download"
+    correct_answer: "Quiet mode - no output"
+    explanation: "-q runs wget silently without progress output."
+    points: 15
+    hint: "q for quiet."
+
+  - id: "wget_mc_005"
+    type: "multiple_choice"
+    command: "wget"
+    difficulty: "advanced"
+    question_text: "What does 'wget -b url' do?"
+    options:
+      - "Downloads in background"
+      - "Creates backup"
+      - "Binary mode"
+      - "Bandwidth limit"
+    correct_answer: "Downloads in background"
+    explanation: "-b runs wget in the background."
+    points: 20
+    hint: "b for background."
+
+  - id: "wget_cb_001"
+    type: "command_builder"
+    command: "wget"
+    difficulty: "advanced"
+    question_text: "Download file.zip and save as backup.zip"
+    correct_answer:
+      - "wget -O backup.zip url/file.zip"
+    explanation: "-O specifies output filename."
+    points: 15
+    hint: "Use -O for output file."
+
+  - id: "wget_cb_002"
+    type: "command_builder"
+    command: "wget"
+    difficulty: "advanced"
+    question_text: "Resume a partially downloaded file"
+    correct_answer:
+      - "wget -c url"
+    explanation: "-c continues incomplete downloads."
+    points: 15
+    hint: "Continue flag."
+
+  # ============================================================
+  # SSH COMMAND - 30 Questions
+  # ============================================================
+
+  - id: "ssh_mc_001"
+    type: "multiple_choice"
+    command: "ssh"
+    difficulty: "advanced"
+    question_text: "What does SSH stand for?"
+    options:
+      - "Secure Shell"
+      - "Super Secure Host"
+      - "System Shell"
+      - "Safe Shell Handler"
+    correct_answer: "Secure Shell"
+    explanation: "SSH provides encrypted communication over networks."
+    points: 10
+    hint: "Security focused."
+
+  - id: "ssh_mc_002"
+    type: "multiple_choice"
+    command: "ssh"
+    difficulty: "advanced"
+    question_text: "What is the default SSH port?"
+    options:
+      - "22"
+      - "80"
+      - "443"
+      - "21"
+    correct_answer: "22"
+    explanation: "SSH runs on port 22 by default."
+    points: 15
+    hint: "A two-digit number."
+
+  - id: "ssh_mc_003"
+    type: "multiple_choice"
+    command: "ssh"
+    difficulty: "advanced"
+    question_text: "What does 'ssh -p 2222 user@host' do?"
+    options:
+      - "Connects on port 2222 instead of 22"
+      - "Uses password 2222"
+      - "Connects to 2222 hosts"
+      - "Pauses for 2222ms"
+    correct_answer: "Connects on port 2222 instead of 22"
+    explanation: "-p specifies a non-default port."
+    points: 20
+    hint: "p for port."
+
+  - id: "ssh_mc_004"
+    type: "multiple_choice"
+    command: "ssh"
+    difficulty: "advanced"
+    question_text: "What does 'ssh -i keyfile user@host' do?"
+    options:
+      - "Uses a specific private key file"
+      - "Ignores keyfile"
+      - "Installs keyfile"
+      - "Interactive mode"
+    correct_answer: "Uses a specific private key file"
+    explanation: "-i specifies which identity (private key) to use."
+    points: 20
+    hint: "i for identity."
+
+  - id: "ssh_mc_005"
+    type: "multiple_choice"
+    command: "ssh"
+    difficulty: "advanced"
+    question_text: "What does 'ssh-keygen' do?"
+    options:
+      - "Generates SSH key pairs"
+      - "Shows existing keys"
+      - "Kills SSH connections"
+      - "Generates passwords"
+    correct_answer: "Generates SSH key pairs"
+    explanation: "ssh-keygen creates public/private key pairs for authentication."
+    points: 15
+    hint: "Key generation."
+
+  - id: "ssh_cb_001"
+    type: "command_builder"
+    command: "ssh"
+    difficulty: "advanced"
+    question_text: "Connect to server.com as user 'admin'"
+    correct_answer:
+      - "ssh admin@server.com"
+    explanation: "Format is user@host."
+    points: 15
+    hint: "user@host format."
+
+  - id: "ssh_cb_002"
+    type: "command_builder"
+    command: "ssh"
+    difficulty: "advanced"
+    question_text: "Copy your public key to a remote server"
+    correct_answer:
+      - "ssh-copy-id user@host"
+      - "ssh-copy-id -i ~/.ssh/id_rsa.pub user@host"
+    explanation: "ssh-copy-id installs your public key on the remote server."
+    points: 25
+    hint: "Use ssh-copy-id."
+
+  # ============================================================
+  # AWK COMMAND - 40 Questions
+  # ============================================================
+
+  - id: "awk_mc_001"
+    type: "multiple_choice"
+    command: "awk"
+    difficulty: "advanced"
+    question_text: "What does awk do?"
+    options:
+      - "Processes and transforms text line by line"
+      - "Archives files"
+      - "Watches files for changes"
+      - "Kills processes"
+    correct_answer: "Processes and transforms text line by line"
+    explanation: "awk is a powerful text processing language for data extraction."
+    points: 10
+    hint: "Text processing tool."
+
+  - id: "awk_mc_002"
+    type: "multiple_choice"
+    command: "awk"
+    difficulty: "advanced"
+    question_text: "What does '$1' mean in awk?"
+    options:
+      - "First field (column)"
+      - "First line"
+      - "One dollar"
+      - "First character"
+    correct_answer: "First field (column)"
+    explanation: "$1 represents the first field, $2 the second, etc."
+    points: 15
+    hint: "Fields are like columns."
+
+  - id: "awk_mc_003"
+    type: "multiple_choice"
+    command: "awk"
+    difficulty: "advanced"
+    question_text: "What does '$0' mean in awk?"
+    options:
+      - "The entire line"
+      - "Nothing (zero)"
+      - "First field"
+      - "Last field"
+    correct_answer: "The entire line"
+    explanation: "$0 represents the whole line."
+    points: 15
+    hint: "Zero means all."
+
+  - id: "awk_mc_004"
+    type: "multiple_choice"
+    command: "awk"
+    difficulty: "advanced"
+    question_text: "What does '$NF' mean in awk?"
+    options:
+      - "The last field"
+      - "Number of fields"
+      - "New field"
+      - "Next field"
+    correct_answer: "The last field"
+    explanation: "NF is the number of fields, so $NF is the last one."
+    points: 20
+    hint: "NF = Number of Fields."
+
+  - id: "awk_mc_005"
+    type: "multiple_choice"
+    command: "awk"
+    difficulty: "advanced"
+    question_text: "What does 'awk -F:' do?"
+    options:
+      - "Sets field separator to colon"
+      - "Finds colons"
+      - "Filters by colon"
+      - "Formats with colon"
+    correct_answer: "Sets field separator to colon"
+    explanation: "-F sets the field separator (default is whitespace)."
+    points: 20
+    hint: "F for Field separator."
+
+  - id: "awk_mc_006"
+    type: "multiple_choice"
+    command: "awk"
+    difficulty: "advanced"
+    question_text: "What does 'awk '/pattern/' file' do?"
+    options:
+      - "Prints lines matching pattern"
+      - "Counts patterns"
+      - "Deletes pattern"
+      - "Replaces pattern"
+    correct_answer: "Prints lines matching pattern"
+    explanation: "Like grep, awk can filter lines by pattern."
+    points: 20
+    hint: "Pattern matching."
+
+  - id: "awk_cb_001"
+    type: "command_builder"
+    command: "awk"
+    difficulty: "advanced"
+    question_text: "Print the first column of a file"
+    correct_answer:
+      - "awk '{print $1}' file"
+    explanation: "$1 is the first field."
+    points: 15
+    hint: "Print $1."
+
+  - id: "awk_cb_002"
+    type: "command_builder"
+    command: "awk"
+    difficulty: "advanced"
+    question_text: "Print columns 1 and 3 from a CSV file"
+    correct_answer:
+      - "awk -F, '{print $1,$3}' file.csv"
+      - "awk -F',' '{print $1,$3}' file.csv"
+    explanation: "-F, sets comma as separator."
+    points: 20
+    hint: "Set comma as separator."
+
+  - id: "awk_cb_003"
+    type: "command_builder"
+    command: "awk"
+    difficulty: "advanced"
+    question_text: "Print the last column of each line"
+    correct_answer:
+      - "awk '{print $NF}' file"
+    explanation: "$NF is the last field."
+    points: 20
+    hint: "Use NF variable."
+
+  - id: "awk_wd_001"
+    type: "what_does_it_do"
+    command: "awk"
+    difficulty: "advanced"
+    question_text: "What does 'ps aux | awk '{print $2,$11}'' do?"
+    options:
+      - "Shows PID and command name for all processes"
+      - "Shows 2 and 11 processes"
+      - "Counts processes"
+      - "Kills processes 2 and 11"
+    correct_answer: "Shows PID and command name for all processes"
+    explanation: "Extracts columns 2 (PID) and 11 (command) from ps output."
+    points: 25
+    hint: "ps aux columns."
+
+  # ============================================================
+  # SED COMMAND - 40 Questions
+  # ============================================================
+
+  - id: "sed_mc_001"
+    type: "multiple_choice"
+    command: "sed"
+    difficulty: "advanced"
+    question_text: "What does 'sed' stand for?"
+    options:
+      - "Stream Editor"
+      - "Search and Delete"
+      - "String Editor"
+      - "System Edit"
+    correct_answer: "Stream Editor"
+    explanation: "sed is a stream editor for filtering and transforming text."
+    points: 10
+    hint: "It edits streams of text."
+
+  - id: "sed_mc_002"
+    type: "multiple_choice"
+    command: "sed"
+    difficulty: "advanced"
+    question_text: "What does 's' in 'sed 's/old/new/' mean?"
+    options:
+      - "Substitute"
+      - "Search"
+      - "String"
+      - "Start"
+    correct_answer: "Substitute"
+    explanation: "s is the substitute command."
+    points: 15
+    hint: "Replace something."
+
+  - id: "sed_mc_003"
+    type: "multiple_choice"
+    command: "sed"
+    difficulty: "advanced"
+    question_text: "What does the 'g' flag in 'sed 's/old/new/g' do?"
+    options:
+      - "Replaces all occurrences on each line"
+      - "Global search across files"
+      - "Grep mode"
+      - "Generate output"
+    correct_answer: "Replaces all occurrences on each line"
+    explanation: "Without g, only the first match per line is replaced."
+    points: 20
+    hint: "g for global (all matches)."
+
+  - id: "sed_mc_004"
+    type: "multiple_choice"
+    command: "sed"
+    difficulty: "advanced"
+    question_text: "What does 'sed -i' do?"
+    options:
+      - "Edits file in-place"
+      - "Interactive mode"
+      - "Ignores case"
+      - "Inserts text"
+    correct_answer: "Edits file in-place"
+    explanation: "-i modifies the file directly instead of outputting to stdout."
+    points: 20
+    hint: "i for in-place."
+
+  - id: "sed_mc_005"
+    type: "multiple_choice"
+    command: "sed"
+    difficulty: "advanced"
+    question_text: "What does 'sed -i.bak' do?"
+    options:
+      - "Edits in-place and creates backup with .bak extension"
+      - "Backs up before editing"
+      - "Reads from backup"
+      - "Ignores backup files"
+    correct_answer: "Edits in-place and creates backup with .bak extension"
+    explanation: "The suffix after -i creates a backup before modifying."
+    points: 25
+    hint: "Safe editing with backup."
+
+  - id: "sed_mc_006"
+    type: "multiple_choice"
+    command: "sed"
+    difficulty: "advanced"
+    question_text: "What does 'sed '5d' file' do?"
+    options:
+      - "Deletes line 5"
+      - "Duplicates line 5"
+      - "Displays line 5"
+      - "Downloads line 5"
+    correct_answer: "Deletes line 5"
+    explanation: "d is the delete command, 5 specifies line number."
+    points: 20
+    hint: "d for delete."
+
+  - id: "sed_mc_007"
+    type: "multiple_choice"
+    command: "sed"
+    difficulty: "advanced"
+    question_text: "What does 'sed -n '5,10p' file' do?"
+    options:
+      - "Prints only lines 5-10"
+      - "Processes lines 5-10"
+      - "Deletes lines 5-10"
+      - "Numbers lines 5-10"
+    correct_answer: "Prints only lines 5-10"
+    explanation: "-n suppresses output, p prints matched lines."
+    points: 25
+    hint: "p for print, -n for no default output."
+
+  - id: "sed_cb_001"
+    type: "command_builder"
+    command: "sed"
+    difficulty: "advanced"
+    question_text: "Replace all 'foo' with 'bar' in file.txt"
+    correct_answer:
+      - "sed 's/foo/bar/g' file.txt"
+    explanation: "s/old/new/g for global substitution."
+    points: 15
+    hint: "Use s command with g flag."
+
+  - id: "sed_cb_002"
+    type: "command_builder"
+    command: "sed"
+    difficulty: "advanced"
+    question_text: "Delete all empty lines from a file (in-place)"
+    correct_answer:
+      - "sed -i '/^$/d' file"
+    explanation: "^$ matches empty lines, d deletes them."
+    points: 25
+    hint: "Pattern for empty lines."
+
+  - id: "sed_cb_003"
+    type: "command_builder"
+    command: "sed"
+    difficulty: "advanced"
+    question_text: "Replace 'error' with 'warning' in config.txt in-place with backup"
+    correct_answer:
+      - "sed -i.bak 's/error/warning/g' config.txt"
+    explanation: "-i.bak creates backup, s/old/new/g replaces."
+    points: 25
+    hint: "Combine -i.bak with substitution."
+
+  # ============================================================
+  # CUT COMMAND - 25 Questions
+  # ============================================================
+
+  - id: "cut_mc_001"
+    type: "multiple_choice"
+    command: "cut"
+    difficulty: "advanced"
+    question_text: "What does 'cut' do?"
+    options:
+      - "Extracts sections from each line"
+      - "Deletes files"
+      - "Copies files"
+      - "Cuts files in half"
+    correct_answer: "Extracts sections from each line"
+    explanation: "cut removes sections from each line of files."
+    points: 10
+    hint: "Extracts parts of text."
+
+  - id: "cut_mc_002"
+    type: "multiple_choice"
+    command: "cut"
+    difficulty: "advanced"
+    question_text: "What does 'cut -d',' -f1' do?"
+    options:
+      - "Gets first field using comma as delimiter"
+      - "Deletes first comma"
+      - "Finds first comma"
+      - "Counts commas"
+    correct_answer: "Gets first field using comma as delimiter"
+    explanation: "-d sets delimiter, -f selects fields."
+    points: 20
+    hint: "d for delimiter, f for field."
+
+  - id: "cut_mc_003"
+    type: "multiple_choice"
+    command: "cut"
+    difficulty: "advanced"
+    question_text: "What does 'cut -c1-10' do?"
+    options:
+      - "Extracts characters 1 through 10"
+      - "Counts 10 characters"
+      - "Copies 10 characters"
+      - "Creates 10 copies"
+    correct_answer: "Extracts characters 1 through 10"
+    explanation: "-c selects character positions."
+    points: 20
+    hint: "c for characters."
+
+  - id: "cut_cb_001"
+    type: "command_builder"
+    command: "cut"
+    difficulty: "advanced"
+    question_text: "Extract usernames (first field) from /etc/passwd"
+    correct_answer:
+      - "cut -d: -f1 /etc/passwd"
+      - "cut -d':' -f1 /etc/passwd"
+    explanation: "passwd uses : as delimiter, usernames are in field 1."
+    points: 20
+    hint: "Colon delimiter, field 1."
+
+  - id: "cut_cb_002"
+    type: "command_builder"
+    command: "cut"
+    difficulty: "advanced"
+    question_text: "Get columns 2 and 4 from a CSV file"
+    correct_answer:
+      - "cut -d, -f2,4 file.csv"
+      - "cut -d',' -f2,4 file.csv"
+    explanation: "Use comma delimiter and specify multiple fields."
+    points: 20
+    hint: "Comma delimiter, fields 2,4."
+
+  # ============================================================
+  # PS & KILL COMMANDS - 30 Questions
+  # ============================================================
+
+  - id: "ps_mc_001"
+    type: "multiple_choice"
+    command: "ps"
+    difficulty: "advanced"
+    question_text: "What does 'ps aux' show?"
+    options:
+      - "All processes for all users with details"
+      - "Auxiliary processes only"
+      - "Active users"
+      - "Available updates"
+    correct_answer: "All processes for all users with details"
+    explanation: "a=all users, u=user format, x=processes without terminal."
+    points: 15
+    hint: "Common command to see all processes."
+
+  - id: "ps_mc_002"
+    type: "multiple_choice"
+    command: "ps"
+    difficulty: "advanced"
+    question_text: "What does 'ps -ef' show?"
+    options:
+      - "Full format listing of all processes"
+      - "Error-free processes"
+      - "Executable files"
+      - "Environment files"
+    correct_answer: "Full format listing of all processes"
+    explanation: "-e=all processes, -f=full format (alternative to aux)."
+    points: 15
+    hint: "Another way to see all processes."
+
+  - id: "ps_mc_003"
+    type: "multiple_choice"
+    command: "kill"
+    difficulty: "advanced"
+    question_text: "What signal does 'kill -9' send?"
+    options:
+      - "SIGKILL (force terminate)"
+      - "SIGTERM (graceful)"
+      - "SIGSTOP (pause)"
+      - "SIGHUP (hangup)"
+    correct_answer: "SIGKILL (force terminate)"
+    explanation: "-9 is SIGKILL which cannot be caught or ignored."
+    points: 20
+    hint: "The strongest kill signal."
+
+  - id: "ps_mc_004"
+    type: "multiple_choice"
+    command: "kill"
+    difficulty: "advanced"
+    question_text: "What's the difference between 'kill' and 'kill -9'?"
+    options:
+      - "kill sends SIGTERM (can be caught), -9 sends SIGKILL (forced)"
+      - "They are the same"
+      - "kill is for processes, -9 is for users"
+      - "-9 is 9 times stronger"
+    correct_answer: "kill sends SIGTERM (can be caught), -9 sends SIGKILL (forced)"
+    explanation: "SIGTERM allows cleanup, SIGKILL terminates immediately."
+    points: 25
+    hint: "Graceful vs forced."
+
+  - id: "ps_mc_005"
+    type: "multiple_choice"
+    command: "kill"
+    difficulty: "advanced"
+    question_text: "What does 'killall python' do?"
+    options:
+      - "Kills all processes named python"
+      - "Kills Python itself"
+      - "Kills all processes"
+      - "Uninstalls Python"
+    correct_answer: "Kills all processes named python"
+    explanation: "killall terminates all processes matching the name."
+    points: 15
+    hint: "Kill by name."
+
+  - id: "ps_cb_001"
+    type: "command_builder"
+    command: "ps"
+    difficulty: "advanced"
+    question_text: "Find all Python processes"
+    correct_answer:
+      - "ps aux | grep python"
+      - "pgrep python"
+    explanation: "Filter ps output with grep or use pgrep."
+    points: 15
+    hint: "Combine ps with grep."
+
+  - id: "ps_cb_002"
+    type: "command_builder"
+    command: "kill"
+    difficulty: "advanced"
+    question_text: "Force kill process with PID 1234"
+    correct_answer:
+      - "kill -9 1234"
+      - "kill -KILL 1234"
+    explanation: "-9 or -KILL sends SIGKILL."
+    points: 15
+    hint: "Use signal 9."
+
+  # ============================================================
+  # DF & DU COMMANDS - 25 Questions
+  # ============================================================
+
+  - id: "df_mc_001"
+    type: "multiple_choice"
+    command: "df"
+    difficulty: "advanced"
+    question_text: "What does 'df' show?"
+    options:
+      - "Disk filesystem space usage"
+      - "Directory files"
+      - "Deleted files"
+      - "Download files"
+    correct_answer: "Disk filesystem space usage"
+    explanation: "df = disk free, shows mounted filesystem usage."
+    points: 10
+    hint: "Disk free space."
+
+  - id: "df_mc_002"
+    type: "multiple_choice"
+    command: "df"
+    difficulty: "advanced"
+    question_text: "What does 'df -h' show?"
+    options:
+      - "Human-readable sizes (KB, MB, GB)"
+      - "Hidden partitions"
+      - "Hardware info"
+      - "History"
+    correct_answer: "Human-readable sizes (KB, MB, GB)"
+    explanation: "-h formats sizes in human-readable units."
+    points: 15
+    hint: "h for human-readable."
+
+  - id: "du_mc_001"
+    type: "multiple_choice"
+    command: "du"
+    difficulty: "advanced"
+    question_text: "What does 'du' show?"
+    options:
+      - "Disk usage of files and directories"
+      - "Downloaded updates"
+      - "Duplicate files"
+      - "Directory users"
+    correct_answer: "Disk usage of files and directories"
+    explanation: "du = disk usage, shows how much space files use."
+    points: 10
+    hint: "Disk usage."
+
+  - id: "du_mc_002"
+    type: "multiple_choice"
+    command: "du"
+    difficulty: "advanced"
+    question_text: "What does 'du -sh *' show?"
+    options:
+      - "Summary size of each item in current directory"
+      - "Sorted hidden files"
+      - "System hardware"
+      - "Shell variables"
+    correct_answer: "Summary size of each item in current directory"
+    explanation: "-s summary, -h human-readable, * all items."
+    points: 20
+    hint: "s for summary."
+
+  - id: "du_cb_001"
+    type: "command_builder"
+    command: "du"
+    difficulty: "advanced"
+    question_text: "Find the top 10 largest directories"
+    correct_answer:
+      - "du -sh * | sort -hr | head -10"
+      - "du -sh * | sort -h | tail -10"
+    explanation: "Get sizes, sort by size, show top 10."
+    points: 25
+    hint: "Combine du with sort and head."
+
+  # ============================================================
+  # PIPES & REDIRECTS - 40 Questions
+  # ============================================================
+
+  - id: "pipe_mc_001"
+    type: "multiple_choice"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does the pipe '|' do?"
+    options:
+      - "Passes output of one command to another"
+      - "Runs commands in parallel"
+      - "Saves output to file"
+      - "Combines files"
+    correct_answer: "Passes output of one command to another"
+    explanation: "Pipe connects stdout of one command to stdin of another."
+    points: 10
+    hint: "Chain commands together."
+
+  - id: "pipe_mc_002"
+    type: "multiple_choice"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does '>' do?"
+    options:
+      - "Redirects output to file (overwrites)"
+      - "Appends to file"
+      - "Reads from file"
+      - "Compares files"
+    correct_answer: "Redirects output to file (overwrites)"
+    explanation: "> redirects stdout to a file, overwriting it."
+    points: 15
+    hint: "Arrow points to destination."
+
+  - id: "pipe_mc_003"
+    type: "multiple_choice"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does '>>' do?"
+    options:
+      - "Appends output to file"
+      - "Overwrites file twice"
+      - "Reads from file"
+      - "Compares versions"
+    correct_answer: "Appends output to file"
+    explanation: ">> appends to the file instead of overwriting."
+    points: 15
+    hint: "Double arrow = append."
+
+  - id: "pipe_mc_004"
+    type: "multiple_choice"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does '2>' redirect?"
+    options:
+      - "Standard error (stderr)"
+      - "Second output"
+      - "Two files"
+      - "Backup output"
+    correct_answer: "Standard error (stderr)"
+    explanation: "2 is the file descriptor for stderr."
+    points: 20
+    hint: "2 = error stream."
+
+  - id: "pipe_mc_005"
+    type: "multiple_choice"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does '2>/dev/null' do?"
+    options:
+      - "Discards error messages"
+      - "Saves errors to null"
+      - "Shows null errors"
+      - "Deletes the device"
+    correct_answer: "Discards error messages"
+    explanation: "/dev/null is a black hole for data."
+    points: 20
+    hint: "dev/null = trash."
+
+  - id: "pipe_mc_006"
+    type: "multiple_choice"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does '&>' do?"
+    options:
+      - "Redirects both stdout and stderr"
+      - "Runs in background"
+      - "AND operation"
+      - "Creates backup"
+    correct_answer: "Redirects both stdout and stderr"
+    explanation: "&> combines stdout and stderr into one stream."
+    points: 25
+    hint: "& means both."
+
+  - id: "pipe_mc_007"
+    type: "multiple_choice"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does 'cmd1 && cmd2' do?"
+    options:
+      - "Runs cmd2 only if cmd1 succeeds"
+      - "Runs both in parallel"
+      - "Runs both always"
+      - "AND the outputs"
+    correct_answer: "Runs cmd2 only if cmd1 succeeds"
+    explanation: "&& is AND - second command runs only if first succeeds (exit 0)."
+    points: 20
+    hint: "Conditional execution."
+
+  - id: "pipe_mc_008"
+    type: "multiple_choice"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does 'cmd1 || cmd2' do?"
+    options:
+      - "Runs cmd2 only if cmd1 fails"
+      - "Runs both commands"
+      - "OR the outputs"
+      - "Runs in parallel"
+    correct_answer: "Runs cmd2 only if cmd1 fails"
+    explanation: "|| is OR - second runs only if first fails (non-zero exit)."
+    points: 20
+    hint: "Opposite of &&."
+
+  - id: "pipe_cb_001"
+    type: "command_builder"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "Run command hiding all errors"
+    correct_answer:
+      - "command 2>/dev/null"
+    explanation: "Redirect stderr to /dev/null."
+    points: 15
+    hint: "Redirect error stream."
+
+  - id: "pipe_cb_002"
+    type: "command_builder"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "Save both output and errors to log.txt"
+    correct_answer:
+      - "command &> log.txt"
+      - "command > log.txt 2>&1"
+    explanation: "&> or 2>&1 combines both streams."
+    points: 20
+    hint: "Combine stdout and stderr."
+
+  - id: "pipe_wd_001"
+    type: "what_does_it_do"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does 'cat file.txt | grep error | wc -l' do?"
+    options:
+      - "Counts lines containing 'error'"
+      - "Finds word count of errors"
+      - "Creates error log"
+      - "Deletes error lines"
+    correct_answer: "Counts lines containing 'error'"
+    explanation: "cat outputs file, grep filters for 'error', wc -l counts lines."
+    points: 20
+    hint: "Pipeline for counting."
+
+  - id: "pipe_wd_002"
+    type: "what_does_it_do"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does 'mkdir test && cd test && touch file.txt' do?"
+    options:
+      - "Creates directory, enters it, creates file (if each step succeeds)"
+      - "Creates three things at once"
+      - "Tests if directory can be created"
+      - "Moves test to file.txt"
+    correct_answer: "Creates directory, enters it, creates file (if each step succeeds)"
+    explanation: "&& chains commands that depend on previous success."
+    points: 25
+    hint: "Sequential dependent operations."
+
+  # ============================================================
+  # TEE COMMAND - 15 Questions
+  # ============================================================
+
+  - id: "tee_mc_001"
+    type: "multiple_choice"
+    command: "tee"
+    difficulty: "advanced"
+    question_text: "What does 'tee' do?"
+    options:
+      - "Writes to file AND stdout simultaneously"
+      - "Types text"
+      - "Tests files"
+      - "Terminates processes"
+    correct_answer: "Writes to file AND stdout simultaneously"
+    explanation: "tee splits output to both screen and file."
+    points: 15
+    hint: "Like a T-junction for data."
+
+  - id: "tee_mc_002"
+    type: "multiple_choice"
+    command: "tee"
+    difficulty: "advanced"
+    question_text: "What does 'tee -a' do?"
+    options:
+      - "Appends to file instead of overwriting"
+      - "Shows all output"
+      - "Archives output"
+      - "Adds line numbers"
+    correct_answer: "Appends to file instead of overwriting"
+    explanation: "-a appends like >> instead of >."
+    points: 20
+    hint: "a for append."
+
+  - id: "tee_cb_001"
+    type: "command_builder"
+    command: "tee"
+    difficulty: "advanced"
+    question_text: "Run command and save output to log while showing on screen"
+    correct_answer:
+      - "command | tee log.txt"
+    explanation: "tee shows output and saves to file."
+    points: 15
+    hint: "Pipe to tee."
+
+  - id: "tee_wd_001"
+    type: "what_does_it_do"
+    command: "tee"
+    difficulty: "advanced"
+    question_text: "What does 'make 2>&1 | tee build.log' do?"
+    options:
+      - "Runs make, shows output, saves everything to build.log"
+      - "Makes a tee"
+      - "Builds a log file"
+      - "Cleans build"
+    correct_answer: "Runs make, shows output, saves everything to build.log"
+    explanation: "2>&1 combines errors with output, tee saves while displaying."
+    points: 30
+    hint: "Capture full build output."
+
+  # ============================================================
+  # XARGS COMMAND - 15 Questions
+  # ============================================================
+
+  - id: "xargs_mc_001"
+    type: "multiple_choice"
+    command: "xargs"
+    difficulty: "advanced"
+    question_text: "What does 'xargs' do?"
+    options:
+      - "Builds and executes commands from standard input"
+      - "X-ray arguments"
+      - "Expands arguments"
+      - "Exits with arguments"
+    correct_answer: "Builds and executes commands from standard input"
+    explanation: "xargs converts input into arguments for another command."
+    points: 20
+    hint: "Execute with arguments."
+
+  - id: "xargs_mc_002"
+    type: "multiple_choice"
+    command: "xargs"
+    difficulty: "advanced"
+    question_text: "What does 'find . -name '*.txt' | xargs rm' do?"
+    options:
+      - "Finds all .txt files and deletes them"
+      - "Removes xargs"
+      - "Finds and renames"
+      - "Creates .txt files"
+    correct_answer: "Finds all .txt files and deletes them"
+    explanation: "find outputs file paths, xargs passes them to rm."
+    points: 25
+    hint: "Chain find with action."
+
+  - id: "xargs_cb_001"
+    type: "command_builder"
+    command: "xargs"
+    difficulty: "advanced"
+    question_text: "Count lines in all .py files found"
+    correct_answer:
+      - "find . -name '*.py' | xargs wc -l"
+      - "find . -name '*.py' -exec wc -l {} +"
+    explanation: "xargs passes found files to wc -l."
+    points: 25
+    hint: "Combine find with wc."
+
+  # ============================================================
+  # HISTORY & SHORTCUTS - 20 Questions
+  # ============================================================
+
+  - id: "history_mc_001"
+    type: "multiple_choice"
+    command: "history"
+    difficulty: "advanced"
+    question_text: "What does '!!' do?"
+    options:
+      - "Repeats the last command"
+      - "Shows two commands"
+      - "Exits twice"
+      - "Error message"
+    correct_answer: "Repeats the last command"
+    explanation: "!! expands to the previous command."
+    points: 15
+    hint: "Bang bang."
+
+  - id: "history_mc_002"
+    type: "multiple_choice"
+    command: "history"
+    difficulty: "advanced"
+    question_text: "What does '!$' represent?"
+    options:
+      - "The last argument of the previous command"
+      - "Dollar sign"
+      - "Last command"
+      - "Last error"
+    correct_answer: "The last argument of the previous command"
+    explanation: "!$ gives you the last argument from the previous command."
+    points: 20
+    hint: "Last word of last command."
+
+  - id: "history_mc_003"
+    type: "multiple_choice"
+    command: "history"
+    difficulty: "advanced"
+    question_text: "What does 'sudo !!' do?"
+    options:
+      - "Runs the last command with sudo"
+      - "Shows sudo history"
+      - "Exits sudo"
+      - "Creates sudo user"
+    correct_answer: "Runs the last command with sudo"
+    explanation: "Common pattern when you forgot to use sudo."
+    points: 15
+    hint: "Add sudo to last command."
+
+  - id: "history_mc_004"
+    type: "multiple_choice"
+    command: "history"
+    difficulty: "advanced"
+    question_text: "What does CTRL+R do in terminal?"
+    options:
+      - "Reverse search through command history"
+      - "Reset terminal"
+      - "Restart shell"
+      - "Run last command"
+    correct_answer: "Reverse search through command history"
+    explanation: "CTRL+R lets you search and recall previous commands."
+    points: 15
+    hint: "Search history interactively."
+
+  - id: "history_mc_005"
+    type: "multiple_choice"
+    command: "history"
+    difficulty: "advanced"
+    question_text: "What does '!123' do?"
+    options:
+      - "Runs command number 123 from history"
+      - "Runs 123 times"
+      - "Shows error 123"
+      - "Creates 123 files"
+    correct_answer: "Runs command number 123 from history"
+    explanation: "!n executes command number n from history."
+    points: 20
+    hint: "Execute by history number."
+
+  - id: "history_wd_001"
+    type: "what_does_it_do"
+    command: "history"
+    difficulty: "advanced"
+    question_text: "What does 'history | grep ssh' do?"
+    options:
+      - "Shows all SSH commands from history"
+      - "Creates SSH history"
+      - "Deletes SSH commands"
+      - "Runs SSH from history"
+    correct_answer: "Shows all SSH commands from history"
+    explanation: "Filters history for SSH-related commands."
+    points: 15
+    hint: "Search through past commands."
+
+  # ============================================================
+  # MORE TAR QUESTIONS
+  # ============================================================
+
+  - id: "tar_mc_009"
+    type: "multiple_choice"
+    command: "tar"
+    difficulty: "advanced"
+    question_text: "What does 'tar --exclude='*.log' -czf backup.tar.gz folder/' do?"
+    options:
+      - "Creates archive excluding all .log files"
+      - "Includes only log files"
+      - "Shows excluded files"
+      - "Creates log of archive"
+    correct_answer: "Creates archive excluding all .log files"
+    explanation: "--exclude skips files matching the pattern."
+    points: 25
+    hint: "Pattern exclusion."
+
+  - id: "tar_mc_010"
+    type: "multiple_choice"
+    command: "tar"
+    difficulty: "advanced"
+    question_text: "How do you extract a single file from archive.tar.gz?"
+    options:
+      - "tar -xzf archive.tar.gz path/to/file.txt"
+      - "tar -xzf archive.tar.gz --single file.txt"
+      - "tar -e file.txt archive.tar.gz"
+      - "You cannot extract single files"
+    correct_answer: "tar -xzf archive.tar.gz path/to/file.txt"
+    explanation: "Specify the file path after the archive name."
+    points: 25
+    hint: "Add the file path at the end."
+
+  - id: "tar_fb_001"
+    type: "fill_blank"
+    command: "tar"
+    difficulty: "advanced"
+    question_text: "Create gzip compressed archive: tar ___ backup.tar.gz folder/"
+    correct_answer:
+      - "-czf"
+      - "czf"
+    explanation: "c=create, z=gzip, f=file."
+    points: 15
+    hint: "Three flags for create, gzip, and file."
+
+  - id: "tar_fb_002"
+    type: "fill_blank"
+    command: "tar"
+    difficulty: "advanced"
+    question_text: "Extract tar.gz archive: tar ___ backup.tar.gz"
+    correct_answer:
+      - "-xzf"
+      - "xzf"
+    explanation: "x=extract, z=gzip, f=file."
+    points: 15
+    hint: "Extract with gzip."
+
+  # ============================================================
+  # MORE CURL QUESTIONS
+  # ============================================================
+
+  - id: "curl_mc_009"
+    type: "multiple_choice"
+    command: "curl"
+    difficulty: "advanced"
+    question_text: "What does 'curl -w '%{http_code}' url' show?"
+    options:
+      - "The HTTP status code"
+      - "The word count"
+      - "Write mode"
+      - "Wait time"
+    correct_answer: "The HTTP status code"
+    explanation: "-w allows custom output format, %{http_code} shows status."
+    points: 25
+    hint: "-w for write-out format."
+
+  - id: "curl_mc_010"
+    type: "multiple_choice"
+    command: "curl"
+    difficulty: "advanced"
+    question_text: "How do you send a file upload with curl?"
+    options:
+      - "curl -F 'file=@path/to/file' url"
+      - "curl --upload file url"
+      - "curl -u file url"
+      - "curl file > url"
+    correct_answer: "curl -F 'file=@path/to/file' url"
+    explanation: "-F for form data, @ prefix for file upload."
+    points: 30
+    hint: "-F for multipart form."
+
+  - id: "curl_mc_011"
+    type: "multiple_choice"
+    command: "curl"
+    difficulty: "advanced"
+    question_text: "What does 'curl -k url' do?"
+    options:
+      - "Allows insecure SSL connections"
+      - "Keeps connection alive"
+      - "Kills after timeout"
+      - "Shows key information"
+    correct_answer: "Allows insecure SSL connections"
+    explanation: "-k ignores SSL certificate errors (insecure)."
+    points: 20
+    hint: "k for insecure mode."
+
+  - id: "curl_mc_012"
+    type: "multiple_choice"
+    command: "curl"
+    difficulty: "advanced"
+    question_text: "How do you add a custom header with curl?"
+    options:
+      - "curl -H 'Header: Value' url"
+      - "curl --head 'Header' url"
+      - "curl -header 'Value' url"
+      - "curl header='Value' url"
+    correct_answer: "curl -H 'Header: Value' url"
+    explanation: "-H adds a custom HTTP header."
+    points: 20
+    hint: "-H for header."
+
+  - id: "curl_mc_013"
+    type: "multiple_choice"
+    command: "curl"
+    difficulty: "advanced"
+    question_text: "What does 'curl -u user:pass url' do?"
+    options:
+      - "Authenticates with username and password"
+      - "Updates user information"
+      - "Uploads with user"
+      - "Uses proxy"
+    correct_answer: "Authenticates with username and password"
+    explanation: "-u provides basic authentication credentials."
+    points: 20
+    hint: "-u for user authentication."
+
+  - id: "curl_fb_001"
+    type: "fill_blank"
+    command: "curl"
+    difficulty: "advanced"
+    question_text: "Follow redirects: curl ___ url"
+    correct_answer: "-L"
+    explanation: "-L follows HTTP redirects."
+    points: 15
+    hint: "Location header."
+
+  - id: "curl_fb_002"
+    type: "fill_blank"
+    command: "curl"
+    difficulty: "advanced"
+    question_text: "Show only headers: curl ___ url"
+    correct_answer: "-I"
+    explanation: "-I fetches only HTTP headers."
+    points: 15
+    hint: "Capital I."
+
+  # ============================================================
+  # MORE WGET QUESTIONS
+  # ============================================================
+
+  - id: "wget_mc_006"
+    type: "multiple_choice"
+    command: "wget"
+    difficulty: "advanced"
+    question_text: "What does 'wget --limit-rate=200k url' do?"
+    options:
+      - "Limits download speed to 200KB/s"
+      - "Downloads 200 kilobytes only"
+      - "Sets timeout to 200"
+      - "Creates 200 connections"
+    correct_answer: "Limits download speed to 200KB/s"
+    explanation: "--limit-rate throttles download bandwidth."
+    points: 20
+    hint: "Rate limiting."
+
+  - id: "wget_mc_007"
+    type: "multiple_choice"
+    command: "wget"
+    difficulty: "advanced"
+    question_text: "What does 'wget -P /download url' do?"
+    options:
+      - "Saves downloaded file to /download directory"
+      - "Uses proxy /download"
+      - "Prints to /download"
+      - "Pauses at /download"
+    correct_answer: "Saves downloaded file to /download directory"
+    explanation: "-P sets the download directory."
+    points: 20
+    hint: "-P for prefix/path."
+
+  - id: "wget_mc_008"
+    type: "multiple_choice"
+    command: "wget"
+    difficulty: "advanced"
+    question_text: "What does 'wget -i urls.txt' do?"
+    options:
+      - "Downloads URLs listed in urls.txt"
+      - "Ignores urls.txt"
+      - "Installs from urls.txt"
+      - "Information about urls.txt"
+    correct_answer: "Downloads URLs listed in urls.txt"
+    explanation: "-i reads URLs from a file."
+    points: 20
+    hint: "-i for input file."
+
+  - id: "wget_fb_001"
+    type: "fill_blank"
+    command: "wget"
+    difficulty: "advanced"
+    question_text: "Download to background: wget ___ url"
+    correct_answer: "-b"
+    explanation: "-b runs wget in background."
+    points: 15
+    hint: "b for background."
+
+  # ============================================================
+  # MORE SSH QUESTIONS
+  # ============================================================
+
+  - id: "ssh_mc_006"
+    type: "multiple_choice"
+    command: "ssh"
+    difficulty: "advanced"
+    question_text: "What does 'ssh -L 8080:localhost:80 user@host' do?"
+    options:
+      - "Creates a local port forward (tunnel)"
+      - "Limits to port 8080"
+      - "Lists port 8080"
+      - "Logs port activity"
+    correct_answer: "Creates a local port forward (tunnel)"
+    explanation: "-L creates a local tunnel forwarding local:8080 to remote:80."
+    points: 30
+    hint: "Port forwarding."
+
+  - id: "ssh_mc_007"
+    type: "multiple_choice"
+    command: "ssh"
+    difficulty: "advanced"
+    question_text: "What does 'ssh -N' do?"
+    options:
+      - "No command execution (useful for tunnels)"
+      - "New connection"
+      - "No password"
+      - "Non-interactive"
+    correct_answer: "No command execution (useful for tunnels)"
+    explanation: "-N prevents remote command execution, used with port forwarding."
+    points: 25
+    hint: "Just for tunneling."
+
+  - id: "ssh_mc_008"
+    type: "multiple_choice"
+    command: "ssh"
+    difficulty: "advanced"
+    question_text: "What does 'ssh -X user@host' enable?"
+    options:
+      - "X11 forwarding (run graphical apps)"
+      - "eXtended mode"
+      - "eXtra security"
+      - "eXport files"
+    correct_answer: "X11 forwarding (run graphical apps)"
+    explanation: "-X enables X11 forwarding for GUI applications."
+    points: 25
+    hint: "Graphical forwarding."
+
+  - id: "ssh_mc_009"
+    type: "multiple_choice"
+    command: "ssh"
+    difficulty: "advanced"
+    question_text: "Where is the SSH config file typically located?"
+    options:
+      - "~/.ssh/config"
+      - "~/.sshconfig"
+      - "/etc/ssh/user_config"
+      - "~/.ssh/settings"
+    correct_answer: "~/.ssh/config"
+    explanation: "Per-user SSH configuration goes in ~/.ssh/config."
+    points: 20
+    hint: "Inside the .ssh directory."
+
+  - id: "ssh_fb_001"
+    type: "fill_blank"
+    command: "ssh"
+    difficulty: "advanced"
+    question_text: "Connect on port 2222: ssh ___ 2222 user@host"
+    correct_answer: "-p"
+    explanation: "-p specifies the port."
+    points: 15
+    hint: "p for port."
+
+  # ============================================================
+  # MORE AWK QUESTIONS
+  # ============================================================
+
+  - id: "awk_mc_007"
+    type: "multiple_choice"
+    command: "awk"
+    difficulty: "advanced"
+    question_text: "What does 'NR' represent in awk?"
+    options:
+      - "Number of Records (current line number)"
+      - "New Record"
+      - "No Result"
+      - "Next Row"
+    correct_answer: "Number of Records (current line number)"
+    explanation: "NR is the current line number being processed."
+    points: 20
+    hint: "Counts lines."
+
+  - id: "awk_mc_008"
+    type: "multiple_choice"
+    command: "awk"
+    difficulty: "advanced"
+    question_text: "What does 'awk 'NR==5' file' do?"
+    options:
+      - "Prints only line 5"
+      - "Prints first 5 lines"
+      - "Numbers to 5"
+      - "Skips 5 lines"
+    correct_answer: "Prints only line 5"
+    explanation: "NR==5 matches when line number equals 5."
+    points: 20
+    hint: "Line number condition."
+
+  - id: "awk_mc_009"
+    type: "multiple_choice"
+    command: "awk"
+    difficulty: "advanced"
+    question_text: "What does 'awk '{sum+=$1} END{print sum}' file' do?"
+    options:
+      - "Sums all values in first column"
+      - "Counts lines"
+      - "Shows first sum"
+      - "Ends at sum"
+    correct_answer: "Sums all values in first column"
+    explanation: "sum+=$1 accumulates, END block runs after all lines."
+    points: 30
+    hint: "Accumulator pattern."
+
+  - id: "awk_mc_010"
+    type: "multiple_choice"
+    command: "awk"
+    difficulty: "advanced"
+    question_text: "What does 'BEGIN' block do in awk?"
+    options:
+      - "Runs before processing any lines"
+      - "Begins new file"
+      - "Beeps"
+      - "Backs up file"
+    correct_answer: "Runs before processing any lines"
+    explanation: "BEGIN executes once before reading input."
+    points: 20
+    hint: "Initialization block."
+
+  - id: "awk_fb_001"
+    type: "fill_blank"
+    command: "awk"
+    difficulty: "advanced"
+    question_text: "Print first column: awk '{print ___}' file"
+    correct_answer: "$1"
+    explanation: "$1 is the first field."
+    points: 10
+    hint: "Dollar sign and number."
+
+  - id: "awk_fb_002"
+    type: "fill_blank"
+    command: "awk"
+    difficulty: "advanced"
+    question_text: "Print last column: awk '{print ___}' file"
+    correct_answer: "$NF"
+    explanation: "$NF is the last field."
+    points: 15
+    hint: "Number of Fields."
+
+  # ============================================================
+  # MORE SED QUESTIONS
+  # ============================================================
+
+  - id: "sed_mc_008"
+    type: "multiple_choice"
+    command: "sed"
+    difficulty: "advanced"
+    question_text: "What does 'sed '/pattern/d' file' do?"
+    options:
+      - "Deletes lines containing pattern"
+      - "Duplicates pattern lines"
+      - "Displays pattern"
+      - "Downloads pattern"
+    correct_answer: "Deletes lines containing pattern"
+    explanation: "/pattern/d deletes matching lines."
+    points: 20
+    hint: "d for delete."
+
+  - id: "sed_mc_009"
+    type: "multiple_choice"
+    command: "sed"
+    difficulty: "advanced"
+    question_text: "What does 'sed '1,5s/old/new/' file' do?"
+    options:
+      - "Replaces only in lines 1-5"
+      - "Replaces 1 to 5 times"
+      - "Inserts 1-5"
+      - "Shows lines 1-5"
+    correct_answer: "Replaces only in lines 1-5"
+    explanation: "1,5 specifies line range for the substitution."
+    points: 25
+    hint: "Line range before command."
+
+  - id: "sed_mc_010"
+    type: "multiple_choice"
+    command: "sed"
+    difficulty: "advanced"
+    question_text: "What does 'sed 's/old/new/i' file' do?"
+    options:
+      - "Case-insensitive replacement"
+      - "In-place replacement"
+      - "Insert mode"
+      - "Ignore errors"
+    correct_answer: "Case-insensitive replacement"
+    explanation: "The i flag makes the pattern match case-insensitive."
+    points: 25
+    hint: "i for ignore case."
+
+  - id: "sed_fb_001"
+    type: "fill_blank"
+    command: "sed"
+    difficulty: "advanced"
+    question_text: "Replace all occurrences: sed 's/old/new/___' file"
+    correct_answer: "g"
+    explanation: "g flag for global replacement."
+    points: 10
+    hint: "Global flag."
+
+  - id: "sed_fb_002"
+    type: "fill_blank"
+    command: "sed"
+    difficulty: "advanced"
+    question_text: "Edit file in-place: sed ___ 's/old/new/g' file"
+    correct_answer: "-i"
+    explanation: "-i for in-place editing."
+    points: 15
+    hint: "In-place flag."
+
+  # ============================================================
+  # MORE CUT QUESTIONS
+  # ============================================================
+
+  - id: "cut_mc_004"
+    type: "multiple_choice"
+    command: "cut"
+    difficulty: "advanced"
+    question_text: "What does 'cut -f1-3' select?"
+    options:
+      - "Fields 1, 2, and 3"
+      - "Only field 1 and 3"
+      - "First 3 characters"
+      - "Every third field"
+    correct_answer: "Fields 1, 2, and 3"
+    explanation: "1-3 is a range including 1, 2, and 3."
+    points: 15
+    hint: "Range notation."
+
+  - id: "cut_mc_005"
+    type: "multiple_choice"
+    command: "cut"
+    difficulty: "advanced"
+    question_text: "What does 'cut --complement -f1' do?"
+    options:
+      - "Shows all fields except field 1"
+      - "Completes field 1"
+      - "Complements the cut"
+      - "Shows field 1"
+    correct_answer: "Shows all fields except field 1"
+    explanation: "--complement inverts the selection."
+    points: 25
+    hint: "Invert selection."
+
+  - id: "cut_fb_001"
+    type: "fill_blank"
+    command: "cut"
+    difficulty: "advanced"
+    question_text: "Extract first 5 characters: cut ___ file"
+    correct_answer: "-c1-5"
+    explanation: "-c for characters, 1-5 for range."
+    points: 15
+    hint: "Character range."
+
+  # ============================================================
+  # MORE PS & KILL QUESTIONS
+  # ============================================================
+
+  - id: "ps_mc_006"
+    type: "multiple_choice"
+    command: "ps"
+    difficulty: "advanced"
+    question_text: "What does 'pgrep' do?"
+    options:
+      - "Finds PIDs by process name"
+      - "Prints grep results"
+      - "Process grep"
+      - "Power grep"
+    correct_answer: "Finds PIDs by process name"
+    explanation: "pgrep returns PIDs matching a pattern."
+    points: 20
+    hint: "Process grep."
+
+  - id: "ps_mc_007"
+    type: "multiple_choice"
+    command: "kill"
+    difficulty: "advanced"
+    question_text: "What does 'pkill' do?"
+    options:
+      - "Kills processes by name"
+      - "Prints kill info"
+      - "Power kill"
+      - "Partial kill"
+    correct_answer: "Kills processes by name"
+    explanation: "pkill sends signals to processes by name."
+    points: 20
+    hint: "Kill by name."
+
+  - id: "ps_mc_008"
+    type: "multiple_choice"
+    command: "ps"
+    difficulty: "advanced"
+    question_text: "What does 'top' command do?"
+    options:
+      - "Shows real-time process activity"
+      - "Shows top of file"
+      - "Shows top users"
+      - "Tops processes"
+    correct_answer: "Shows real-time process activity"
+    explanation: "top is an interactive process viewer."
+    points: 10
+    hint: "Live process monitor."
+
+  - id: "ps_mc_009"
+    type: "multiple_choice"
+    command: "ps"
+    difficulty: "advanced"
+    question_text: "What does 'htop' offer over 'top'?"
+    options:
+      - "Better interface, colors, mouse support"
+      - "HTTP support"
+      - "Help topics"
+      - "Horizontal top"
+    correct_answer: "Better interface, colors, mouse support"
+    explanation: "htop is an enhanced interactive process viewer."
+    points: 15
+    hint: "Improved version."
+
+  - id: "ps_fb_001"
+    type: "fill_blank"
+    command: "kill"
+    difficulty: "advanced"
+    question_text: "Force kill signal number: kill ___ PID"
+    correct_answer: "-9"
+    explanation: "-9 is SIGKILL."
+    points: 10
+    hint: "Nine."
+
+  # ============================================================
+  # MORE DF & DU QUESTIONS
+  # ============================================================
+
+  - id: "df_mc_003"
+    type: "multiple_choice"
+    command: "df"
+    difficulty: "advanced"
+    question_text: "What does 'df -T' show?"
+    options:
+      - "Filesystem type column"
+      - "Total space"
+      - "Time of last check"
+      - "Table format"
+    correct_answer: "Filesystem type column"
+    explanation: "-T adds filesystem type (ext4, ntfs, etc.)."
+    points: 20
+    hint: "T for type."
+
+  - id: "du_mc_003"
+    type: "multiple_choice"
+    command: "du"
+    difficulty: "advanced"
+    question_text: "What does 'du --max-depth=1' do?"
+    options:
+      - "Shows sizes only for current level"
+      - "Maximum depth of 1 byte"
+      - "Shows 1 file"
+      - "Drills down 1 level only"
+    correct_answer: "Shows sizes only for current level"
+    explanation: "--max-depth limits how deep du recurses."
+    points: 20
+    hint: "Limit recursion."
+
+  - id: "du_mc_004"
+    type: "multiple_choice"
+    command: "du"
+    difficulty: "advanced"
+    question_text: "What does 'ncdu' do?"
+    options:
+      - "Interactive disk usage analyzer"
+      - "Network du"
+      - "New du"
+      - "Count du"
+    correct_answer: "Interactive disk usage analyzer"
+    explanation: "ncdu is NCurses Disk Usage, a visual disk analyzer."
+    points: 15
+    hint: "Interactive version."
+
+  - id: "df_fb_001"
+    type: "fill_blank"
+    command: "df"
+    difficulty: "advanced"
+    question_text: "Human readable sizes: df ___"
+    correct_answer: "-h"
+    explanation: "-h for human-readable."
+    points: 10
+    hint: "Human."
+
+  # ============================================================
+  # MORE PIPES & REDIRECTS
+  # ============================================================
+
+  - id: "pipe_mc_009"
+    type: "multiple_choice"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does '2>&1' do?"
+    options:
+      - "Redirects stderr to stdout"
+      - "Redirects to file 2"
+      - "Creates 2 files"
+      - "Doubles output"
+    correct_answer: "Redirects stderr to stdout"
+    explanation: "2>&1 sends stderr (2) to where stdout (1) goes."
+    points: 25
+    hint: "Combine error with output."
+
+  - id: "pipe_mc_010"
+    type: "multiple_choice"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does '< file' do?"
+    options:
+      - "Redirects file as stdin"
+      - "Less than file"
+      - "Shows file less"
+      - "Compares to file"
+    correct_answer: "Redirects file as stdin"
+    explanation: "< provides file content as input to a command."
+    points: 20
+    hint: "Input redirection."
+
+  - id: "pipe_mc_011"
+    type: "multiple_choice"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does 'cmd &' do?"
+    options:
+      - "Runs command in background"
+      - "AND with nothing"
+      - "Appends output"
+      - "Amplifies command"
+    correct_answer: "Runs command in background"
+    explanation: "& at end runs the command in background."
+    points: 15
+    hint: "Background execution."
+
+  - id: "pipe_mc_012"
+    type: "multiple_choice"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does 'nohup cmd &' do?"
+    options:
+      - "Runs command that survives logout"
+      - "No help mode"
+      - "No output"
+      - "Hurry up mode"
+    correct_answer: "Runs command that survives logout"
+    explanation: "nohup prevents hangup signal, & runs in background."
+    points: 25
+    hint: "Persistent background process."
+
+  - id: "pipe_fb_001"
+    type: "fill_blank"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "Discard errors: command ___ /dev/null"
+    correct_answer: "2>"
+    explanation: "2> redirects stderr."
+    points: 15
+    hint: "Error stream number."
+
+  - id: "pipe_fb_002"
+    type: "fill_blank"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "Append to file: echo text ___ file.txt"
+    correct_answer: ">>"
+    explanation: ">> appends instead of overwriting."
+    points: 10
+    hint: "Double arrow."
+
+  # ============================================================
+  # MORE TEE & XARGS
+  # ============================================================
+
+  - id: "tee_mc_003"
+    type: "multiple_choice"
+    command: "tee"
+    difficulty: "advanced"
+    question_text: "What does 'cmd | tee file1 file2' do?"
+    options:
+      - "Writes to both files and stdout"
+      - "Writes only to file1"
+      - "Creates a tee junction"
+      - "Compares files"
+    correct_answer: "Writes to both files and stdout"
+    explanation: "tee can write to multiple files."
+    points: 25
+    hint: "Multiple output."
+
+  - id: "xargs_mc_003"
+    type: "multiple_choice"
+    command: "xargs"
+    difficulty: "advanced"
+    question_text: "What does 'xargs -n 1' do?"
+    options:
+      - "Uses one argument at a time"
+      - "Numbers arguments"
+      - "New arguments"
+      - "Nullifies arguments"
+    correct_answer: "Uses one argument at a time"
+    explanation: "-n limits arguments per command execution."
+    points: 25
+    hint: "Process one at a time."
+
+  - id: "xargs_mc_004"
+    type: "multiple_choice"
+    command: "xargs"
+    difficulty: "advanced"
+    question_text: "What does 'xargs -I {} cmd {}' do?"
+    options:
+      - "Replaces {} with each input item"
+      - "Interactive mode"
+      - "Ignore mode"
+      - "Insert mode"
+    correct_answer: "Replaces {} with each input item"
+    explanation: "-I sets a placeholder that gets replaced."
+    points: 30
+    hint: "Placeholder substitution."
+
+  - id: "xargs_fb_001"
+    type: "fill_blank"
+    command: "xargs"
+    difficulty: "advanced"
+    question_text: "Delete found files: find . -name '*.tmp' | xargs ___"
+    correct_answer: "rm"
+    explanation: "xargs passes files to rm command."
+    points: 15
+    hint: "Delete command."
+
+  # ============================================================
+  # PROCESS SUBSTITUTION
+  # ============================================================
+
+  - id: "subst_mc_001"
+    type: "multiple_choice"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does 'diff <(cmd1) <(cmd2)' do?"
+    options:
+      - "Compares output of two commands"
+      - "Differences cmd1 from cmd2"
+      - "Deletes files"
+      - "Shows syntax"
+    correct_answer: "Compares output of two commands"
+    explanation: "Process substitution <() treats command output as a file."
+    points: 30
+    hint: "Process substitution."
+
+  - id: "subst_mc_002"
+    type: "multiple_choice"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What is $(command) called?"
+    options:
+      - "Command substitution"
+      - "Variable expansion"
+      - "Function call"
+      - "Array access"
+    correct_answer: "Command substitution"
+    explanation: "$() runs command and substitutes with its output."
+    points: 20
+    hint: "Run and capture."
+
+  # ============================================================
+  # ENVIRONMENT VARIABLES
+  # ============================================================
+
+  - id: "env_mc_001"
+    type: "multiple_choice"
+    command: "echo"
+    difficulty: "advanced"
+    question_text: "What does 'export VAR=value' do?"
+    options:
+      - "Makes variable available to child processes"
+      - "Exports to file"
+      - "Saves permanently"
+      - "Extracts value"
+    correct_answer: "Makes variable available to child processes"
+    explanation: "export makes the variable an environment variable."
+    points: 20
+    hint: "Environment inheritance."
+
+  - id: "env_mc_002"
+    type: "multiple_choice"
+    command: "echo"
+    difficulty: "advanced"
+    question_text: "What does 'env' command show?"
+    options:
+      - "All environment variables"
+      - "Environmental info"
+      - "Envelope data"
+      - "Entry points"
+    correct_answer: "All environment variables"
+    explanation: "env displays all current environment variables."
+    points: 15
+    hint: "Environment listing."
+
+  - id: "env_mc_003"
+    type: "multiple_choice"
+    command: "echo"
+    difficulty: "advanced"
+    question_text: "What is $PATH?"
+    options:
+      - "List of directories to search for commands"
+      - "Current file path"
+      - "Home directory"
+      - "System path"
+    correct_answer: "List of directories to search for commands"
+    explanation: "PATH contains directories where shell looks for executables."
+    points: 15
+    hint: "Command search path."
+
+  - id: "env_mc_004"
+    type: "multiple_choice"
+    command: "echo"
+    difficulty: "advanced"
+    question_text: "What is $HOME?"
+    options:
+      - "Current user's home directory"
+      - "Root home"
+      - "System home"
+      - "Default home"
+    correct_answer: "Current user's home directory"
+    explanation: "HOME points to /home/username (or /Users/username on Mac)."
+    points: 10
+    hint: "Home sweet home."
+
+  # ============================================================
+  # SCRIPTING BASICS
+  # ============================================================
+
+  - id: "script_mc_001"
+    type: "multiple_choice"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does '#!/bin/bash' at script start mean?"
+    options:
+      - "Specifies interpreter (shebang)"
+      - "Comment"
+      - "Hash bang command"
+      - "Shell decoration"
+    correct_answer: "Specifies interpreter (shebang)"
+    explanation: "Shebang tells the system which interpreter to use."
+    points: 15
+    hint: "Script interpreter line."
+
+  - id: "script_mc_002"
+    type: "multiple_choice"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does '$1' mean in a shell script?"
+    options:
+      - "First argument passed to script"
+      - "One dollar"
+      - "First line"
+      - "Exit code"
+    correct_answer: "First argument passed to script"
+    explanation: "$1, $2, etc. are positional parameters."
+    points: 20
+    hint: "Script arguments."
+
+  - id: "script_mc_003"
+    type: "multiple_choice"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does '$@' represent in a script?"
+    options:
+      - "All arguments as separate words"
+      - "At sign"
+      - "Array name"
+      - "All files"
+    correct_answer: "All arguments as separate words"
+    explanation: "$@ expands to all positional parameters."
+    points: 25
+    hint: "All arguments."
+
+  - id: "script_mc_004"
+    type: "multiple_choice"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does '$#' show?"
+    options:
+      - "Number of arguments passed"
+      - "Hash code"
+      - "Comment count"
+      - "Current PID"
+    correct_answer: "Number of arguments passed"
+    explanation: "$# is the count of positional parameters."
+    points: 20
+    hint: "Argument count."
+
+  - id: "script_mc_005"
+    type: "multiple_choice"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does '$$' represent?"
+    options:
+      - "Current process ID (PID)"
+      - "Double dollar"
+      - "Parent PID"
+      - "Dollar variable"
+    correct_answer: "Current process ID (PID)"
+    explanation: "$$ is the PID of the current shell."
+    points: 25
+    hint: "Process ID."
+
+  # ============================================================
+  # TMUX / SCREEN
+  # ============================================================
+
+  - id: "tmux_mc_001"
+    type: "multiple_choice"
+    command: "tmux"
+    difficulty: "advanced"
+    question_text: "What is tmux?"
+    options:
+      - "Terminal multiplexer (multiple windows/panes)"
+      - "Terminal mix"
+      - "Text multiplier"
+      - "Time machine"
+    correct_answer: "Terminal multiplexer (multiple windows/panes)"
+    explanation: "tmux lets you run multiple terminals in one window."
+    points: 15
+    hint: "Multiple terminals."
+
+  - id: "tmux_mc_002"
+    type: "multiple_choice"
+    command: "tmux"
+    difficulty: "advanced"
+    question_text: "How do you detach from a tmux session?"
+    options:
+      - "Ctrl+b then d"
+      - "Ctrl+d"
+      - "Ctrl+c"
+      - "Exit"
+    correct_answer: "Ctrl+b then d"
+    explanation: "Ctrl+b is the prefix, d is detach."
+    points: 20
+    hint: "Prefix then d."
+
+  - id: "tmux_mc_003"
+    type: "multiple_choice"
+    command: "tmux"
+    difficulty: "advanced"
+    question_text: "What does 'tmux attach' do?"
+    options:
+      - "Reconnects to a detached session"
+      - "Creates new session"
+      - "Attaches file"
+      - "Adds window"
+    correct_answer: "Reconnects to a detached session"
+    explanation: "attach (or attach-session) reconnects to existing session."
+    points: 15
+    hint: "Rejoin session."
+
+  # ============================================================
+  # COMMON PATTERNS
+  # ============================================================
+
+  - id: "pattern_wd_001"
+    type: "what_does_it_do"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does 'du -sh * | sort -hr | head -5' do?"
+    options:
+      - "Shows 5 largest items in current directory"
+      - "Downloads 5 files"
+      - "Duplicates 5 files"
+      - "Deletes 5 items"
+    correct_answer: "Shows 5 largest items in current directory"
+    explanation: "du gets sizes, sort orders by size, head shows top 5."
+    points: 25
+    hint: "Find largest files."
+
+  - id: "pattern_wd_002"
+    type: "what_does_it_do"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does 'find . -name '*.pyc' -delete' do?"
+    options:
+      - "Finds and deletes all .pyc files"
+      - "Finds pyc files only"
+      - "Creates .pyc files"
+      - "Moves .pyc files"
+    correct_answer: "Finds and deletes all .pyc files"
+    explanation: "-delete removes all matching files."
+    points: 20
+    hint: "Find and remove."
+
+  - id: "pattern_wd_003"
+    type: "what_does_it_do"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does 'tail -f log.txt | grep ERROR' do?"
+    options:
+      - "Monitors log file for ERROR lines in real-time"
+      - "Finds errors in tail"
+      - "Creates error log"
+      - "Fixes errors"
+    correct_answer: "Monitors log file for ERROR lines in real-time"
+    explanation: "tail -f follows file, grep filters for ERROR."
+    points: 25
+    hint: "Live log monitoring."
+
+  - id: "pattern_wd_004"
+    type: "what_does_it_do"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does 'ps aux | awk '{print $2,$11}' | head -10' do?"
+    options:
+      - "Shows PID and command for first 10 processes"
+      - "Prints 10 processes"
+      - "Kills 10 processes"
+      - "Creates 10 files"
+    correct_answer: "Shows PID and command for first 10 processes"
+    explanation: "Extracts columns 2 and 11, shows first 10."
+    points: 30
+    hint: "Process info extraction."
+
+  - id: "pattern_wd_005"
+    type: "what_does_it_do"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does 'for f in *.txt; do echo $f; done' do?"
+    options:
+      - "Prints all .txt filenames"
+      - "Creates txt files"
+      - "Deletes txt files"
+      - "For loop error"
+    correct_answer: "Prints all .txt filenames"
+    explanation: "For loop iterates over matching files."
+    points: 20
+    hint: "Loop over files."
+
+  # ============================================================
+  # COMMAND COMBINATIONS - Real World Patterns
+  # ============================================================
+
+  # $_ VARIABLE PATTERNS
+  - id: "combo_mc_001"
+    type: "multiple_choice"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does '$_' represent in bash/zsh?"
+    options:
+      - "Last argument of the previous command"
+      - "Current directory"
+      - "Exit status"
+      - "Process ID"
+    correct_answer: "Last argument of the previous command"
+    explanation: "$_ expands to the last argument of the previous command. Very useful for chaining!"
+    points: 25
+    hint: "Think about the last thing you typed."
+
+  - id: "combo_wd_001"
+    type: "what_does_it_do"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does 'mkdir ~/project && cd $_' do?"
+    options:
+      - "Creates directory and enters it"
+      - "Makes project and copies it"
+      - "Creates two directories"
+      - "Shows an error"
+    correct_answer: "Creates directory and enters it"
+    explanation: "$_ is ~/project (last argument), so cd $_ enters the new directory."
+    points: 25
+    hint: "$_ remembers the last argument."
+
+  - id: "combo_wd_002"
+    type: "what_does_it_do"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does 'mkdir -p ~/projekt/backend && cd $_ && touch server.py' do?"
+    options:
+      - "Creates nested dirs, enters backend, creates server.py"
+      - "Creates three separate things"
+      - "Only creates the directory"
+      - "Shows permission error"
+    correct_answer: "Creates nested dirs, enters backend, creates server.py"
+    explanation: "Chain: mkdir creates path, cd $_ enters it, touch creates file inside."
+    points: 30
+    hint: "Three commands chained with &&."
+
+  - id: "combo_wd_003"
+    type: "what_does_it_do"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does 'cp important.txt backup/ && ls $_' do?"
+    options:
+      - "Copies file to backup/ and lists backup/ contents"
+      - "Copies and lists both directories"
+      - "Creates backup of ls"
+      - "Shows error"
+    correct_answer: "Copies file to backup/ and lists backup/ contents"
+    explanation: "$_ is backup/ (last argument of cp), so ls shows what's in backup/."
+    points: 25
+    hint: "$_ is the destination."
+
+  # VARIABLE PATTERNS
+  - id: "combo_mc_002"
+    type: "multiple_choice"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What's the advantage of 'DIR=~/project && mkdir -p $DIR && cd $DIR'?"
+    options:
+      - "Reuse the path without typing it multiple times"
+      - "It's faster"
+      - "It's more secure"
+      - "No advantage"
+    correct_answer: "Reuse the path without typing it multiple times"
+    explanation: "Variables let you define a path once and reuse it, reducing typos."
+    points: 20
+    hint: "DRY principle."
+
+  - id: "combo_cb_001"
+    type: "command_builder"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "Create variable DIR with path ~/src, create the directory, and enter it"
+    correct_answer:
+      - "DIR=~/src && mkdir -p $DIR && cd $DIR"
+      - "DIR=~/src; mkdir -p $DIR; cd $DIR"
+    explanation: "Set variable, create dir with -p, change into it."
+    points: 30
+    hint: "Use && to chain."
+
+  # OR PATTERNS (||)
+  - id: "combo_wd_004"
+    type: "what_does_it_do"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does 'cat config.txt || echo 'File not found'' do?"
+    options:
+      - "Shows file content, or error message if file doesn't exist"
+      - "Shows both file and message"
+      - "Creates config.txt"
+      - "Echoes to config.txt"
+    correct_answer: "Shows file content, or error message if file doesn't exist"
+    explanation: "|| runs the second command only if the first fails."
+    points: 20
+    hint: "|| is like 'else'."
+
+  - id: "combo_wd_005"
+    type: "what_does_it_do"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does 'which htop && htop || echo 'htop not installed'' do?"
+    options:
+      - "Runs htop if installed, shows message if not"
+      - "Installs htop"
+      - "Always shows the message"
+      - "Which and htop combined"
+    correct_answer: "Runs htop if installed, shows message if not"
+    explanation: "which checks if command exists, && runs it, || handles failure."
+    points: 30
+    hint: "Check then run or show error."
+
+  - id: "combo_wd_006"
+    type: "what_does_it_do"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does 'ping -c 1 8.8.8.8 2>/dev/null && echo 'Online' || echo 'Offline'' do?"
+    options:
+      - "Checks internet connection and shows status"
+      - "Pings and echoes"
+      - "Creates online/offline files"
+      - "Shows error"
+    correct_answer: "Checks internet connection and shows status"
+    explanation: "ping tests connection, 2>/dev/null hides errors, && || shows result."
+    points: 30
+    hint: "Internet connectivity check."
+
+  # GROUPING WITH PARENTHESES
+  - id: "combo_mc_003"
+    type: "multiple_choice"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What do parentheses () do in 'cat file || (touch file && nano file)'?"
+    options:
+      - "Group commands to run together if cat fails"
+      - "Run in background"
+      - "Create subshell always"
+      - "Nothing special"
+    correct_answer: "Group commands to run together if cat fails"
+    explanation: "() groups the touch && nano to run as one unit after ||."
+    points: 30
+    hint: "Grouping for || condition."
+
+  - id: "combo_wd_007"
+    type: "what_does_it_do"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does 'cat ~/config.txt || (mkdir -p ~/config && touch ~/config.txt)' do?"
+    options:
+      - "Shows config or creates it with parent dirs if missing"
+      - "Always creates config"
+      - "Deletes config"
+      - "Shows error"
+    correct_answer: "Shows config or creates it with parent dirs if missing"
+    explanation: "If cat fails, create parent dirs and the file."
+    points: 30
+    hint: "Fallback creation pattern."
+
+  # FIND + GREP COMBINATIONS
+  - id: "combo_wd_008"
+    type: "what_does_it_do"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does 'find . -name '*.py' -exec grep -l 'TODO' {} +' do?"
+    options:
+      - "Finds Python files containing TODO"
+      - "Finds TODO files"
+      - "Creates Python files"
+      - "Deletes TODO comments"
+    correct_answer: "Finds Python files containing TODO"
+    explanation: "find locates .py files, grep -l lists those containing TODO."
+    points: 30
+    hint: "Find files with specific content."
+
+  - id: "combo_wd_009"
+    type: "what_does_it_do"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does 'grep -rn 'TODO' . --include='*.py' 2>/dev/null' do?"
+    options:
+      - "Recursively finds TODO in .py files with line numbers, no errors"
+      - "Creates TODO list"
+      - "Removes TODOs"
+      - "Counts TODOs"
+    correct_answer: "Recursively finds TODO in .py files with line numbers, no errors"
+    explanation: "-r recursive, -n line numbers, --include filters, 2>/dev/null hides errors."
+    points: 30
+    hint: "Common code search pattern."
+
+  - id: "combo_cb_002"
+    type: "command_builder"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "Search for 'error' in all .log files, hiding permission errors"
+    correct_answer:
+      - "grep -r 'error' . --include='*.log' 2>/dev/null"
+      - "grep -ri 'error' . --include='*.log' 2>/dev/null"
+      - "find . -name '*.log' -exec grep 'error' {} + 2>/dev/null"
+    explanation: "Search with grep or find, redirect stderr to hide errors."
+    points: 25
+    hint: "Hide errors with 2>/dev/null."
+
+  # DISK SPACE PATTERNS
+  - id: "combo_wd_010"
+    type: "what_does_it_do"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does 'du -sh * | sort -hr | head -10' do?"
+    options:
+      - "Shows 10 largest items in current directory"
+      - "Deletes 10 largest files"
+      - "Creates 10 directories"
+      - "Duplicates files"
+    correct_answer: "Shows 10 largest items in current directory"
+    explanation: "du gets sizes, sort -hr sorts by size descending, head shows top 10."
+    points: 25
+    hint: "Find space hogs."
+
+  - id: "combo_wd_011"
+    type: "what_does_it_do"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does 'find . -type f -size +100M -exec ls -lh {} +' do?"
+    options:
+      - "Lists all files larger than 100MB with details"
+      - "Creates 100MB files"
+      - "Deletes large files"
+      - "Compresses files"
+    correct_answer: "Lists all files larger than 100MB with details"
+    explanation: "find locates big files, -exec ls -lh shows details."
+    points: 25
+    hint: "Find large files."
+
+  # PROCESS PATTERNS
+  - id: "combo_wd_012"
+    type: "what_does_it_do"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does 'ps aux | grep python | grep -v grep' do?"
+    options:
+      - "Shows Python processes without the grep process itself"
+      - "Greps twice"
+      - "Kills Python"
+      - "Verifies Python"
+    correct_answer: "Shows Python processes without the grep process itself"
+    explanation: "First grep finds python, second excludes the grep command from results."
+    points: 25
+    hint: "Filter out grep itself."
+
+  - id: "combo_cb_003"
+    type: "command_builder"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "Kill all processes matching 'node server'"
+    correct_answer:
+      - "pkill -f 'node server'"
+      - "killall -f 'node server'"
+      - "ps aux | grep 'node server' | awk '{print $2}' | xargs kill"
+    explanation: "pkill -f matches full command line."
+    points: 25
+    hint: "pkill with pattern."
+
+  # LOG MONITORING PATTERNS
+  - id: "combo_wd_013"
+    type: "what_does_it_do"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does 'tail -f /var/log/syslog | grep --line-buffered 'error'' do?"
+    options:
+      - "Monitors log in real-time, showing only error lines"
+      - "Creates error log"
+      - "Deletes errors"
+      - "Counts errors"
+    correct_answer: "Monitors log in real-time, showing only error lines"
+    explanation: "tail -f follows, grep filters, --line-buffered ensures immediate output."
+    points: 30
+    hint: "Live error monitoring."
+
+  - id: "combo_wd_014"
+    type: "what_does_it_do"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does 'tail -100 app.log | grep -i 'error\\|warning\\|critical'' do?"
+    options:
+      - "Shows errors, warnings, and critical messages from last 100 lines"
+      - "Shows 100 errors"
+      - "Creates warning file"
+      - "Deletes warnings"
+    correct_answer: "Shows errors, warnings, and critical messages from last 100 lines"
+    explanation: "tail gets last 100 lines, grep -i finds multiple patterns case-insensitive."
+    points: 30
+    hint: "Multiple pattern search."
+
+  # BACKUP PATTERNS
+  - id: "combo_wd_015"
+    type: "what_does_it_do"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does 'cp config.json config.json.$(date +%Y%m%d_%H%M%S)' do?"
+    options:
+      - "Creates timestamped backup of config.json"
+      - "Copies date to config"
+      - "Deletes config"
+      - "Shows date"
+    correct_answer: "Creates timestamped backup of config.json"
+    explanation: "$(date +format) generates timestamp, creating unique backup name."
+    points: 25
+    hint: "Timestamp in filename."
+
+  - id: "combo_cb_004"
+    type: "command_builder"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "Create a backup of project/ as project_backup_YYYYMMDD.tar.gz"
+    correct_answer:
+      - "tar -czf project_backup_$(date +%Y%m%d).tar.gz project/"
+    explanation: "tar with date command substitution for filename."
+    points: 30
+    hint: "Use $(date +%Y%m%d)."
+
+  # FILE COUNTING/STATISTICS
+  - id: "combo_wd_016"
+    type: "what_does_it_do"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does 'find . -name '*.py' | wc -l' do?"
+    options:
+      - "Counts number of Python files"
+      - "Counts lines in Python files"
+      - "Lists Python files"
+      - "Creates Python files"
+    correct_answer: "Counts number of Python files"
+    explanation: "find lists files, wc -l counts the lines (one file per line)."
+    points: 20
+    hint: "Count files found."
+
+  - id: "combo_wd_017"
+    type: "what_does_it_do"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does 'find . -name '*.py' -exec wc -l {} + | tail -1' do?"
+    options:
+      - "Shows total lines of code in all Python files"
+      - "Shows last Python file"
+      - "Counts Python files"
+      - "Deletes Python files"
+    correct_answer: "Shows total lines of code in all Python files"
+    explanation: "wc -l counts lines, tail -1 shows only the total."
+    points: 30
+    hint: "Total line count."
+
+  - id: "combo_wd_018"
+    type: "what_does_it_do"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does 'cat access.log | cut -d' ' -f1 | sort | uniq -c | sort -rn | head -10' do?"
+    options:
+      - "Shows top 10 IP addresses by request count"
+      - "Sorts log file"
+      - "Cuts 10 lines"
+      - "Counts unique files"
+    correct_answer: "Shows top 10 IP addresses by request count"
+    explanation: "Classic log analysis: extract IP, count occurrences, show top 10."
+    points: 35
+    hint: "Log analysis pipeline."
+
+  # CLEANUP PATTERNS
+  - id: "combo_wd_019"
+    type: "what_does_it_do"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does 'find . -name '*.pyc' -delete' do?"
+    options:
+      - "Deletes all compiled Python files"
+      - "Finds .pyc files only"
+      - "Compiles Python files"
+      - "Creates .pyc files"
+    correct_answer: "Deletes all compiled Python files"
+    explanation: "-delete removes matching files. Common for cleaning Python cache."
+    points: 20
+    hint: "Clean compiled files."
+
+  - id: "combo_wd_020"
+    type: "what_does_it_do"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does 'find . -type d -name '__pycache__' -exec rm -rf {} +' do?"
+    options:
+      - "Removes all __pycache__ directories"
+      - "Creates pycache"
+      - "Lists directories"
+      - "Caches Python"
+    correct_answer: "Removes all __pycache__ directories"
+    explanation: "Finds pycache dirs and removes them recursively."
+    points: 25
+    hint: "Clean Python cache dirs."
+
+  - id: "combo_cb_005"
+    type: "command_builder"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "Delete all .log files older than 30 days in ~/logs"
+    correct_answer:
+      - "find ~/logs -name '*.log' -mtime +30 -delete"
+      - "find ~/logs -type f -name '*.log' -mtime +30 -delete"
+    explanation: "-mtime +30 means older than 30 days."
+    points: 30
+    hint: "Use -mtime for age."
+
+  # GIT PATTERNS
+  - id: "combo_wd_021"
+    type: "what_does_it_do"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does 'git clone https://github.com/user/repo.git && cd $(basename $_ .git)' do?"
+    options:
+      - "Clones repo and enters the new directory"
+      - "Clones twice"
+      - "Shows git status"
+      - "Creates basename"
+    correct_answer: "Clones repo and enters the new directory"
+    explanation: "basename extracts 'repo' from URL, $_ is the URL, cd enters it."
+    points: 35
+    hint: "Auto-enter cloned repo."
+
+  # LINE CONTINUATION
+  - id: "combo_mc_004"
+    type: "multiple_choice"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does backslash \\ at end of line do?"
+    options:
+      - "Continues command on next line"
+      - "Escapes newline"
+      - "Comments the line"
+      - "Ends the command"
+    correct_answer: "Continues command on next line"
+    explanation: "Backslash lets you split long commands across multiple lines."
+    points: 20
+    hint: "Line continuation."
+
+  - id: "combo_mc_005"
+    type: "multiple_choice"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What's wrong with 'mkdir test \\ \\n&& cd test' (space after \\)?"
+    options:
+      - "Space after backslash breaks continuation"
+      - "Nothing wrong"
+      - "mkdir fails"
+      - "cd fails"
+    correct_answer: "Space after backslash breaks continuation"
+    explanation: "Backslash must be the LAST character, no space after it!"
+    points: 25
+    hint: "Common mistake."
+
+  # QUOTING PATTERNS
+  - id: "combo_mc_006"
+    type: "multiple_choice"
+    command: "echo"
+    difficulty: "advanced"
+    question_text: "What's the difference between \"$HOME\" and '$HOME'?"
+    options:
+      - "Double quotes expand variables, single quotes don't"
+      - "They are the same"
+      - "Single quotes expand variables"
+      - "Neither expands variables"
+    correct_answer: "Double quotes expand variables, single quotes don't"
+    explanation: "Double quotes: /Users/you, Single quotes: literal $HOME"
+    points: 25
+    hint: "Quote behavior matters."
+
+  # TEXT OUTPUT PATTERNS
+  - id: "combo_wd_022"
+    type: "what_does_it_do"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does 'echo -e 'Line1\\nLine2\\nLine3'' do?"
+    options:
+      - "Prints three lines"
+      - "Prints one line with \\n"
+      - "Creates a file"
+      - "Shows error"
+    correct_answer: "Prints three lines"
+    explanation: "-e enables escape sequences, \\n is newline."
+    points: 20
+    hint: "-e for escapes."
+
+  # BRACE EXPANSION
+  - id: "combo_mc_007"
+    type: "multiple_choice"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does 'mv file.{txt,bak}' expand to?"
+    options:
+      - "mv file.txt file.bak"
+      - "mv file.txt,bak"
+      - "mv {file.txt} {file.bak}"
+      - "Error"
+    correct_answer: "mv file.txt file.bak"
+    explanation: "Brace expansion creates: file.txt file.bak from the pattern."
+    points: 25
+    hint: "Brace expansion shortcut."
+
+  - id: "combo_wd_023"
+    type: "what_does_it_do"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does 'mkdir -p project/{src,tests,docs}' create?"
+    options:
+      - "Three directories: project/src, project/tests, project/docs"
+      - "One directory named {src,tests,docs}"
+      - "Only project directory"
+      - "Error"
+    correct_answer: "Three directories: project/src, project/tests, project/docs"
+    explanation: "Brace expansion with -p creates all three subdirectories."
+    points: 25
+    hint: "Multiple dirs at once."
+
+  - id: "combo_cb_006"
+    type: "command_builder"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "Create backup of script.sh as script.sh.bak using brace expansion"
+    correct_answer:
+      - "cp script.sh{,.bak}"
+      - "cp script.{sh,sh.bak}"
+    explanation: "{,.bak} expands to: script.sh script.sh.bak"
+    points: 30
+    hint: "Empty first element in braces."
+
+  # XARGS ADVANCED
+  - id: "combo_wd_024"
+    type: "what_does_it_do"
+    command: "xargs"
+    difficulty: "advanced"
+    question_text: "What does 'find . -name '*.jpg' | xargs -I {} cp {} backup/' do?"
+    options:
+      - "Copies each jpg to backup/ directory"
+      - "Lists jpg files"
+      - "Deletes jpg files"
+      - "Creates jpg files"
+    correct_answer: "Copies each jpg to backup/ directory"
+    explanation: "-I {} sets placeholder, each file replaces {} in the command."
+    points: 30
+    hint: "Placeholder substitution."
+
+  - id: "combo_cb_007"
+    type: "command_builder"
+    command: "xargs"
+    difficulty: "advanced"
+    question_text: "Rename all .txt files to .md using find and xargs"
+    correct_answer:
+      - "find . -name '*.txt' | xargs -I {} bash -c 'mv {} ${{}%.txt}.md'"
+      - "for f in *.txt; do mv \"$f\" \"${f%.txt}.md\"; done"
+    explanation: "Use parameter expansion to change extension."
+    points: 35
+    hint: "Complex but powerful."
+
+  # SORT + UNIQ PATTERNS
+  - id: "combo_wd_025"
+    type: "what_does_it_do"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does 'sort file.txt | uniq -c | sort -rn' do?"
+    options:
+      - "Counts and sorts lines by frequency (most common first)"
+      - "Sorts twice"
+      - "Counts characters"
+      - "Removes all duplicates"
+    correct_answer: "Counts and sorts lines by frequency (most common first)"
+    explanation: "Classic frequency analysis: group, count, sort by count."
+    points: 25
+    hint: "Frequency analysis."
+
+  # AWK REAL PATTERNS
+  - id: "combo_wd_026"
+    type: "what_does_it_do"
+    command: "awk"
+    difficulty: "advanced"
+    question_text: "What does 'df -h | awk '$5 > 80 {print $0}'' do?"
+    options:
+      - "Shows filesystems more than 80% full"
+      - "Shows 80 filesystems"
+      - "Deletes full filesystems"
+      - "Creates 80 partitions"
+    correct_answer: "Shows filesystems more than 80% full"
+    explanation: "$5 is the use% column, filters rows where it exceeds 80."
+    points: 30
+    hint: "Disk space alerting."
+
+  - id: "combo_wd_027"
+    type: "what_does_it_do"
+    command: "awk"
+    difficulty: "advanced"
+    question_text: "What does 'free -h | awk '/^Mem/ {print $3 \"/\" $2}'' do?"
+    options:
+      - "Shows used/total memory"
+      - "Frees memory"
+      - "Shows free space"
+      - "Allocates memory"
+    correct_answer: "Shows used/total memory"
+    explanation: "Matches Mem line, prints used ($3) and total ($2)."
+    points: 30
+    hint: "Memory usage."
+
+  # SPECIAL VARIABLES
+  - id: "combo_mc_008"
+    type: "multiple_choice"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does '$?' contain?"
+    options:
+      - "Exit status of the last command"
+      - "Current PID"
+      - "Number of arguments"
+      - "Last argument"
+    correct_answer: "Exit status of the last command"
+    explanation: "$? is 0 for success, non-zero for failure."
+    points: 20
+    hint: "Was last command successful?"
+
+  - id: "combo_wd_028"
+    type: "what_does_it_do"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does 'command; echo $?' do?"
+    options:
+      - "Runs command and shows its exit status"
+      - "Echoes question mark"
+      - "Shows help"
+      - "Asks for input"
+    correct_answer: "Runs command and shows its exit status"
+    explanation: "$? holds the exit code (0=success, non-zero=error)."
+    points: 20
+    hint: "Check command success."
+
+  # REAL-WORLD SCENARIOS
+  - id: "combo_wd_029"
+    type: "what_does_it_do"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does 'wget -q -O - https://api.example.com | jq .' do?"
+    options:
+      - "Fetches JSON from API and pretty-prints it"
+      - "Downloads to file"
+      - "Queries database"
+      - "Creates API"
+    correct_answer: "Fetches JSON from API and pretty-prints it"
+    explanation: "-q quiet, -O - outputs to stdout, jq formats JSON."
+    points: 30
+    hint: "API response formatting."
+
+  - id: "combo_wd_030"
+    type: "what_does_it_do"
+    command: "pipes"
+    difficulty: "advanced"
+    question_text: "What does 'history | awk '{print $2}' | sort | uniq -c | sort -rn | head -10' do?"
+    options:
+      - "Shows your 10 most used commands"
+      - "Sorts history"
+      - "Deletes history"
+      - "Shows 10 commands"
+    correct_answer: "Shows your 10 most used commands"
+    explanation: "Extracts commands, counts frequency, shows top 10."
+    points: 35
+    hint: "Command usage statistics."

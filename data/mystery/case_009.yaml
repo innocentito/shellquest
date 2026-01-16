@@ -1,0 +1,371 @@
+# Murder Mystery Case 009: The Git Grave
+# Secrets buried in version control
+
+case:
+  id: "case_009"
+  title: "The Git Grave"
+  subtitle: "The Dead Don't Delete History"
+  difficulty: "advanced"
+  estimated_time: "25-35 minutes"
+
+  intro: |
+    The startup founder is frantic.
+
+    "Our entire codebase was leaked. Every algorithm, every secret,
+    everything we've built for 5 years. It's on a torrent site."
+
+    "How did they get it?"
+
+    "That's the thing - we don't know. Our repo is private.
+    Only 8 developers have access. But someone got everything,
+    even code we deleted months ago."
+
+    Git never forgets. Neither do you.
+
+  setting: |
+    AlgoTrade Inc - Algorithmic trading startup, $50M valuation.
+    The leak: Complete git history including deleted branches.
+    The mystery: Private repo, limited access, full exposure.
+
+    Someone cloned more than they should have.
+
+suspects:
+  - id: "maya"
+    name: "Maya Johnson"
+    role: "CTO & Co-founder"
+    description: "Built the core algorithms, knows everything"
+    alibi: "Claims she'd never leak her own work"
+    motive: "Secretly negotiating sale to competitor?"
+
+  - id: "kyle"
+    name: "Kyle Barnes"
+    role: "Senior Developer"
+    description: "3 years at company, knows the repo inside out"
+    alibi: "Working remotely, limited access lately"
+    motive: "Passed over for CTO role, bitter"
+
+  - id: "zoe"
+    name: "Zoe Chen"
+    role: "DevOps Engineer"
+    description: "Manages CI/CD, has admin access to repos"
+    alibi: "On vacation in Japan"
+    motive: "Recently divorced, needs money"
+
+  - id: "recent"
+    name: "Recent Departures"
+    role: "Former Employees"
+    description: "3 developers left in past 6 months"
+    alibi: "No longer have access... supposedly"
+    motive: "Revenge, financial gain, new job leverage"
+
+scenes:
+  - id: "scene_01"
+    title: "The Clone Trail"
+    location: "Git Server Logs"
+    narrative: |
+      Every git operation leaves a trace.
+      Clone, pull, push - all logged.
+
+      If someone pulled the entire repo with full history,
+      we'll find it here.
+
+    objective: "Find evidence of suspicious git operations"
+
+    challenges:
+      - id: "ch_09_01"
+        context: "Check the git server access logs for clone operations"
+        question_type: "command_builder"
+        question: "Search for 'clone' operations in /var/log/git/access.log"
+        correct_answers:
+          - "grep -i clone /var/log/git/access.log"
+          - "grep 'clone' /var/log/git/access.log"
+        hint: "Use grep to filter for clone operations"
+        success_narrative: |
+          Clone operations in the last month:
+
+          Mar 01 09:14:22 | kyle.barnes    | clone | algotrade-core | SUCCESS
+          Mar 03 14:22:11 | ci-runner      | clone | algotrade-core | SUCCESS
+          Mar 10 02:33:45 | zoe.chen       | clone | algotrade-core | SUCCESS
+          Mar 10 02:34:12 | zoe.chen       | clone | algotrade-core | --mirror | SUCCESS
+
+          Wait - Zoe cloned TWICE on March 10th!
+          And the second clone used the '--mirror' flag!
+          That downloads EVERYTHING - all branches, all history!
+        clue_unlocked: "Zoe performed a mirror clone at 2:33 AM on March 10"
+
+      - id: "ch_09_02"
+        context: "Check what IP address Zoe was connecting from"
+        question_type: "command_builder"
+        question: "Extract Zoe's IP address from the git access log for March 10"
+        correct_answers:
+          - "grep 'Mar 10.*zoe.chen' /var/log/git/access.log | awk '{print $NF}'"
+          - "grep 'zoe.chen' /var/log/git/access.log | grep 'Mar 10'"
+        hint: "Filter by date and user, IP is usually the last field"
+        success_narrative: |
+          Zoe's connections on March 10:
+
+          IP: 45.77.123.89
+
+          But wait - let's check our VPN logs...
+          Our developers should only connect from VPN.
+
+          Checking VPN: No connection from zoe.chen on March 10.
+
+          That IP isn't from our VPN! Zoe was supposedly
+          in Japan on vacation. Let's trace that IP.
+        clue_unlocked: "Clone was from non-VPN IP while Zoe was on vacation"
+
+  - id: "scene_02"
+    title: "The Stolen Keys"
+    location: "Authentication System"
+    narrative: |
+      Zoe was in Japan. She didn't make that clone.
+      But someone used her credentials.
+
+      SSH keys, access tokens - something was compromised.
+      Let's find out what.
+
+    objective: "Determine how Zoe's credentials were stolen"
+
+    challenges:
+      - id: "ch_09_03"
+        context: "Check if there are multiple SSH keys for Zoe's account"
+        question_type: "command_builder"
+        question: "Count the number of SSH keys in Zoe's account on the git server"
+        correct_answers:
+          - "wc -l /git/users/zoe.chen/.ssh/authorized_keys"
+          - "cat /git/users/zoe.chen/.ssh/authorized_keys | wc -l"
+        hint: "wc -l counts lines in a file, each key is one line"
+        success_narrative: |
+          Key count: 3
+
+          But Zoe should only have 2 keys (laptop and phone).
+          There's an extra key!
+
+          Let's see when it was added...
+        clue_unlocked: "Unauthorized third SSH key found in Zoe's account"
+
+      - id: "ch_09_04"
+        context: "Find when the third key was added to Zoe's account"
+        question_type: "command_builder"
+        question: "Check the git server auth audit log for key additions to zoe.chen"
+        correct_answers:
+          - "grep 'zoe.chen.*key.*add' /var/log/git/auth_audit.log"
+          - "grep -E 'zoe.chen.*(key|ssh)' /var/log/git/auth_audit.log"
+        hint: "Search the auth audit log for key-related operations"
+        success_narrative: |
+          Key addition history:
+
+          Jan 15 2024 | zoe.chen | key_add | MacBook-Pro | zoe@algotrade.com
+          Feb 22 2024 | zoe.chen | key_add | iPhone | zoe-mobile@algotrade.com
+          Mar 08 2024 | zoe.chen | key_add | unknown | temp_access@gmail.com
+
+          "temp_access@gmail.com"?! That's not a company email!
+          Someone added a key to her account on March 8th!
+          Two days before the mirror clone!
+        clue_unlocked: "Rogue SSH key added to Zoe's account on March 8"
+
+  - id: "scene_03"
+    title: "The Inside Job"
+    location: "Admin Access Logs"
+    narrative: |
+      Someone added a key to Zoe's account.
+      That requires admin access.
+
+      Time to find which admin betrayed the company.
+
+    objective: "Identify who added the malicious SSH key"
+
+    challenges:
+      - id: "ch_09_05"
+        context: "Check which admin account was used to add the key on March 8"
+        question_type: "command_builder"
+        question: "Search admin actions log for March 8 user modifications"
+        correct_answers:
+          - "grep 'Mar 08' /var/log/git/admin_actions.log | grep -i 'user\\|key'"
+          - "grep 'Mar 08' /var/log/git/admin_actions.log"
+        hint: "Filter admin actions by date, look for user modifications"
+        success_narrative: |
+          Admin actions on March 8:
+
+          Mar 08 16:45:22 | ADMIN: kyle.barnes | ACTION: user_key_add
+          Mar 08 16:45:22 | TARGET: zoe.chen | KEY: temp_access@gmail.com
+          Mar 08 16:45:45 | ADMIN: kyle.barnes | ACTION: audit_log_truncate (FAILED)
+
+          KYLE BARNES!
+          He used his admin access to add a key to Zoe's account!
+          And then he tried to delete the audit log but failed!
+        clue_unlocked: "Kyle used admin access to add rogue key to Zoe's account"
+
+      - id: "ch_09_06"
+        context: "Check Kyle's git activity before the leak"
+        question_type: "command_builder"
+        question: "Show Kyle's recent git commits and their timestamps"
+        correct_answers:
+          - "git log --author='kyle' --since='2024-03-01' --format='%h %ad %s'"
+          - "git log --author='kyle.barnes' --oneline --since='1 month ago'"
+        hint: "git log with --author filters by committer"
+        success_narrative: |
+          Kyle's recent commits:
+
+          a3b4c5d Mar 07 | Refactored trading algorithm
+          f7e8d9a Mar 06 | Added new market indicators
+          1b2c3d4 Mar 05 | Performance optimizations
+
+          Normal commits until March 7th. Then nothing.
+          He knew the repo was about to leak.
+          He stopped committing to avoid being caught with
+          code that matched the leaked version.
+        clue_unlocked: "Kyle stopped committing after March 7, just before the leak"
+
+  - id: "scene_04"
+    title: "The Digital Fingerprint"
+    location: "Torrent Analysis"
+    narrative: |
+      The leaked repo is on torrent sites.
+      Let's analyze it for clues.
+
+      Git repos have hidden metadata.
+      Things the uploader might not have noticed.
+
+    objective: "Find evidence in the leaked repository"
+
+    challenges:
+      - id: "ch_09_07"
+        context: "Check the git config in the leaked repo for uploader info"
+        question_type: "command_builder"
+        question: "Display the git config file in the leaked repo"
+        correct_answers:
+          - "cat /evidence/leaked_repo/.git/config"
+          - "git config --list --file /evidence/leaked_repo/.git/config"
+        hint: "Git config is stored in .git/config"
+        success_narrative: |
+          Leaked repo git config:
+
+          [user]
+              name = Kyle Barnes
+              email = kyle.barnes@algotrade.com
+          [remote "origin"]
+              url = git@git.algotrade.io:algotrade/core.git
+
+          Kyle's git identity is BURNED INTO THE REPO!
+          He forgot to sanitize his git config before uploading!
+        clue_unlocked: "Kyle's identity found in leaked repo's git config"
+
+      - id: "ch_09_08"
+        context: "Check the reflog in the leaked repo for clone timestamp"
+        question_type: "command_builder"
+        question: "Show the git reflog from the leaked repo"
+        correct_answers:
+          - "git reflog --date=iso"
+          - "cat /evidence/leaked_repo/.git/logs/HEAD"
+        hint: "git reflog shows the history of HEAD, including clone time"
+        success_narrative: |
+          Reflog from leaked repo:
+
+          a3b4c5d HEAD@{0}: clone: from git@git.algotrade.io:algotrade/core.git
+          # Clone timestamp: 2024-03-10T02:33:45+00:00
+
+          The exact time matches the server logs!
+          And this was cloned to Kyle's machine, not Zoe's.
+          He just used her compromised credentials.
+        clue_unlocked: "Reflog confirms clone time and source"
+
+  - id: "scene_05"
+    title: "The Motive"
+    location: "Kyle's Workstation"
+    narrative: |
+      Kyle Barnes. Senior developer. Trusted admin.
+      Why would he leak 5 years of work?
+
+      His workstation might tell us.
+
+    objective: "Uncover Kyle's motive"
+
+    challenges:
+      - id: "ch_09_09"
+        context: "Search Kyle's documents for communication with competitors"
+        question_type: "command_builder"
+        question: "Find all PDF and DOC files in Kyle's home directory modified recently"
+        correct_answers:
+          - "find /home/kyle.barnes -name '*.pdf' -o -name '*.doc*' -mtime -30"
+          - "find /home/kyle.barnes \\( -name '*.pdf' -o -name '*.docx' \\) -mtime -30"
+        hint: "Use find with -name for extensions and -mtime for recent files"
+        success_narrative: |
+          Recent documents found:
+
+          /home/kyle.barnes/Documents/competitor_offer_letter.pdf
+          /home/kyle.barnes/Documents/NDA_algoquant_systems.docx
+          /home/kyle.barnes/Desktop/payment_schedule.pdf
+
+          He has an offer letter from AlgoQuant Systems!
+          Our biggest competitor!
+
+          And a "payment schedule"? Let's see what that is...
+        clue_unlocked: "Kyle received offer from competitor AlgoQuant"
+
+      - id: "ch_09_10"
+        context: "Read the payment schedule to understand the deal"
+        question_type: "command_builder"
+        question: "Convert the payment_schedule.pdf to text and display it"
+        correct_answers:
+          - "pdftotext /home/kyle.barnes/Desktop/payment_schedule.pdf -"
+          - "pdftotext /home/kyle.barnes/Desktop/payment_schedule.pdf - | cat"
+        hint: "pdftotext converts PDF to plain text, - outputs to stdout"
+        success_narrative: |
+          Payment Schedule:
+
+          AlgoQuant Systems -> Kyle Barnes
+          Purpose: "Consulting services" (wink)
+
+          Upon delivery of AlgoTrade source code:
+          - Initial payment: $500,000
+          - Integration bonus: $250,000
+          - Annual retention: $150,000/year for 3 years
+
+          Total: $1,200,000
+
+          He sold the company for $1.2 million.
+          And blamed it on a "hack" using Zoe's credentials.
+        clue_unlocked: "Kyle sold company code for $1.2M to competitor"
+
+conclusion:
+  success: |
+    CASE CLOSED
+
+    Kyle Barnes was arrested for:
+    - Trade secret theft ($50M+ value)
+    - Computer fraud and unauthorized access
+    - Wire fraud
+    - Corporate espionage
+
+    The evidence was buried in git:
+    - Mirror clone from suspicious IP using Zoe's compromised creds
+    - Admin log showing Kyle added the rogue SSH key
+    - Kyle's git identity in the leaked repo
+    - Reflog timestamps matching server logs
+    - Contract showing payment from competitor
+
+    AlgoQuant Systems faced a lawsuit.
+    Kyle's "consulting fee" was seized.
+    The leaked code was ordered destroyed by court injunction.
+
+    Evidence collected: {clues_found}/{total_clues}
+    Time taken: {time_taken}
+
+    Git remembers everything. Including crimes.
+
+  failure: |
+    Without enough evidence, Kyle's frame job worked.
+    Zoe was fired for "leaking" the code.
+
+    Kyle collected his payment and disappeared.
+    AlgoTrade went bankrupt within a year.
+
+    Always check the git config, Detective.
+
+rewards:
+  xp: 700
+  achievement: "git_detective"
+  achievement_name: "Git Detective"
+  achievement_description: "Solved a corporate espionage case through git forensics"

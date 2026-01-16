@@ -1,0 +1,386 @@
+# Murder Mystery Case 008: The Log Poisoner
+# When logs lie
+
+case:
+  id: "case_008"
+  title: "The Log Poisoner"
+  subtitle: "Trust Nothing You Read"
+  difficulty: "expert"
+  estimated_time: "30-40 minutes"
+
+  intro: |
+    The forensic team is baffled.
+
+    "We investigated the breach," the lead investigator says.
+    "According to the logs, nobody accessed the system."
+
+    "But data was stolen," you point out.
+
+    "That's just it. The data IS gone. But the logs show
+    nothing. No logins. No file access. Nothing."
+
+    "Maybe the logs were deleted?"
+
+    "No. They're complete. Timestamps are sequential.
+    It's like... the breach never happened. But it did."
+
+    Someone isn't just covering their tracks.
+    They're rewriting history.
+
+  setting: |
+    Quantum Financial - Investment firm, $500B under management.
+    The theft: $2.3 million transferred to offshore accounts.
+    The mystery: All logs show normal activity. No evidence of breach.
+
+    The perfect crime? Or just a very good cover-up?
+
+suspects:
+  - id: "nathan"
+    name: "Nathan Clarke"
+    role: "Senior Log Analyst"
+    description: "Expert in SIEM systems and log management"
+    alibi: "Was supposedly analyzing the breach"
+    motive: "Gambling debts, expensive divorce"
+
+  - id: "sophia"
+    name: "Sophia Reyes"
+    role: "Database Administrator"
+    description: "Has access to all financial databases"
+    alibi: "On maternity leave"
+    motive: "Medical bills, baby on the way"
+
+  - id: "marcus"
+    name: "Marcus Thompson"
+    role: "Night Shift Security"
+    description: "Monitors systems overnight when breach occurred"
+    alibi: "Claims he saw nothing unusual"
+    motive: "Being evicted, desperate for money"
+
+  - id: "external"
+    name: "Elite Hacker"
+    role: "External Threat"
+    description: "Sophisticated attacker with log manipulation skills"
+    alibi: "N/A"
+    motive: "Financial gain, hired by competitor"
+
+scenes:
+  - id: "scene_01"
+    title: "The Clean Logs"
+    location: "SIEM Control Room"
+    narrative: |
+      The logs are pristine. Too pristine.
+      Real logs have anomalies, errors, noise.
+      These are... sterile.
+
+      "Show me the raw log files," you say.
+
+    objective: "Find evidence of log manipulation"
+
+    challenges:
+      - id: "ch_08_01"
+        context: "Check if the auth.log file has been modified"
+        question_type: "command_builder"
+        question: "Show the inode change time (ctime) of /var/log/auth.log using stat"
+        correct_answers:
+          - "stat /var/log/auth.log"
+          - "stat /var/log/auth.log | grep Change"
+        hint: "stat shows all file timestamps including change time"
+        success_narrative: |
+          File statistics:
+
+          Access: Mar 15 09:14:22
+          Modify: Mar 14 23:59:59
+          Change: Mar 15 04:33:17
+
+          Wait - the CHANGE time is AFTER the modify time?!
+          That means someone modified the file's attributes
+          AFTER the last log entry.
+
+          Log files don't work that way unless...
+          someone edited them directly!
+        clue_unlocked: "Auth.log was manually modified at 4:33 AM"
+
+      - id: "ch_08_02"
+        context: "Check if the log file size changed suspiciously"
+        question_type: "command_builder"
+        question: "Count the number of lines in auth.log for each hour on March 14"
+        correct_answers:
+          - "grep 'Mar 14' /var/log/auth.log | cut -d':' -f1 | uniq -c"
+          - "grep 'Mar 14' /var/log/auth.log | awk '{print $3}' | cut -d: -f1 | sort | uniq -c"
+        hint: "Use grep, cut to extract hour, and uniq -c to count"
+        success_narrative: |
+          Lines per hour on March 14:
+
+                45 Mar 14 00
+                52 Mar 14 01
+                48 Mar 14 02
+                 8 Mar 14 03  <- SUSPICIOUS!
+                51 Mar 14 04
+                47 Mar 14 05
+
+          Only 8 log entries at 3 AM?
+          That's the hour when the money was transferred!
+          Someone deleted most of the 3 AM logs!
+        clue_unlocked: "3 AM logs were significantly reduced - evidence deleted"
+
+  - id: "scene_02"
+    title: "The Shadow Logs"
+    location: "Backup Systems"
+    narrative: |
+      The logs were edited. But maybe there's a backup.
+      System administrators forget about secondary logging.
+
+      Let's check if there's a copy they missed.
+
+    objective: "Find unaltered copies of the logs"
+
+    challenges:
+      - id: "ch_08_03"
+        context: "Check if there are any other log files that might have captured the activity"
+        question_type: "command_builder"
+        question: "Find all log files modified on March 14 between 3:00 and 4:00 AM in /var/log/"
+        correct_answers:
+          - "find /var/log/ -newermt 'Mar 14 03:00' ! -newermt 'Mar 14 04:00' -type f"
+          - "find /var/log -type f -newermt '2024-03-14 03:00' ! -newermt '2024-03-14 04:00'"
+        hint: "Use find with -newermt for time-based search"
+        success_narrative: |
+          Log files from that timeframe:
+
+          /var/log/auth.log
+          /var/log/syslog
+          /var/log/audit/audit.log
+          /var/log/.journal_backup/auth.log.20240314
+
+          .journal_backup? That's an automated backup!
+          The log editor didn't know about this hidden backup!
+        clue_unlocked: "Hidden backup log found at .journal_backup"
+
+      - id: "ch_08_04"
+        context: "Compare the backup log with the modified version"
+        question_type: "command_builder"
+        question: "Show differences between the current auth.log and the backup for 3 AM entries"
+        correct_answers:
+          - "diff <(grep 'Mar 14 03' /var/log/auth.log) <(grep 'Mar 14 03' /var/log/.journal_backup/auth.log.20240314)"
+          - "grep 'Mar 14 03' /var/log/.journal_backup/auth.log.20240314 | diff /var/log/auth.log -"
+        hint: "Use diff with process substitution <() to compare filtered output"
+        success_narrative: |
+          Differences found (backup has, current doesn't):
+
+          + Mar 14 03:14:22 sshd: Accepted password for nathan.clarke
+          + Mar 14 03:15:01 su: nathan.clarke -> root
+          + Mar 14 03:18:45 nathan.clarke: sudo mysql -u admin financial_db
+          + Mar 14 03:22:11 nathan.clarke: transfer.py --amount=2300000 --dest=CH8909...
+          + Mar 14 03:25:33 nathan.clarke: sudo sed -i '/nathan.clarke/d' /var/log/auth.log
+
+          NATHAN CLARKE!
+          He logged in at 3:14 AM, escalated to root,
+          ran the transfer, then DELETED HIS OWN LOG ENTRIES!
+        clue_unlocked: "Nathan Clarke logged in, transferred money, then deleted his logs"
+
+  - id: "scene_03"
+    title: "The Transfer Trail"
+    location: "Financial Systems"
+    narrative: |
+      Nathan used a transfer script. But $2.3 million
+      doesn't just disappear.
+
+      The financial system has its own audit trail.
+      He couldn't edit those - they're on a separate network.
+
+    objective: "Trace the stolen money"
+
+    challenges:
+      - id: "ch_08_05"
+        context: "Check the financial transaction log for the transfer"
+        question_type: "command_builder"
+        question: "Search for transactions over $1 million in the financial log from March 14"
+        correct_answers:
+          - "grep 'Mar 14' /var/log/financial/transactions.log | awk '$5 > 1000000'"
+          - "awk '/Mar 14/ && $5 > 1000000' /var/log/financial/transactions.log"
+        hint: "Use grep for the date, awk to filter by amount in field 5"
+        success_narrative: |
+          Large transactions on March 14:
+
+          Mar 14 03:22:11 | TRANSFER | nathan.clarke | $2,300,000.00 | CH8909...
+          Mar 14 03:22:11 | STATUS   | APPROVED      | AUTH: AUTO-APPROVED
+
+          AUTO-APPROVED? That should require dual authorization!
+          Nathan bypassed the approval system somehow!
+        clue_unlocked: "Nathan bypassed dual authorization for $2.3M transfer"
+
+      - id: "ch_08_06"
+        context: "Check how Nathan bypassed the approval requirement"
+        question_type: "command_builder"
+        question: "Search the config changes log for modifications to approval settings"
+        correct_answers:
+          - "grep -i 'approval' /var/log/config_audit.log"
+          - "grep -iE 'approval|dual|authorize' /var/log/config_audit.log"
+        hint: "Search for approval-related config changes"
+        success_narrative: |
+          Config change log:
+
+          Mar 14 03:20:05 | nathan.clarke | MODIFIED | /etc/financial/approval.conf
+          Mar 14 03:20:05 | nathan.clarke | CHANGED  | dual_approval_threshold: 1000000 -> 5000000
+
+          He RAISED the dual approval threshold from $1M to $5M!
+          So his $2.3M transfer went through automatically!
+
+          Then he changed it back:
+          Mar 14 03:23:00 | nathan.clarke | CHANGED  | dual_approval_threshold: 5000000 -> 1000000
+        clue_unlocked: "Nathan temporarily raised approval threshold to bypass controls"
+
+  - id: "scene_04"
+    title: "The Money Trail"
+    location: "International Banking"
+    narrative: |
+      $2.3 million to a Swiss account.
+      But even Swiss banks keep records now.
+
+      Let's trace where the money went after Switzerland.
+
+    objective: "Follow the money to its final destination"
+
+    challenges:
+      - id: "ch_08_07"
+        context: "Check the SWIFT message logs for the outbound transfer"
+        question_type: "command_builder"
+        question: "Extract the destination account details from the SWIFT log for transaction CH8909"
+        correct_answers:
+          - "grep 'CH8909' /var/log/swift/messages.log"
+          - "grep -A5 'CH8909' /var/log/swift/messages.log"
+        hint: "SWIFT logs contain international transfer details"
+        success_narrative: |
+          SWIFT message details:
+
+          Transaction: CH8909-2024-0314
+          Source: QUANTUMFIN-USD-MAIN
+          Destination: UBSWCHZH-CH8909877654
+          Beneficiary: CLARKE CONSULTING LTD
+          Amount: USD 2,300,000.00
+
+          "CLARKE CONSULTING LTD"!
+          Nathan is transferring to his own company!
+        clue_unlocked: "Money transferred to 'Clarke Consulting Ltd' - Nathan's company"
+
+      - id: "ch_08_08"
+        context: "Find Nathan's connection to Clarke Consulting"
+        question_type: "command_builder"
+        question: "Search HR records for any mention of 'clarke consulting'"
+        correct_answers:
+          - "grep -ri 'clarke consulting' /data/hr/"
+          - "grep -r -i 'clarke consulting' /data/hr/"
+        hint: "Search HR records with grep -ri for case insensitive recursive search"
+        success_narrative: |
+          Found in /data/hr/conflicts_of_interest/disclosed.txt:
+
+          (NO ENTRIES)
+
+          But in /data/hr/background_checks/nathan.clarke.pdf (OCR'd):
+
+          "Subject registered as director of Clarke Consulting Ltd (BVI)
+          in January 2024. Not disclosed on employment forms."
+
+          He set up the shell company 2 months before the theft!
+          This was premeditated!
+        clue_unlocked: "Nathan created shell company 2 months before theft - premeditated"
+
+  - id: "scene_05"
+    title: "The Confession"
+    location: "Nathan's Office"
+    narrative: |
+      Nathan is still at his desk, "investigating" the breach.
+      Ironic, since he IS the breach.
+
+      You have everything: the backup logs, the transfer records,
+      the shell company. Time to end his investigation.
+
+    objective: "Confront Nathan with the evidence"
+
+    challenges:
+      - id: "ch_08_09"
+        context: "Before confronting Nathan, create a hash of all evidence files for integrity"
+        question_type: "command_builder"
+        question: "Generate SHA256 checksums for all files in /evidence/ directory"
+        correct_answers:
+          - "sha256sum /evidence/*"
+          - "sha256sum /evidence/* > /evidence/checksums.txt"
+          - "find /evidence -type f -exec sha256sum {} \\;"
+        hint: "sha256sum generates cryptographic hashes for file integrity"
+        success_narrative: |
+          Evidence integrity hashes:
+
+          a3b4c5d6... /evidence/backup_auth.log
+          f7e8d9a0... /evidence/transactions.log
+          1b2c3d4e... /evidence/swift_messages.log
+          9f8e7d6c... /evidence/config_audit.log
+
+          Hashes recorded. Evidence is tamper-proof for court.
+        clue_unlocked: "Evidence integrity secured with cryptographic hashes"
+
+      - id: "ch_08_10"
+        context: "Lock Nathan's accounts across all systems immediately"
+        question_type: "command_builder"
+        question: "Lock the user account 'nathan.clarke' so he cannot login"
+        correct_answers:
+          - "usermod -L nathan.clarke"
+          - "passwd -l nathan.clarke"
+          - "chage -E 0 nathan.clarke"
+        hint: "usermod -L or passwd -l locks a user account"
+        success_narrative: |
+          Account locked.
+
+          Nathan looks up from his screen as security enters.
+
+          "I found something strange in the logs-" he starts.
+
+          "We found something too, Nathan. The backup logs you
+          didn't know existed. Your shell company in the Virgin Islands.
+          The $2.3 million sitting in Switzerland."
+
+          The color drains from his face.
+
+          "I... I was going to pay it back. The gambling debts...
+          they were going to break my legs. I just needed time."
+
+          "You had time, Nathan. Now you have a cell."
+        clue_unlocked: "Nathan confessed - gambling debts drove him to theft"
+
+conclusion:
+  success: |
+    CASE CLOSED
+
+    Nathan Clarke was arrested for:
+    - Grand theft ($2.3 million)
+    - Computer fraud
+    - Evidence tampering
+    - Money laundering
+
+    The evidence chain was unbreakable:
+    - Backup logs proved his login and actions
+    - Transaction logs showed the transfer
+    - Config audit proved he bypassed controls
+    - SWIFT logs traced the money
+    - Shell company registration proved premeditation
+
+    Swiss authorities froze the account.
+    $2.1 million was recovered. (The rest went to gambling debts.)
+
+    Evidence collected: {clues_found}/{total_clues}
+    Time taken: {time_taken}
+
+    He poisoned the logs, but he couldn't poison the backups.
+
+  failure: |
+    Without the backup logs, Nathan's cover-up held.
+    The money disappeared into offshore accounts.
+
+    He resigned "to pursue other opportunities."
+    No one knew the truth.
+
+    Always check for backup logs, Detective.
+
+rewards:
+  xp: 750
+  achievement: "log_archaeologist"
+  achievement_name: "Log Archaeologist"
+  achievement_description: "Uncovered evidence hidden by log manipulation"

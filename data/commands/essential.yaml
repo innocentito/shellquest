@@ -1,0 +1,771 @@
+commands:
+  - name: "cd"
+    category: "navigation"
+    difficulty: "essential"
+    syntax: "cd [directory]"
+    description: "Change the current working directory"
+    common_options:
+      - name: "-"
+        description: "Switch to previous directory"
+      - name: "~"
+        description: "Go to home directory"
+      - name: ".."
+        description: "Go up one directory level"
+    examples:
+      - command: "cd /home/user/Documents"
+        explanation: "Navigate to Documents folder"
+      - command: "cd .."
+        explanation: "Go up one directory"
+      - command: "cd ~"
+        explanation: "Go to home directory"
+      - command: "cd -"
+        explanation: "Switch to previous directory"
+    tags: ["navigation", "filesystem", "basic"]
+    related_commands: ["pwd", "ls"]
+    tips:
+      - "Use tab completion to avoid typing long paths"
+      - "cd - switches between current and previous directory"
+
+  - name: "pwd"
+    category: "navigation"
+    difficulty: "essential"
+    syntax: "pwd"
+    description: "Print the current working directory (full path)"
+    common_options:
+      - name: "-P"
+        description: "Print physical path without symbolic links"
+    examples:
+      - command: "pwd"
+        explanation: "Display current directory path"
+    tags: ["navigation", "filesystem", "basic"]
+    related_commands: ["cd", "ls"]
+    tips:
+      - "Useful to confirm your current location in the filesystem"
+
+  - name: "ls"
+    category: "filesystem"
+    difficulty: "essential"
+    syntax: "ls [options] [path]"
+    description: "List directory contents"
+    common_options:
+      - name: "-l"
+        description: "Long format (detailed info)"
+      - name: "-a"
+        description: "Show hidden files (starting with .)"
+      - name: "-h"
+        description: "Human-readable file sizes"
+      - name: "-R"
+        description: "Recursive (show subdirectories)"
+      - name: "-t"
+        description: "Sort by modification time"
+    examples:
+      - command: "ls"
+        explanation: "List files in current directory"
+      - command: "ls -la"
+        explanation: "List all files with details"
+      - command: "ls -lh"
+        explanation: "List files with human-readable sizes"
+    tags: ["filesystem", "listing", "basic"]
+    related_commands: ["cd", "pwd", "find"]
+    tips:
+      - "ls -lah is a very common combination"
+      - "Use ls -t to see recently modified files first"
+
+  - name: "cp"
+    category: "filesystem"
+    difficulty: "essential"
+    syntax: "cp [options] source destination"
+    description: "Copy files or directories"
+    common_options:
+      - name: "-r"
+        description: "Recursive (copy directories)"
+      - name: "-i"
+        description: "Interactive (prompt before overwrite)"
+      - name: "-v"
+        description: "Verbose (show what's being copied)"
+    examples:
+      - command: "cp file.txt backup.txt"
+        explanation: "Copy file.txt to backup.txt"
+      - command: "cp -r folder/ backup_folder/"
+        explanation: "Copy entire directory recursively"
+    tags: ["filesystem", "copy", "basic"]
+    related_commands: ["mv", "rm", "rsync"]
+    tips:
+      - "Always use -r when copying directories"
+      - "Use -i to avoid accidentally overwriting files"
+
+  - name: "mv"
+    category: "filesystem"
+    difficulty: "essential"
+    syntax: "mv [options] source destination"
+    description: "Move or rename files and directories"
+    common_options:
+      - name: "-i"
+        description: "Interactive (prompt before overwrite)"
+      - name: "-v"
+        description: "Verbose (show what's being moved)"
+    examples:
+      - command: "mv oldname.txt newname.txt"
+        explanation: "Rename a file"
+      - command: "mv file.txt /path/to/directory/"
+        explanation: "Move file to another directory"
+    tags: ["filesystem", "move", "rename", "basic"]
+    related_commands: ["cp", "rm"]
+    tips:
+      - "mv is used for both moving AND renaming"
+      - "No -r needed, works on directories by default"
+
+  - name: "rm"
+    category: "filesystem"
+    difficulty: "essential"
+    syntax: "rm [options] file..."
+    description: "Remove (delete) files or directories"
+    common_options:
+      - name: "-r"
+        description: "Recursive (delete directories)"
+      - name: "-f"
+        description: "Force (no confirmation)"
+      - name: "-i"
+        description: "Interactive (prompt before each deletion)"
+    examples:
+      - command: "rm file.txt"
+        explanation: "Delete a file"
+      - command: "rm -r folder/"
+        explanation: "Delete a directory and its contents"
+      - command: "rm -i *.txt"
+        explanation: "Delete all .txt files with confirmation"
+    tags: ["filesystem", "delete", "basic"]
+    related_commands: ["cp", "mv", "rmdir"]
+    tips:
+      - "BE CAREFUL! rm is permanent, there's no undo"
+      - "Never run 'rm -rf /' as root!"
+      - "Use -i for important files to avoid accidents"
+
+  - name: "cat"
+    category: "text"
+    difficulty: "essential"
+    syntax: "cat [options] file..."
+    description: "Concatenate and display file contents"
+    common_options:
+      - name: "-n"
+        description: "Number all output lines"
+      - name: "-A"
+        description: "Show all (including special characters)"
+    examples:
+      - command: "cat file.txt"
+        explanation: "Display file contents"
+      - command: "cat file1.txt file2.txt > combined.txt"
+        explanation: "Combine multiple files"
+    tags: ["text", "display", "basic"]
+    related_commands: ["less", "more", "head", "tail"]
+    tips:
+      - "Use less or more for large files instead of cat"
+
+  - name: "grep"
+    category: "text"
+    difficulty: "essential"
+    syntax: "grep [options] pattern [file...]"
+    description: "Search for patterns in text"
+    common_options:
+      - name: "-i"
+        description: "Case-insensitive search"
+      - name: "-r"
+        description: "Recursive search in directories"
+      - name: "-n"
+        description: "Show line numbers"
+      - name: "-v"
+        description: "Invert match (show non-matching lines)"
+      - name: "-c"
+        description: "Count matching lines"
+    examples:
+      - command: "grep 'error' logfile.txt"
+        explanation: "Find lines containing 'error'"
+      - command: "grep -i 'warning' *.log"
+        explanation: "Case-insensitive search in all log files"
+      - command: "grep -rn 'TODO' ."
+        explanation: "Recursively search for TODO with line numbers"
+    tags: ["search", "text", "filter", "basic"]
+    related_commands: ["awk", "sed", "find"]
+    tips:
+      - "Combine with pipes for powerful text filtering"
+      - "Use -r to search entire directory trees"
+
+  - name: "find"
+    category: "search"
+    difficulty: "essential"
+    syntax: "find [path] [options] [expression]"
+    description: "Search for files and directories"
+    common_options:
+      - name: "-name"
+        description: "Search by filename"
+      - name: "-type f"
+        description: "Find only files"
+      - name: "-type d"
+        description: "Find only directories"
+      - name: "-size"
+        description: "Find by file size"
+      - name: "-mtime"
+        description: "Find by modification time"
+    examples:
+      - command: "find . -name '*.txt'"
+        explanation: "Find all .txt files in current directory"
+      - command: "find /home -type f -name 'config*'"
+        explanation: "Find files starting with 'config' in /home"
+      - command: "find . -type f -size +10M"
+        explanation: "Find files larger than 10MB"
+    tags: ["search", "filesystem", "basic"]
+    related_commands: ["grep", "ls", "locate"]
+    tips:
+      - "Very powerful but can be slow on large directories"
+      - "Combine with -exec to perform actions on found files"
+
+  - name: "chmod"
+    category: "permissions"
+    difficulty: "essential"
+    syntax: "chmod [options] mode file..."
+    description: "Change file permissions"
+    common_options:
+      - name: "+x"
+        description: "Add execute permission"
+      - name: "-w"
+        description: "Remove write permission"
+      - name: "755"
+        description: "rwxr-xr-x (common for executables)"
+      - name: "644"
+        description: "rw-r--r-- (common for files)"
+    examples:
+      - command: "chmod +x script.sh"
+        explanation: "Make script executable"
+      - command: "chmod 755 program"
+        explanation: "Set full permissions for owner, read+execute for others"
+      - command: "chmod 644 file.txt"
+        explanation: "Set read+write for owner, read-only for others"
+    tags: ["permissions", "filesystem", "basic"]
+    related_commands: ["chown", "chgrp", "ls"]
+    tips:
+      - "755 is common for executables (rwxr-xr-x)"
+      - "644 is common for regular files (rw-r--r--)"
+      - "Use ls -l to view current permissions"
+
+  - name: "echo"
+    category: "text"
+    difficulty: "essential"
+    syntax: "echo [options] [string...]"
+    description: "Display a line of text or variables"
+    common_options:
+      - name: "-n"
+        description: "Don't output trailing newline"
+      - name: "-e"
+        description: "Enable interpretation of backslash escapes"
+    examples:
+      - command: "echo 'Hello World'"
+        explanation: "Print text to terminal"
+      - command: "echo $PATH"
+        explanation: "Display PATH environment variable"
+      - command: "echo 'text' > file.txt"
+        explanation: "Write text to a file (overwrite)"
+      - command: "echo 'text' >> file.txt"
+        explanation: "Append text to a file"
+    tags: ["text", "output", "basic"]
+    related_commands: ["printf", "cat"]
+    tips:
+      - "Use > to redirect output to a file"
+      - "Use >> to append instead of overwriting"
+
+  - name: "man"
+    category: "help"
+    difficulty: "essential"
+    syntax: "man [section] command"
+    description: "Display manual pages for commands"
+    common_options:
+      - name: "-k"
+        description: "Search manual page names and descriptions"
+    examples:
+      - command: "man ls"
+        explanation: "Show manual for ls command"
+      - command: "man -k search"
+        explanation: "Search for commands related to 'search'"
+    tags: ["help", "documentation", "basic"]
+    related_commands: ["help", "info", "whatis"]
+    tips:
+      - "Press 'q' to quit the manual viewer"
+      - "Use / to search within a manual page"
+
+  - name: "mkdir"
+    category: "filesystem"
+    difficulty: "essential"
+    syntax: "mkdir [options] directory..."
+    description: "Create directories"
+    common_options:
+      - name: "-p"
+        description: "Create parent directories as needed"
+      - name: "-v"
+        description: "Verbose (print each created directory)"
+    examples:
+      - command: "mkdir newfolder"
+        explanation: "Create a directory"
+      - command: "mkdir -p parent/child/grandchild"
+        explanation: "Create nested directories"
+    tags: ["filesystem", "create", "basic"]
+    related_commands: ["rmdir", "rm", "cd"]
+    tips:
+      - "Use -p to create entire directory paths at once"
+
+  - name: "touch"
+    category: "filesystem"
+    difficulty: "essential"
+    syntax: "touch [options] file..."
+    description: "Create empty file or update timestamp"
+    examples:
+      - command: "touch newfile.txt"
+        explanation: "Create an empty file"
+      - command: "touch file1.txt file2.txt file3.txt"
+        explanation: "Create multiple empty files"
+    tags: ["filesystem", "create", "basic"]
+    related_commands: ["mkdir", "cat"]
+    tips:
+      - "Quick way to create empty files"
+      - "Also updates modification time of existing files"
+
+  - name: "head"
+    category: "text"
+    difficulty: "essential"
+    syntax: "head [options] [file...]"
+    description: "Output the first part of files"
+    common_options:
+      - name: "-n NUM"
+        description: "Print first NUM lines (default 10)"
+    examples:
+      - command: "head file.txt"
+        explanation: "Show first 10 lines of file"
+      - command: "head -n 20 file.txt"
+        explanation: "Show first 20 lines"
+    tags: ["text", "display", "basic"]
+    related_commands: ["tail", "cat", "less"]
+    tips:
+      - "Useful for previewing large files"
+
+  - name: "tail"
+    category: "text"
+    difficulty: "essential"
+    syntax: "tail [options] [file...]"
+    description: "Output the last part of files"
+    common_options:
+      - name: "-n NUM"
+        description: "Print last NUM lines (default 10)"
+      - name: "-f"
+        description: "Follow file updates (live monitoring)"
+    examples:
+      - command: "tail file.txt"
+        explanation: "Show last 10 lines of file"
+      - command: "tail -n 20 file.txt"
+        explanation: "Show last 20 lines"
+      - command: "tail -f /var/log/system.log"
+        explanation: "Monitor log file in real-time"
+    tags: ["text", "display", "monitoring", "basic"]
+    related_commands: ["head", "cat", "less"]
+    tips:
+      - "tail -f is essential for monitoring log files"
+      - "Press Ctrl+C to stop following a file"
+
+  - name: "less"
+    category: "text"
+    difficulty: "essential"
+    syntax: "less [options] [file...]"
+    description: "View file contents one screen at a time with scrolling"
+    common_options:
+      - name: "-N"
+        description: "Show line numbers"
+      - name: "-S"
+        description: "Chop long lines (don't wrap)"
+      - name: "-i"
+        description: "Ignore case in searches"
+    examples:
+      - command: "less file.txt"
+        explanation: "View file with scrolling navigation"
+      - command: "less -N file.txt"
+        explanation: "View file with line numbers"
+      - command: "cat large.log | less"
+        explanation: "Pipe output to less for scrolling"
+    tags: ["text", "display", "pager", "basic"]
+    related_commands: ["cat", "head", "tail", "more"]
+    tips:
+      - "Press q to quit, / to search, n for next match"
+      - "Use Page Up/Down or arrow keys to navigate"
+      - "Press g to go to start, G to go to end"
+
+  - name: "wc"
+    category: "text"
+    difficulty: "essential"
+    syntax: "wc [options] [file...]"
+    description: "Count lines, words, and characters in files"
+    common_options:
+      - name: "-l"
+        description: "Count lines only"
+      - name: "-w"
+        description: "Count words only"
+      - name: "-c"
+        description: "Count bytes/characters"
+    examples:
+      - command: "wc file.txt"
+        explanation: "Show lines, words, and bytes"
+      - command: "wc -l file.txt"
+        explanation: "Count only lines"
+    tags: ["text", "counting", "basic"]
+    related_commands: ["cat", "grep"]
+    tips:
+      - "Pipe output to wc -l to count results"
+
+  - name: "sort"
+    category: "text"
+    difficulty: "essential"
+    syntax: "sort [options] [file...]"
+    description: "Sort lines of text files"
+    common_options:
+      - name: "-r"
+        description: "Reverse sort order"
+      - name: "-n"
+        description: "Numeric sort"
+      - name: "-u"
+        description: "Unique (remove duplicates)"
+    examples:
+      - command: "sort file.txt"
+        explanation: "Sort lines alphabetically"
+      - command: "sort -n numbers.txt"
+        explanation: "Sort numerically"
+    tags: ["text", "sorting", "basic"]
+    related_commands: ["uniq", "cut"]
+    tips:
+      - "Use with uniq to get unique sorted values"
+
+  - name: "uniq"
+    category: "text"
+    difficulty: "essential"
+    syntax: "uniq [options] [input [output]]"
+    description: "Report or filter out repeated lines"
+    common_options:
+      - name: "-c"
+        description: "Prefix lines with count"
+      - name: "-d"
+        description: "Only print duplicates"
+    examples:
+      - command: "sort file.txt | uniq"
+        explanation: "Remove duplicate lines"
+      - command: "sort file.txt | uniq -c"
+        explanation: "Count occurrences"
+    tags: ["text", "filtering", "basic"]
+    related_commands: ["sort", "cut"]
+    tips:
+      - "Input must be sorted for uniq to work correctly"
+
+  - name: "cut"
+    category: "text"
+    difficulty: "essential"
+    syntax: "cut [options] [file...]"
+    description: "Remove sections from each line of files"
+    common_options:
+      - name: "-d DELIM"
+        description: "Use DELIM as field delimiter"
+      - name: "-f FIELDS"
+        description: "Select only these fields"
+    examples:
+      - command: "cut -d',' -f1 file.csv"
+        explanation: "Extract first column from CSV"
+      - command: "cut -d':' -f1 /etc/passwd"
+        explanation: "List usernames"
+    tags: ["text", "extraction", "basic"]
+    related_commands: ["awk", "sed"]
+    tips:
+      - "Great for extracting columns from delimited files"
+
+  - name: "awk"
+    category: "text"
+    difficulty: "essential"
+    syntax: "awk 'pattern {action}' [file...]"
+    description: "Pattern scanning and processing language"
+    common_options:
+      - name: "-F"
+        description: "Set field separator"
+    examples:
+      - command: "awk '{print $1}' file.txt"
+        explanation: "Print first field of each line"
+      - command: "awk -F',' '{print $2}' file.csv"
+        explanation: "Print second column of CSV"
+    tags: ["text", "processing", "advanced"]
+    related_commands: ["sed", "cut", "grep"]
+    tips:
+      - "$0 is entire line, $1 is first field, etc."
+
+  - name: "sed"
+    category: "text"
+    difficulty: "essential"
+    syntax: "sed [options] 'command' [file...]"
+    description: "Stream editor for filtering and transforming text"
+    common_options:
+      - name: "-i"
+        description: "Edit files in place"
+      - name: "-e"
+        description: "Add script commands"
+    examples:
+      - command: "sed 's/old/new/' file.txt"
+        explanation: "Replace first occurrence per line"
+      - command: "sed 's/old/new/g' file.txt"
+        explanation: "Replace all occurrences"
+    tags: ["text", "editing", "advanced"]
+    related_commands: ["awk", "grep"]
+    tips:
+      - "Use g flag for global replacement"
+
+  - name: "curl"
+    category: "network"
+    difficulty: "essential"
+    syntax: "curl [options] [URL]"
+    description: "Transfer data from or to a server"
+    common_options:
+      - name: "-o FILE"
+        description: "Write output to file"
+      - name: "-O"
+        description: "Save with remote filename"
+      - name: "-L"
+        description: "Follow redirects"
+    examples:
+      - command: "curl https://example.com"
+        explanation: "Fetch webpage content"
+      - command: "curl -O https://example.com/file.zip"
+        explanation: "Download file"
+    tags: ["network", "download", "api"]
+    related_commands: ["wget"]
+    tips:
+      - "Use -s for silent mode, -v for verbose"
+
+  - name: "wget"
+    category: "network"
+    difficulty: "essential"
+    syntax: "wget [options] [URL]"
+    description: "Download files from the web"
+    common_options:
+      - name: "-O FILE"
+        description: "Save to specified filename"
+      - name: "-c"
+        description: "Continue partial download"
+    examples:
+      - command: "wget https://example.com/file.zip"
+        explanation: "Download a file"
+      - command: "wget -c https://example.com/large.iso"
+        explanation: "Resume interrupted download"
+    tags: ["network", "download"]
+    related_commands: ["curl"]
+    tips:
+      - "wget can resume downloads with -c"
+
+  - name: "ssh"
+    category: "network"
+    difficulty: "essential"
+    syntax: "ssh [options] [user@]hostname [command]"
+    description: "Secure Shell - remote login and command execution"
+    common_options:
+      - name: "-p PORT"
+        description: "Connect to specified port"
+      - name: "-i KEY"
+        description: "Use identity file (private key)"
+    examples:
+      - command: "ssh user@server.com"
+        explanation: "Connect to remote server"
+      - command: "ssh user@server.com ls"
+        explanation: "Run command on remote server"
+    tags: ["network", "remote", "security"]
+    related_commands: ["scp"]
+    tips:
+      - "Use ssh-keygen to create key pairs"
+
+  - name: "tar"
+    category: "archive"
+    difficulty: "essential"
+    syntax: "tar [options] [archive] [files...]"
+    description: "Archive utility for creating and extracting archives"
+    common_options:
+      - name: "-c"
+        description: "Create archive"
+      - name: "-x"
+        description: "Extract archive"
+      - name: "-f FILE"
+        description: "Use archive file"
+      - name: "-z"
+        description: "Compress with gzip"
+      - name: "-v"
+        description: "Verbose output"
+    examples:
+      - command: "tar -czvf archive.tar.gz folder/"
+        explanation: "Create compressed archive"
+      - command: "tar -xzvf archive.tar.gz"
+        explanation: "Extract compressed archive"
+    tags: ["archive", "compression"]
+    related_commands: ["gzip", "zip"]
+    tips:
+      - "Remember: c=create, x=extract, v=verbose, f=file, z=gzip"
+
+  - name: "ps"
+    category: "system"
+    difficulty: "essential"
+    syntax: "ps [options]"
+    description: "Report process status"
+    common_options:
+      - name: "aux"
+        description: "Show all processes with details"
+      - name: "-ef"
+        description: "Full format listing"
+    examples:
+      - command: "ps aux"
+        explanation: "Show all running processes"
+      - command: "ps aux | grep python"
+        explanation: "Find Python processes"
+    tags: ["system", "processes"]
+    related_commands: ["kill", "top"]
+    tips:
+      - "Combine with grep to find specific processes"
+
+  - name: "kill"
+    category: "system"
+    difficulty: "essential"
+    syntax: "kill [options] PID..."
+    description: "Send signals to processes"
+    common_options:
+      - name: "-9"
+        description: "Force kill (SIGKILL)"
+      - name: "-15"
+        description: "Graceful termination (SIGTERM)"
+    examples:
+      - command: "kill 1234"
+        explanation: "Terminate process 1234"
+      - command: "kill -9 1234"
+        explanation: "Force kill process"
+    tags: ["system", "processes"]
+    related_commands: ["ps", "pkill"]
+    tips:
+      - "Try normal kill before -9"
+
+  - name: "xargs"
+    category: "text"
+    difficulty: "essential"
+    syntax: "xargs [options] [command]"
+    description: "Build and execute commands from standard input"
+    common_options:
+      - name: "-I {}"
+        description: "Replace {} with input"
+      - name: "-n NUM"
+        description: "Use at most NUM arguments"
+    examples:
+      - command: "find . -name '*.txt' | xargs rm"
+        explanation: "Delete found files"
+      - command: "cat files.txt | xargs -I {} cp {} backup/"
+        explanation: "Copy files from list"
+    tags: ["text", "piping", "advanced"]
+    related_commands: ["find"]
+    tips:
+      - "Great for processing lists of files"
+
+  - name: "tee"
+    category: "text"
+    difficulty: "essential"
+    syntax: "tee [options] [file...]"
+    description: "Read from stdin, write to stdout and files"
+    common_options:
+      - name: "-a"
+        description: "Append to files"
+    examples:
+      - command: "echo 'log' | tee file.txt"
+        explanation: "Write to screen and file"
+      - command: "command | tee output.log"
+        explanation: "Log output while viewing"
+    tags: ["text", "piping"]
+    related_commands: ["cat"]
+    tips:
+      - "Useful for logging while seeing output"
+
+  - name: "history"
+    category: "shell"
+    difficulty: "essential"
+    syntax: "history [options]"
+    description: "Display command history"
+    common_options:
+      - name: "-c"
+        description: "Clear history"
+    examples:
+      - command: "history"
+        explanation: "Show command history"
+      - command: "history | grep ssh"
+        explanation: "Find ssh commands in history"
+    tags: ["shell", "history"]
+    related_commands: []
+    tips:
+      - "Use !number to repeat a command"
+
+  - name: "du"
+    category: "filesystem"
+    difficulty: "essential"
+    syntax: "du [options] [file...]"
+    description: "Estimate file and directory space usage"
+    common_options:
+      - name: "-h"
+        description: "Human-readable sizes"
+      - name: "-s"
+        description: "Summary only"
+    examples:
+      - command: "du -sh *"
+        explanation: "Show size of each item"
+      - command: "du -h folder/"
+        explanation: "Show folder size breakdown"
+    tags: ["filesystem", "disk"]
+    related_commands: ["df"]
+    tips:
+      - "Use -s for summary, -h for human readable"
+
+  - name: "df"
+    category: "filesystem"
+    difficulty: "essential"
+    syntax: "df [options] [file...]"
+    description: "Report filesystem disk space usage"
+    common_options:
+      - name: "-h"
+        description: "Human-readable sizes"
+    examples:
+      - command: "df -h"
+        explanation: "Show disk usage for all filesystems"
+    tags: ["filesystem", "disk"]
+    related_commands: ["du"]
+    tips:
+      - "Check available space before large operations"
+
+  - name: "pipes"
+    category: "shell"
+    difficulty: "essential"
+    syntax: "command1 | command2"
+    description: "Connect output of one command to input of another"
+    common_options: []
+    examples:
+      - command: "cat file.txt | grep error"
+        explanation: "Search file for errors"
+      - command: "ls | wc -l"
+        explanation: "Count files in directory"
+      - command: "ps aux | grep python | wc -l"
+        explanation: "Count Python processes"
+    tags: ["shell", "piping", "basic"]
+    related_commands: ["xargs", "tee"]
+    tips:
+      - "Chain multiple commands for powerful operations"
+
+  - name: "tmux"
+    category: "shell"
+    difficulty: "advanced"
+    syntax: "tmux [command]"
+    description: "Terminal multiplexer for multiple sessions"
+    common_options: []
+    examples:
+      - command: "tmux new -s mysession"
+        explanation: "Create named session"
+      - command: "tmux attach -t mysession"
+        explanation: "Attach to session"
+    tags: ["shell", "sessions", "advanced"]
+    related_commands: ["screen"]
+    tips:
+      - "Use Ctrl+B then D to detach"

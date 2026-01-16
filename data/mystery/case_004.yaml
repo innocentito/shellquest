@@ -1,0 +1,384 @@
+# Murder Mystery Case 004: The Vanishing Backup
+# A ransomware investigation
+
+case:
+  id: "case_004"
+  title: "The Vanishing Backup"
+  subtitle: "When the Safety Net Disappears"
+  difficulty: "intermediate"
+  estimated_time: "20-30 minutes"
+
+  intro: |
+    The hospital's IT director is panicking.
+
+    "Detective Shell, we've been hit by ransomware. Every patient
+    record is encrypted. They want 50 Bitcoin to decrypt."
+
+    "What about your backups?" you ask.
+
+    "That's why I called you. The backups... they're gone.
+    All of them. Someone deleted them BEFORE the attack."
+
+    This wasn't just ransomware. This was an inside job.
+
+  setting: |
+    Metro General Hospital - 500 beds, 2000 staff.
+    The attack: Ransomware encrypted all patient data at 3 AM.
+    The twist: All backups were deleted 2 hours before the attack.
+
+    Someone wanted to make sure there was no way out.
+    Find the insider before the hospital pays the ransom.
+
+suspects:
+  - id: "victor"
+    name: "Victor Nash"
+    role: "Backup Administrator"
+    description: "15 years experience, knows every backup system"
+    alibi: "Claims he was asleep at home"
+    motive: "Recently denied a raise despite stellar performance"
+
+  - id: "priya"
+    name: "Dr. Priya Sharma"
+    role: "Chief Medical Officer"
+    description: "Pushing for new systems, frustrated with IT"
+    alibi: "On call at the hospital"
+    motive: "Insurance fraud? Hospital is struggling financially"
+
+  - id: "marcus"
+    name: "Marcus Webb"
+    role: "Night Shift IT Support"
+    description: "New hire, eager, maybe too eager"
+    alibi: "Was 'fixing a printer' during the deletion window"
+    motive: "Unknown - background check was rushed"
+
+  - id: "janet"
+    name: "Janet Cole"
+    role: "Former IT Director"
+    description: "Fired 3 months ago, bitter about it"
+    alibi: "Claims no access to systems anymore"
+    motive: "Revenge against the hospital that fired her"
+
+scenes:
+  - id: "scene_01"
+    title: "The Backup Graveyard"
+    location: "Backup Server Room"
+    narrative: |
+      The backup server sits silent. Three months of patient data,
+      gone in minutes. The tapes are blank. The cloud sync is empty.
+
+      "Show me what happened," you say.
+
+      The sysadmin pulls up the logs with shaking hands.
+
+    objective: "Analyze backup deletion logs"
+
+    challenges:
+      - id: "ch_04_01"
+        context: "Check when the backup files were deleted from /backup/hospital/"
+        question_type: "command_builder"
+        question: "Find all files in /var/log/ that were modified in the last 24 hours"
+        correct_answers:
+          - "find /var/log/ -mtime -1 -type f"
+          - "find /var/log -mtime -1 -type f"
+          - "find /var/log/ -mtime 0 -type f"
+        hint: "Use find with -mtime -1 for files modified in the last day"
+        success_narrative: |
+          Recent log files:
+
+          /var/log/backup.log
+          /var/log/auth.log
+          /var/log/cron.log
+          /var/log/secure
+
+          The backup.log was modified at 1:07 AM - right when the
+          deletions happened. Let's look inside.
+        clue_unlocked: "Backup logs show activity at 1:07 AM"
+
+      - id: "ch_04_02"
+        context: "Check the backup log for deletion commands"
+        question_type: "command_builder"
+        question: "Search for 'rm' or 'delete' commands in /var/log/backup.log (case insensitive)"
+        correct_answers:
+          - "grep -iE 'rm|delete' /var/log/backup.log"
+          - "grep -i 'rm\\|delete' /var/log/backup.log"
+          - "grep -i -E 'rm|delete' /var/log/backup.log"
+        hint: "Use grep -i for case insensitive, -E for extended regex with |"
+        success_narrative: |
+          Found deletion commands:
+
+          01:07:23 [backup-agent] Executing: rm -rf /backup/hospital/daily/*
+          01:07:45 [backup-agent] Executing: rm -rf /backup/hospital/weekly/*
+          01:08:02 [backup-agent] Executing: rm -rf /backup/hospital/monthly/*
+          01:08:15 [backup-agent] Cloud sync purge initiated
+
+          All backups systematically destroyed. But who triggered it?
+        clue_unlocked: "Backups were deleted via backup-agent at 1:07 AM"
+
+  - id: "scene_02"
+    title: "The Scheduled Crime"
+    location: "Cron Job Analysis"
+    narrative: |
+      The deletions were executed by the backup-agent service.
+      But that service only runs scheduled tasks.
+
+      Someone must have added a malicious cron job.
+      Time to dig into the scheduling system.
+
+    objective: "Find the malicious scheduled task"
+
+    challenges:
+      - id: "ch_04_03"
+        context: "List all cron jobs that run as root"
+        question_type: "command_builder"
+        question: "Display the contents of the root user's crontab"
+        correct_answers:
+          - "sudo crontab -l"
+          - "crontab -l -u root"
+          - "sudo crontab -u root -l"
+        hint: "Use crontab -l to list cron jobs, sudo for root's crontab"
+        success_narrative: |
+          Root's crontab:
+
+          # Standard backups
+          0 2 * * * /usr/local/bin/backup-daily.sh
+          0 3 * * 0 /usr/local/bin/backup-weekly.sh
+
+          # Added 2024-03-14 - MAINTENANCE
+          7 1 15 3 * /tmp/.maintenance/cleanup.sh
+
+          That "MAINTENANCE" job was added yesterday!
+          It ran at 1:07 AM on March 15 - exactly when backups were deleted!
+        clue_unlocked: "Malicious cron job was added on March 14"
+
+      - id: "ch_04_04"
+        context: "Check what's in that suspicious cleanup script"
+        question_type: "what_does_it_do"
+        question: |
+          What does this script do?
+
+          #!/bin/bash
+          rm -rf /backup/hospital/daily/* 2>/dev/null
+          rm -rf /backup/hospital/weekly/* 2>/dev/null
+          rm -rf /backup/hospital/monthly/* 2>/dev/null
+          aws s3 rm s3://hospital-backup/ --recursive --quiet
+          shred -u /tmp/.maintenance/cleanup.sh
+        options:
+          - "Deletes all backups and then destroys itself"
+          - "Creates a backup of maintenance files"
+          - "Cleans up temporary log files"
+          - "Syncs backups to AWS"
+        correct_answer: "Deletes all backups and then destroys itself"
+        hint: "shred -u securely deletes a file after overwriting it"
+        success_narrative: |
+          A self-destructing script! It:
+          1. Deletes local daily, weekly, and monthly backups
+          2. Purges the AWS S3 backup bucket
+          3. Shreds itself to hide evidence
+
+          But files aren't truly gone until overwritten...
+          Maybe we can recover something.
+        clue_unlocked: "Script was designed to self-destruct after execution"
+
+  - id: "scene_03"
+    title: "Digital Forensics"
+    location: "Forensic Workstation"
+    narrative: |
+      The script shredded itself, but the system leaves traces.
+      Bash history, file metadata, audit logs - something remains.
+
+      Your forensic tools are ready. Time to recover the evidence.
+
+    objective: "Recover evidence of who created the malicious script"
+
+    challenges:
+      - id: "ch_04_05"
+        context: "Check the bash history of all users for suspicious activity"
+        question_type: "command_builder"
+        question: "Search all users' bash history files for 'crontab' or 'cleanup'"
+        correct_answers:
+          - "grep -r 'crontab\\|cleanup' /home/*/.bash_history"
+          - "grep -rE 'crontab|cleanup' /home/*/.bash_history"
+          - "grep -r -E 'crontab|cleanup' /home/*/.bash_history"
+        hint: "Use grep -r to search recursively, check .bash_history files in /home/"
+        success_narrative: |
+          Found in /home/victor.nash/.bash_history:
+
+          mkdir /tmp/.maintenance
+          vim /tmp/.maintenance/cleanup.sh
+          chmod +x /tmp/.maintenance/cleanup.sh
+          sudo crontab -e
+          history -c
+
+          Victor Nash! The backup administrator created the script!
+          He tried to clear his history but missed the backup of .bash_history
+        clue_unlocked: "Victor Nash created the cleanup script"
+
+      - id: "ch_04_06"
+        context: "Check when Victor's history file was last modified vs when he 'cleared' it"
+        question_type: "command_builder"
+        question: "Show detailed file info including timestamps for /home/victor.nash/.bash_history"
+        correct_answers:
+          - "stat /home/victor.nash/.bash_history"
+          - "ls -la /home/victor.nash/.bash_history"
+        hint: "stat shows detailed file information including all timestamps"
+        success_narrative: |
+          File timestamps:
+
+          Access: 2024-03-14 23:45:12
+          Modify: 2024-03-14 23:45:12
+          Change: 2024-03-14 23:45:12
+
+          Victor accessed his terminal at 11:45 PM on March 14 -
+          exactly when the cron job was added!
+
+          But the history -c command should have cleared everything...
+          Unless there's a backup we haven't checked.
+        clue_unlocked: "Victor was on the system at 11:45 PM when the cron job was added"
+
+  - id: "scene_04"
+    title: "The Money Trail"
+    location: "Financial Records"
+    narrative: |
+      Victor Nash - the backup administrator. But why?
+      15 years of loyalty doesn't disappear overnight.
+
+      "Follow the money," your partner suggests.
+      Let's check if Victor has any financial connections.
+
+    objective: "Find Victor's connection to the ransomware group"
+
+    challenges:
+      - id: "ch_04_07"
+        context: "Search Victor's email archive for cryptocurrency or payment mentions"
+        question_type: "command_builder"
+        question: "Search for 'bitcoin' or 'payment' or 'wallet' in Victor's mail directory, showing 2 lines of context"
+        correct_answers:
+          - "grep -riC 2 'bitcoin\\|payment\\|wallet' /home/victor.nash/mail/"
+          - "grep -ri -C 2 -E 'bitcoin|payment|wallet' /home/victor.nash/mail/"
+        hint: "Use grep -r for recursive, -i for case insensitive, -C 2 for context lines"
+        success_narrative: |
+          Found in /home/victor.nash/mail/sent/draft_03_10:
+
+          Subject: Re: Our arrangement
+
+          The backups will be gone by 1:30 AM on the 15th.
+          You can launch at 3 AM. No recovery possible.
+
+          My cut: 10 BTC to wallet 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa
+          After the hospital pays, you send my share.
+
+          - V
+        clue_unlocked: "Victor made a deal with the ransomware group for 10 BTC"
+
+      - id: "ch_04_08"
+        context: "Find out who Victor was communicating with"
+        question_type: "command_builder"
+        question: "Extract all email addresses from Victor's sent mail folder"
+        correct_answers:
+          - "grep -rohE '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}' /home/victor.nash/mail/sent/"
+          - "grep -roh -E '[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}' /home/victor.nash/mail/sent/"
+        hint: "Use grep -o to output only matches, -E for extended regex to match email pattern"
+        success_narrative: |
+          Email addresses found:
+
+          darkside_ops@protonmail.com
+          payment_verify@tutanota.com
+          v.nash.personal@gmail.com
+
+          DarkSide! That's the ransomware group that hit Colonial Pipeline!
+          Victor was in direct contact with them.
+        clue_unlocked: "Victor communicated with DarkSide ransomware operators"
+
+  - id: "scene_05"
+    title: "The Arrest"
+    location: "Victor's Office"
+    narrative: |
+      Victor Nash sits at his desk, pretending to work on "recovery."
+      Ironic, since he made recovery impossible.
+
+      You have everything: the script, the cron job, the emails.
+      Time to end this.
+
+    objective: "Confront Victor and secure evidence"
+
+    challenges:
+      - id: "ch_04_09"
+        context: "Before confronting Victor, create a forensic copy of his home directory"
+        question_type: "command_builder"
+        question: "Create a compressed archive of /home/victor.nash/ preserving permissions and ownership"
+        correct_answers:
+          - "tar -cvpzf victor_evidence.tar.gz /home/victor.nash/"
+          - "tar -czvpf victor_evidence.tar.gz /home/victor.nash/"
+          - "tar --preserve-permissions -czvf victor_evidence.tar.gz /home/victor.nash/"
+        hint: "Use tar with -p to preserve permissions, -z for gzip compression"
+        success_narrative: |
+          Evidence archived:
+
+          victor_evidence.tar.gz - 2.3 GB
+          Permissions and ownership preserved for court.
+
+          Now to confront him.
+        clue_unlocked: "Forensic evidence preserved"
+
+      - id: "ch_04_10"
+        context: "Victor is trying to remotely wipe his machine. Kill his SSH session immediately."
+        question_type: "command_builder"
+        question: "Find and kill all processes owned by user 'victor.nash'"
+        correct_answers:
+          - "pkill -u victor.nash"
+          - "killall -u victor.nash"
+          - "pkill -U victor.nash"
+        hint: "pkill -u kills all processes owned by a specific user"
+        success_narrative: |
+          All of Victor's processes terminated.
+
+          He stares at his frozen screen, then at you.
+
+          "15 years," he says quietly. "15 years and they wouldn't
+          give me a 5% raise. The ransomware group offered me more
+          money than I'd make in a decade."
+
+          "And the patients?" you ask.
+
+          He has no answer.
+        clue_unlocked: "Victor confessed - motivated by money"
+
+conclusion:
+  success: |
+    CASE CLOSED
+
+    Victor Nash was arrested for:
+    - Computer fraud and sabotage
+    - Conspiracy with international cybercriminals
+    - Endangering patient safety
+    - Destruction of medical records
+
+    The evidence was comprehensive:
+    - Malicious cron job traced to his account
+    - Bash history showing script creation
+    - Emails proving coordination with DarkSide
+    - Timeline matching his system access
+
+    The hospital refused to pay the ransom. With Victor's cooperation,
+    authorities traced the ransomware servers and recovered the
+    decryption keys.
+
+    Evidence collected: {clues_found}/{total_clues}
+    Time taken: {time_taken}
+
+    The backups are gone, but justice was served.
+
+  failure: |
+    Without enough evidence, Victor had time to cover his tracks.
+    The hospital paid the 50 Bitcoin ransom.
+
+    Victor disappeared three days later.
+    The ransomware group was never caught.
+
+    Better backup your forensic skills, Detective.
+
+rewards:
+  xp: 600
+  achievement: "backup_detective"
+  achievement_name: "Backup Detective"
+  achievement_description: "Traced a ransomware inside job through backup logs"

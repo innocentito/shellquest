@@ -1,0 +1,354 @@
+# Murder Mystery Case 001: Death at DevCorp
+# A terminal-based detective story
+
+case:
+  id: "case_001"
+  title: "Death at DevCorp"
+  subtitle: "A Developer's Last Commit"
+  difficulty: "intermediate"
+  estimated_time: "20-30 minutes"
+
+  intro: |
+    It's 2:47 AM when your phone rings. You're Detective Shell,
+    the city's top digital forensics investigator.
+
+    "We've got a body at DevCorp headquarters," says the voice.
+    "Senior developer. Found in the server room. We need you."
+
+    You grab your laptop and head out. Time to let the terminal
+    do the talking.
+
+  setting: |
+    DevCorp - A successful tech startup in downtown.
+    The victim: Marcus Chen, Lead Backend Developer.
+    Found dead in Server Room B at 11:43 PM.
+
+    Your job: Navigate the company's systems, analyze logs,
+    and find the killer before they cover their tracks.
+
+suspects:
+  - id: "sarah"
+    name: "Sarah Miller"
+    role: "CTO"
+    description: "Ambitious, recently clashed with Marcus over architecture decisions"
+    alibi: "Claims she was in a board meeting until midnight"
+    motive: "Marcus was about to expose security flaws she ignored"
+
+  - id: "david"
+    name: "David Park"
+    role: "Junior Developer"
+    description: "Quiet, worked directly under Marcus"
+    alibi: "Says he left at 6 PM, but badge logs show otherwise"
+    motive: "Marcus rejected his promotion recommendation"
+
+  - id: "elena"
+    name: "Elena Volkov"
+    role: "Security Engineer"
+    description: "Paranoid about security, had access to all systems"
+    alibi: "Working from home, but VPN logs are suspicious"
+    motive: "Marcus discovered she was selling company data"
+
+  - id: "james"
+    name: "James Wright"
+    role: "DevOps Lead"
+    description: "Marcus's best friend, or so everyone thought"
+    alibi: "At a conference in another city"
+    motive: "Secret gambling debts, Marcus found out"
+
+scenes:
+  - id: "scene_01"
+    title: "The Crime Scene"
+    location: "Server Room B"
+    narrative: |
+      You arrive at DevCorp. Yellow tape surrounds Server Room B.
+      The body has been removed, but the scene tells a story.
+
+      Marcus's laptop is still open. The terminal shows his last commands.
+      You need to check what files he was looking at.
+
+    objective: "Examine the victim's last terminal session"
+
+    challenges:
+      - id: "ch_01_01"
+        context: "You need to see what's in Marcus's home directory"
+        question_type: "command_builder"
+        question: "Write the command to list ALL files (including hidden) in /home/marcus/"
+        correct_answers: ["ls -la /home/marcus/", "ls -al /home/marcus/", "ls -a -l /home/marcus/", "ls -l -a /home/marcus/"]
+        hint: "Some files are hidden by default. Think about showing everything with details."
+        success_narrative: |
+          The directory listing reveals several interesting files:
+
+          drwxr-xr-x  marcus  .secret_notes/
+          -rw-------  marcus  .bash_history
+          -rw-r--r--  marcus  evidence.txt.gpg
+
+          A hidden directory called .secret_notes catches your eye...
+        clue_unlocked: "Marcus had a hidden directory with secret notes"
+
+      - id: "ch_01_02"
+        context: "You found a hidden .secret_notes directory. Time to investigate."
+        question_type: "command_builder"
+        question: "Write the command to read the file /home/marcus/.secret_notes/suspects.txt"
+        correct_answers: ["cat /home/marcus/.secret_notes/suspects.txt"]
+        hint: "What command lets you see what's inside a text file?"
+        success_narrative: |
+          The file contains Marcus's personal notes:
+
+          "Someone is leaking our source code. I've narrowed it down.
+          Check the git logs. The pattern is there.
+          Meeting with Sarah tomorrow - she won't like what I found.
+
+          E.V. - watch the VPN logs. Something's not right."
+
+          E.V... Elena Volkov?
+        clue_unlocked: "Marcus suspected someone of leaking source code"
+
+  - id: "scene_02"
+    title: "The Server Logs"
+    location: "Security Operations Center"
+    narrative: |
+      You move to the Security Operations Center. Banks of monitors
+      show system status. A tired security guard lets you in.
+
+      "The logs are all there," he says. "Everything's logged."
+
+      Time to dig through the access logs from the night of the murder.
+
+    objective: "Analyze access logs to find who was in the building"
+
+    challenges:
+      - id: "ch_02_01"
+        context: "You have a large access log file. You need to find entries from the murder night (2024-03-15)"
+        question_type: "command_builder"
+        question: "Search for all lines containing '2024-03-15' in /var/log/access.log"
+        correct_answers: ["grep '2024-03-15' /var/log/access.log", "grep \"2024-03-15\" /var/log/access.log", "grep 2024-03-15 /var/log/access.log"]
+        hint: "What command searches for text inside files?"
+        success_narrative: |
+          The filtered log shows interesting entries:
+
+          2024-03-15 18:02:14 | BADGE_IN  | david.park    | Main Entrance
+          2024-03-15 18:45:33 | BADGE_OUT | david.park    | Main Entrance
+          2024-03-15 21:30:00 | BADGE_IN  | david.park    | Parking Garage
+          2024-03-15 23:15:22 | BADGE_IN  | marcus.chen   | Server Room B
+          2024-03-15 23:42:11 | BADGE_IN  | elena.volkov  | Server Room B
+          2024-03-15 23:58:44 | BADGE_OUT | elena.volkov  | Emergency Exit
+
+          Wait - David came back at 9:30 PM? And Elena was in the server room
+          just before Marcus died!
+        clue_unlocked: "Elena was in Server Room B 27 minutes before Marcus died"
+
+      - id: "ch_02_02"
+        context: "You need to count how many times each person accessed Server Room B"
+        question_type: "command_builder"
+        question: "Count unique badge entries for 'Server Room B' in the log. Use grep, cut (field 4), sort and uniq -c"
+        correct_answers:
+          - "grep 'Server Room B' /var/log/access.log | cut -d'|' -f4 | sort | uniq -c"
+          - "grep \"Server Room B\" /var/log/access.log | cut -d'|' -f4 | sort | uniq -c"
+        hint: "Filter the log, extract the username column, then count occurrences"
+        success_narrative: |
+          The count reveals:
+
+                12 elena.volkov
+                 8 james.wright
+                 5 marcus.chen
+                 3 sarah.miller
+                 1 david.park
+
+          Elena accessed Server Room B 12 times this month.
+          That's more than anyone else, including the DevOps lead!
+        clue_unlocked: "Elena had unusual high access to the server room"
+
+  - id: "scene_03"
+    title: "The Hidden Files"
+    location: "Elena's Workstation"
+    narrative: |
+      With a warrant in hand, you access Elena's workstation.
+      Her desktop looks clean - too clean for a security engineer.
+
+      "She probably hid everything," your partner suggests.
+
+      Time to find what she didn't want anyone to see.
+
+    objective: "Discover Elena's hidden files and communications"
+
+    challenges:
+      - id: "ch_03_01"
+        context: "You need to find all hidden files in Elena's home directory and subdirectories"
+        question_type: "command_builder"
+        question: "Find all hidden files (starting with .) in /home/elena/ recursively"
+        correct_answers:
+          - "find /home/elena/ -name '.*' -type f"
+          - "find /home/elena -name '.*' -type f"
+          - "find /home/elena/ -name \".*\" -type f"
+        hint: "Search for files matching a pattern. Hidden files have a specific naming convention."
+        success_narrative: |
+          Several hidden files appear:
+
+          /home/elena/.config/.secret_comms.txt
+          /home/elena/.local/.buyer_contact.gpg
+          /home/elena/Documents/.delete_schedule.sh
+
+          A file called .buyer_contact.gpg? That sounds incriminating...
+        clue_unlocked: "Elena had encrypted communications with a 'buyer'"
+
+      - id: "ch_03_02"
+        context: "You found a suspicious script. Check what it does."
+        question_type: "what_does_it_do"
+        question: |
+          What does this script do?
+
+          #!/bin/bash
+          find /var/log -name "*.log" -mtime -1 -exec rm {} \;
+          history -c
+          echo "" > ~/.bash_history
+        options:
+          - "Deletes recent log files and clears command history"
+          - "Backs up log files from yesterday"
+          - "Searches for errors in log files"
+          - "Creates new log files"
+        correct_answer: "Deletes recent log files and clears command history"
+        hint: "Analyze what each line does: finding files, clearing history, and file redirection"
+        success_narrative: |
+          This is a cover-up script! Elena planned to:
+          1. Delete all log files from the last 24 hours
+          2. Clear her bash history
+          3. Erase the history file completely
+
+          She was preparing to destroy evidence. But why didn't she run it?
+          Maybe she was interrupted... or caught.
+        clue_unlocked: "Elena had a script to destroy evidence but never ran it"
+
+  - id: "scene_04"
+    title: "The Git History"
+    location: "Development Server"
+    narrative: |
+      Marcus mentioned git logs in his notes. You access the main
+      development server where all code is stored.
+
+      The repository for their flagship product awaits.
+      Somewhere in the commit history lies the truth.
+
+    objective: "Analyze git history to find evidence of data theft"
+
+    challenges:
+      - id: "ch_04_01"
+        context: "You need to see who committed code in the last month"
+        question_type: "command_builder"
+        question: "Show git log with author statistics for the last 30 days (use --since and --format options)"
+        correct_answers:
+          - "git log --since='30 days ago' --format='%an' | sort | uniq -c | sort -rn"
+          - "git log --since=\"30 days ago\" --format=\"%an\" | sort | uniq -c | sort -rn"
+        hint: "Git can show commits in a date range and format output to show just author names, which you can then count"
+        success_narrative: |
+          Commit statistics reveal:
+
+               47 marcus.chen
+               31 david.park
+               28 sarah.miller
+               15 elena.volkov
+                3 external.contractor
+
+          Wait - external.contractor? There's no external contractor
+          on this project! Someone created a fake account.
+        clue_unlocked: "A fake 'external.contractor' account was used for commits"
+
+      - id: "ch_04_02"
+        context: "Find commits from the suspicious external.contractor account"
+        question_type: "command_builder"
+        question: "Show git log entries only from author 'external.contractor'"
+        correct_answers:
+          - "git log --author='external.contractor'"
+          - "git log --author=\"external.contractor\""
+          - "git log --author=external.contractor"
+        hint: "Git can filter its history by who made the commits"
+        success_narrative: |
+          The commits show a pattern:
+
+          commit 7a3b2c1 - "Added export functionality"
+          commit 9d4e5f6 - "Updated API endpoints"
+          commit 2h8i9j0 - "Database schema export"
+
+          All these commits add code that exports sensitive data!
+          And they all happened between 2-4 AM. Who works those hours?
+
+          Checking the SSH key associated with this account...
+          It matches Elena's backup key.
+        clue_unlocked: "Elena used a fake account to add data exfiltration code"
+
+  - id: "scene_05"
+    title: "The Confrontation"
+    location: "Interrogation Room"
+    narrative: |
+      You've gathered enough evidence. Elena Volkov sits across
+      from you in the interrogation room, arms crossed.
+
+      "I want my lawyer," she says.
+
+      "You'll get one. But first, let me show you what we found."
+
+      Time to present the evidence and get a confession.
+
+    objective: "Present evidence and identify the killer"
+
+    challenges:
+      - id: "ch_05_01"
+        context: "Final question: Based on all evidence, who killed Marcus Chen?"
+        question_type: "multiple_choice"
+        question: |
+          Based on the evidence you collected:
+          - Elena had high server room access
+          - Elena was in Server Room B minutes before Marcus died
+          - Elena had encrypted buyer contacts
+          - Elena created a fake git account for data theft
+          - Elena had an evidence deletion script ready
+          - Marcus was about to expose her
+
+          Who is the killer?
+        options:
+          - "Elena Volkov - She killed Marcus to stop him from exposing her data theft"
+          - "David Park - He returned to the office and had motive"
+          - "Sarah Miller - She didn't want security flaws exposed"
+          - "James Wright - Secret gambling debts"
+        correct_answer: "Elena Volkov - She killed Marcus to stop him from exposing her data theft"
+        hint: "Follow the evidence trail - who had the most to lose?"
+        clue_unlocked: "Elena Volkov is the killer - case solved"
+        success_narrative: |
+          Elena's composure breaks.
+
+          "He was going to ruin everything," she whispers.
+          "I'd been selling code for months. The buyers paid well.
+          But Marcus... he was too good. He found the patterns.
+
+          I just wanted to scare him. But he fought back, and..."
+
+          She breaks down. Case closed.
+
+conclusion:
+  success: |
+    CASE CLOSED
+
+    Elena Volkov confessed to the murder of Marcus Chen.
+    She had been selling proprietary code to competitors for months.
+    When Marcus discovered her scheme, she confronted him in Server Room B.
+    The confrontation turned violent.
+
+    Your terminal skills helped bring justice to Marcus Chen.
+
+    Evidence collected: {clues_found}/{total_clues}
+    Time taken: {time_taken}
+
+    "Another case solved," you think, closing your laptop.
+    "The terminal never lies."
+
+  failure: |
+    The trail has gone cold. Without enough evidence,
+    Elena walks free. But you know the truth.
+
+    Perhaps with more practice, the next case will be different.
+    Keep honing your terminal skills, Detective.
+
+rewards:
+  xp: 500
+  achievement: "digital_detective"
+  achievement_name: "Digital Detective"
+  achievement_description: "Solved your first murder mystery using terminal commands"

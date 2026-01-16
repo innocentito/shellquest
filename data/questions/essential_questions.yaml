@@ -1,0 +1,4690 @@
+# ShellQuest Essential Questions
+# ~500 questions for essential commands
+
+questions:
+  # ============================================================
+  # CD COMMAND - 40 Questions
+  # ============================================================
+
+  # Multiple Choice
+  - id: "cd_mc_001"
+    type: "multiple_choice"
+    command: "cd"
+    difficulty: "essential"
+    question_text: "What does 'cd' stand for?"
+    options:
+      - "Change Directory"
+      - "Copy Directory"
+      - "Create Directory"
+      - "Check Directory"
+    correct_answer: "Change Directory"
+    explanation: "cd stands for 'Change Directory' - it's used to navigate between directories."
+    points: 10
+    hint: "Think about what the command actually does - it changes your location."
+
+  - id: "cd_mc_002"
+    type: "multiple_choice"
+    command: "cd"
+    difficulty: "essential"
+    question_text: "What does 'cd ~' do?"
+    options:
+      - "Goes to the home directory"
+      - "Goes to the root directory"
+      - "Goes to the previous directory"
+      - "Shows current directory"
+    correct_answer: "Goes to the home directory"
+    explanation: "The tilde (~) is a shortcut for your home directory, usually /home/username."
+    points: 10
+    hint: "The tilde is a special symbol representing your personal space."
+
+  - id: "cd_mc_003"
+    type: "multiple_choice"
+    command: "cd"
+    difficulty: "essential"
+    question_text: "What does 'cd ..' do?"
+    options:
+      - "Goes to parent directory"
+      - "Goes to home directory"
+      - "Goes to root directory"
+      - "Shows hidden files"
+    correct_answer: "Goes to parent directory"
+    explanation: "Two dots (..) represent the parent directory - one level up."
+    points: 10
+    hint: "Think about the shortcut for moving up in the directory tree."
+
+  - id: "cd_mc_004"
+    type: "multiple_choice"
+    command: "cd"
+    difficulty: "essential"
+    question_text: "What does 'cd -' do?"
+    options:
+      - "Goes to the previous directory"
+      - "Goes to home directory"
+      - "Goes to root directory"
+      - "Deletes current directory"
+    correct_answer: "Goes to the previous directory"
+    explanation: "The dash (-) takes you back to the directory you were in before."
+    points: 15
+    hint: "Think of it like an 'undo' for navigation."
+
+  - id: "cd_mc_005"
+    type: "multiple_choice"
+    command: "cd"
+    difficulty: "essential"
+    question_text: "What does 'cd /' do?"
+    options:
+      - "Goes to the root directory"
+      - "Goes to home directory"
+      - "Goes to parent directory"
+      - "Creates a new directory"
+    correct_answer: "Goes to the root directory"
+    explanation: "The forward slash (/) represents the root of the filesystem."
+    points: 10
+    hint: "The slash is the top of the directory tree."
+
+  - id: "cd_mc_006"
+    type: "multiple_choice"
+    command: "cd"
+    difficulty: "essential"
+    question_text: "If you're in /home/user/docs, what does 'cd ../../' take you?"
+    options:
+      - "/home"
+      - "/home/user"
+      - "/"
+      - "/home/user/docs"
+    correct_answer: "/home"
+    explanation: "Each .. goes up one level: docs -> user -> home."
+    points: 20
+    hint: "Count the dots - each pair goes up one directory."
+
+  - id: "cd_mc_007"
+    type: "multiple_choice"
+    command: "cd"
+    difficulty: "essential"
+    question_text: "What happens if you type 'cd' with no arguments?"
+    options:
+      - "Goes to home directory"
+      - "Shows current directory"
+      - "Shows an error"
+      - "Goes to root directory"
+    correct_answer: "Goes to home directory"
+    explanation: "Running cd without arguments is the same as cd ~ - it takes you home."
+    points: 15
+    hint: "It's a shortcut to get back home quickly."
+
+  - id: "cd_mc_008"
+    type: "multiple_choice"
+    command: "cd"
+    difficulty: "essential"
+    question_text: "What does 'cd .' do?"
+    options:
+      - "Stays in current directory"
+      - "Goes to parent directory"
+      - "Goes to home directory"
+      - "Shows an error"
+    correct_answer: "Stays in current directory"
+    explanation: "A single dot (.) represents the current directory."
+    points: 10
+    hint: "What symbol represents your current position?"
+
+  # Fill in the blank
+  - id: "cd_fb_001"
+    type: "fill_blank"
+    command: "cd"
+    difficulty: "essential"
+    question_text: "Complete the command to go to the parent directory: cd ___"
+    correct_answer: ".."
+    explanation: "Two dots (..) represent the parent directory."
+    points: 15
+    hint: "How do you reference the directory above?"
+
+  - id: "cd_fb_002"
+    type: "fill_blank"
+    command: "cd"
+    difficulty: "essential"
+    question_text: "Complete the command to go to your home directory: cd ___"
+    correct_answer:
+      - "~"
+      - ""
+    explanation: "Either ~ or no argument takes you to your home directory."
+    points: 15
+    hint: "There's a special character for home, or you can leave it empty."
+
+  - id: "cd_fb_003"
+    type: "fill_blank"
+    command: "cd"
+    difficulty: "essential"
+    question_text: "Complete the command to go to the previous directory: cd ___"
+    correct_answer: "-"
+    explanation: "The dash (-) returns you to your previous location."
+    points: 15
+    hint: "Think about toggling between two locations."
+
+  - id: "cd_fb_004"
+    type: "fill_blank"
+    command: "cd"
+    difficulty: "essential"
+    question_text: "Complete the command to go to root: cd ___"
+    correct_answer: "/"
+    explanation: "The forward slash represents the root directory."
+    points: 15
+    hint: "What's at the very top of the filesystem tree?"
+
+  # What does it do
+  - id: "cd_wd_001"
+    type: "what_does_it_do"
+    command: "cd"
+    difficulty: "essential"
+    question_text: "What does 'cd /var/log' do?"
+    options:
+      - "Changes to the /var/log directory"
+      - "Creates the /var/log directory"
+      - "Lists files in /var/log"
+      - "Deletes the /var/log directory"
+    correct_answer: "Changes to the /var/log directory"
+    explanation: "cd followed by a path navigates to that directory."
+    points: 10
+    hint: "cd always changes your current location."
+
+  - id: "cd_wd_002"
+    type: "what_does_it_do"
+    command: "cd"
+    difficulty: "essential"
+    question_text: "What does 'cd ~/Documents' do?"
+    options:
+      - "Goes to Documents folder in your home directory"
+      - "Creates a Documents folder"
+      - "Lists Documents folder contents"
+      - "Copies Documents folder"
+    correct_answer: "Goes to Documents folder in your home directory"
+    explanation: "~/Documents means the Documents folder inside your home directory."
+    points: 15
+    hint: "The ~ expands to your home directory path."
+
+  # Command Builder
+  - id: "cd_cb_001"
+    type: "command_builder"
+    command: "cd"
+    difficulty: "essential"
+    question_text: "Write the command to navigate to /etc/nginx"
+    correct_answer:
+      - "cd /etc/nginx"
+    explanation: "Use cd followed by the absolute path."
+    points: 20
+    hint: "Start with cd, then the full path."
+
+  - id: "cd_cb_002"
+    type: "command_builder"
+    command: "cd"
+    difficulty: "essential"
+    question_text: "Write the command to go up two directories"
+    correct_answer:
+      - "cd ../.."
+      - "cd ../../"
+    explanation: "Each .. goes up one level, so ../.. goes up two."
+    points: 20
+    hint: "How do you chain multiple upward movements?"
+
+  # ============================================================
+  # PWD COMMAND - 25 Questions
+  # ============================================================
+
+  - id: "pwd_mc_001"
+    type: "multiple_choice"
+    command: "pwd"
+    difficulty: "essential"
+    question_text: "What does 'pwd' stand for?"
+    options:
+      - "Print Working Directory"
+      - "Password"
+      - "Path Working Directory"
+      - "Present Working Directory"
+    correct_answer: "Print Working Directory"
+    explanation: "pwd prints the full path of your current working directory."
+    points: 10
+    hint: "It prints something about where you are."
+
+  - id: "pwd_mc_002"
+    type: "multiple_choice"
+    command: "pwd"
+    difficulty: "essential"
+    question_text: "What does pwd display?"
+    options:
+      - "The absolute path of current directory"
+      - "The contents of current directory"
+      - "The parent directory"
+      - "The home directory"
+    correct_answer: "The absolute path of current directory"
+    explanation: "pwd shows the complete path from root to your current location."
+    points: 10
+    hint: "It shows your full location in the filesystem."
+
+  - id: "pwd_mc_003"
+    type: "multiple_choice"
+    command: "pwd"
+    difficulty: "essential"
+    question_text: "If pwd shows '/home/user/projects', where are you?"
+    options:
+      - "In the projects folder inside user's home"
+      - "In the home folder"
+      - "In the root folder"
+      - "In the user folder"
+    correct_answer: "In the projects folder inside user's home"
+    explanation: "The path shows you're in projects, which is inside user, which is inside home."
+    points: 15
+    hint: "Read the path from left to right."
+
+  - id: "pwd_mc_004"
+    type: "multiple_choice"
+    command: "pwd"
+    difficulty: "essential"
+    question_text: "Does pwd take any arguments?"
+    options:
+      - "Usually no, it just shows current directory"
+      - "Yes, it requires a path"
+      - "Yes, it requires a filename"
+      - "Yes, it requires a username"
+    correct_answer: "Usually no, it just shows current directory"
+    explanation: "pwd is typically used without arguments - it just prints where you are."
+    points: 10
+    hint: "It's a very simple command."
+
+  - id: "pwd_mc_005"
+    type: "multiple_choice"
+    command: "pwd"
+    difficulty: "essential"
+    question_text: "What's the difference between pwd and cd?"
+    options:
+      - "pwd shows location, cd changes location"
+      - "pwd changes location, cd shows location"
+      - "They do the same thing"
+      - "pwd deletes directories, cd creates them"
+    correct_answer: "pwd shows location, cd changes location"
+    explanation: "pwd is for viewing your location, cd is for changing it."
+    points: 15
+    hint: "One shows, one moves."
+
+  - id: "pwd_wd_001"
+    type: "what_does_it_do"
+    command: "pwd"
+    difficulty: "essential"
+    question_text: "What happens when you run 'pwd' in a terminal?"
+    options:
+      - "It prints the full path of current directory"
+      - "It changes to a new directory"
+      - "It creates a new directory"
+      - "It lists all files"
+    correct_answer: "It prints the full path of current directory"
+    explanation: "pwd simply outputs your current location as an absolute path."
+    points: 10
+    hint: "It's all about showing where you are."
+
+  - id: "pwd_fb_001"
+    type: "fill_blank"
+    command: "pwd"
+    difficulty: "essential"
+    question_text: "To see your current directory path, type: ___"
+    correct_answer: "pwd"
+    explanation: "pwd (print working directory) shows your current location."
+    points: 10
+    hint: "What command shows your current location?"
+
+  # ============================================================
+  # LS COMMAND - 60 Questions
+  # ============================================================
+
+  - id: "ls_mc_001"
+    type: "multiple_choice"
+    command: "ls"
+    difficulty: "essential"
+    question_text: "What does 'ls' do?"
+    options:
+      - "Lists directory contents"
+      - "Locates files"
+      - "Links files"
+      - "Loads system"
+    correct_answer: "Lists directory contents"
+    explanation: "ls is short for 'list' - it shows what's in a directory."
+    points: 10
+    hint: "Think of it as 'list'."
+
+  - id: "ls_mc_002"
+    type: "multiple_choice"
+    command: "ls"
+    difficulty: "essential"
+    question_text: "What does 'ls -l' do?"
+    options:
+      - "Shows detailed/long listing"
+      - "Shows only links"
+      - "Shows largest files first"
+      - "Shows last modified files"
+    correct_answer: "Shows detailed/long listing"
+    explanation: "The -l flag means 'long format' with permissions, size, date, etc."
+    points: 15
+    hint: "What flag gives you more details about each file?"
+
+  - id: "ls_mc_003"
+    type: "multiple_choice"
+    command: "ls"
+    difficulty: "essential"
+    question_text: "What does 'ls -a' show?"
+    options:
+      - "All files including hidden ones"
+      - "Only audio files"
+      - "Files in alphabetical order"
+      - "Only archive files"
+    correct_answer: "All files including hidden ones"
+    explanation: "The -a flag shows 'all' files, including those starting with a dot."
+    points: 15
+    hint: "What's normally excluded from the listing?"
+
+  - id: "ls_mc_004"
+    type: "multiple_choice"
+    command: "ls"
+    difficulty: "essential"
+    question_text: "How are hidden files named in Linux?"
+    options:
+      - "They start with a dot (.)"
+      - "They end with .hidden"
+      - "They have no extension"
+      - "They start with underscore (_)"
+    correct_answer: "They start with a dot (.)"
+    explanation: "Files starting with . are hidden by default, like .bashrc or .gitignore."
+    points: 15
+    hint: "Think of files like .bashrc or .gitignore."
+
+  - id: "ls_mc_005"
+    type: "multiple_choice"
+    command: "ls"
+    difficulty: "essential"
+    question_text: "What does 'ls -h' do (with -l)?"
+    options:
+      - "Shows file sizes in human-readable format"
+      - "Shows hidden files"
+      - "Shows help"
+      - "Shows history"
+    correct_answer: "Shows file sizes in human-readable format"
+    explanation: "-h makes sizes readable like '4.2K' or '1.5M' instead of bytes."
+    points: 20
+    hint: "Would you rather see 1048576 or 1M?"
+
+  - id: "ls_mc_006"
+    type: "multiple_choice"
+    command: "ls"
+    difficulty: "essential"
+    question_text: "What does 'ls -R' do?"
+    options:
+      - "Lists contents recursively (including subdirectories)"
+      - "Lists in reverse order"
+      - "Lists only readable files"
+      - "Lists recently modified files"
+    correct_answer: "Lists contents recursively (including subdirectories)"
+    explanation: "-R means recursive - it shows contents of all subdirectories too."
+    points: 20
+    hint: "How do you see inside nested folders too?"
+
+  - id: "ls_mc_007"
+    type: "multiple_choice"
+    command: "ls"
+    difficulty: "essential"
+    question_text: "What does 'ls -t' do?"
+    options:
+      - "Sorts by modification time (newest first)"
+      - "Shows file types"
+      - "Shows total size"
+      - "Shows tree view"
+    correct_answer: "Sorts by modification time (newest first)"
+    explanation: "-t sorts files by time, with most recently modified first."
+    points: 20
+    hint: "How would you find what changed recently?"
+
+  - id: "ls_mc_008"
+    type: "multiple_choice"
+    command: "ls"
+    difficulty: "essential"
+    question_text: "What does 'ls -r' do?"
+    options:
+      - "Reverses the sort order"
+      - "Shows recursive listing"
+      - "Shows readable files only"
+      - "Shows recently accessed files"
+    correct_answer: "Reverses the sort order"
+    explanation: "-r (lowercase) reverses whatever sort order is being used."
+    points: 20
+    hint: "It's the opposite of the normal order."
+
+  - id: "ls_mc_009"
+    type: "multiple_choice"
+    command: "ls"
+    difficulty: "essential"
+    question_text: "What does 'ls -S' do?"
+    options:
+      - "Sorts by file size (largest first)"
+      - "Shows symbolic links"
+      - "Shows system files"
+      - "Shows special files"
+    correct_answer: "Sorts by file size (largest first)"
+    explanation: "-S sorts files by size, with biggest files first."
+    points: 20
+    hint: "How do you find the biggest files?"
+
+  - id: "ls_mc_010"
+    type: "multiple_choice"
+    command: "ls"
+    difficulty: "essential"
+    question_text: "What does 'ls *.txt' do?"
+    options:
+      - "Lists only files ending in .txt"
+      - "Lists all text content"
+      - "Creates a .txt file"
+      - "Deletes .txt files"
+    correct_answer: "Lists only files ending in .txt"
+    explanation: "The asterisk (*) is a wildcard matching any characters before .txt."
+    points: 15
+    hint: "The * is a wildcard pattern."
+
+  - id: "ls_mc_011"
+    type: "multiple_choice"
+    command: "ls"
+    difficulty: "essential"
+    question_text: "In 'ls -l' output, what does 'd' at the start mean?"
+    options:
+      - "It's a directory"
+      - "It's deleted"
+      - "It's a document"
+      - "It's a device"
+    correct_answer: "It's a directory"
+    explanation: "The first character shows file type: d=directory, -=file, l=link."
+    points: 20
+    hint: "It indicates the type of item."
+
+  - id: "ls_mc_012"
+    type: "multiple_choice"
+    command: "ls"
+    difficulty: "essential"
+    question_text: "What does 'ls -la' do?"
+    options:
+      - "Shows all files in long format"
+      - "Shows links and archives"
+      - "Shows large files only"
+      - "Shows latest files"
+    correct_answer: "Shows all files in long format"
+    explanation: "-la combines -l (long) and -a (all), showing everything in detail."
+    points: 15
+    hint: "It combines two flags we've learned."
+
+  - id: "ls_mc_013"
+    type: "multiple_choice"
+    command: "ls"
+    difficulty: "essential"
+    question_text: "What does 'ls /etc' do?"
+    options:
+      - "Lists contents of /etc directory"
+      - "Lists files ending in etc"
+      - "Edits the etc file"
+      - "Changes to /etc directory"
+    correct_answer: "Lists contents of /etc directory"
+    explanation: "ls with a path argument lists that directory's contents."
+    points: 10
+    hint: "You can give ls any directory path."
+
+  - id: "ls_mc_014"
+    type: "multiple_choice"
+    command: "ls"
+    difficulty: "essential"
+    question_text: "What does 'ls -1' (number one) do?"
+    options:
+      - "Lists one file per line"
+      - "Lists only one file"
+      - "Lists first file only"
+      - "Shows version 1"
+    correct_answer: "Lists one file per line"
+    explanation: "-1 forces single-column output, one entry per line."
+    points: 20
+    hint: "One file per line."
+
+  - id: "ls_mc_015"
+    type: "multiple_choice"
+    command: "ls"
+    difficulty: "essential"
+    question_text: "What color typically represents directories in ls output?"
+    options:
+      - "Blue"
+      - "Red"
+      - "Green"
+      - "Yellow"
+    correct_answer: "Blue"
+    explanation: "In most terminals, directories appear blue, executables green, etc."
+    points: 15
+    hint: "It's a common 'cool' color."
+
+  # Fill in blank for ls
+  - id: "ls_fb_001"
+    type: "fill_blank"
+    command: "ls"
+    difficulty: "essential"
+    question_text: "Show hidden files with: ls ___"
+    correct_answer:
+      - "-a"
+      - "-la"
+      - "-al"
+    explanation: "The -a flag shows all files including hidden ones."
+    points: 15
+    hint: "Files starting with a dot are hidden by default."
+
+  - id: "ls_fb_002"
+    type: "fill_blank"
+    command: "ls"
+    difficulty: "essential"
+    question_text: "Show detailed file info with: ls ___"
+    correct_answer:
+      - "-l"
+      - "-la"
+      - "-al"
+    explanation: "The -l flag gives long/detailed output."
+    points: 15
+    hint: "Think about getting a detailed view with permissions and sizes."
+
+  - id: "ls_fb_003"
+    type: "fill_blank"
+    command: "ls"
+    difficulty: "essential"
+    question_text: "Sort files by size with: ls ___"
+    correct_answer:
+      - "-S"
+      - "-lS"
+      - "-Sl"
+    explanation: "-S sorts by file size, largest first."
+    points: 20
+    hint: "How do you find the biggest files?"
+
+  - id: "ls_fb_004"
+    type: "fill_blank"
+    command: "ls"
+    difficulty: "essential"
+    question_text: "List only .log files: ls ___"
+    correct_answer:
+      - "*.log"
+    explanation: "The wildcard * matches any characters before .log."
+    points: 20
+    hint: "Use a wildcard pattern."
+
+  # What does it do - ls
+  - id: "ls_wd_001"
+    type: "what_does_it_do"
+    command: "ls"
+    difficulty: "essential"
+    question_text: "What does 'ls -lah /var/log' do?"
+    options:
+      - "Lists all files in /var/log with sizes in human-readable format"
+      - "Creates log files in /var"
+      - "Deletes files from /var/log"
+      - "Changes to /var/log directory"
+    correct_answer: "Lists all files in /var/log with sizes in human-readable format"
+    explanation: "-l=long, -a=all, -h=human-readable sizes, showing /var/log contents."
+    points: 25
+    hint: "Combine the meanings of each flag."
+
+  - id: "ls_wd_002"
+    type: "what_does_it_do"
+    command: "ls"
+    difficulty: "essential"
+    question_text: "What does 'ls -lt | head -5' do?"
+    options:
+      - "Shows the 5 most recently modified files"
+      - "Shows the 5 largest files"
+      - "Shows 5 files starting with 't'"
+      - "Shows 5 random files"
+    correct_answer: "Shows the 5 most recently modified files"
+    explanation: "-lt sorts by time, head -5 shows only the first 5 results."
+    points: 30
+    hint: "-t sorts by time, head limits the output."
+
+  # Command builder - ls
+  - id: "ls_cb_001"
+    type: "command_builder"
+    command: "ls"
+    difficulty: "essential"
+    question_text: "Write a command to list all files including hidden ones"
+    correct_answer:
+      - "ls -a"
+      - "ls -la"
+      - "ls -al"
+    explanation: "Use -a to show all files including hidden ones."
+    points: 15
+    hint: "How do you include items that start with a dot?"
+
+  - id: "ls_cb_002"
+    type: "command_builder"
+    command: "ls"
+    difficulty: "essential"
+    question_text: "Write a command to list files sorted by size, largest first"
+    correct_answer:
+      - "ls -S"
+      - "ls -lS"
+      - "ls -Sl"
+    explanation: "-S sorts by size with largest first."
+    points: 20
+    hint: "There's a way to sort by file size."
+
+  # ============================================================
+  # CAT COMMAND - 40 Questions
+  # ============================================================
+
+  - id: "cat_mc_001"
+    type: "multiple_choice"
+    command: "cat"
+    difficulty: "essential"
+    question_text: "What does 'cat' stand for?"
+    options:
+      - "Concatenate"
+      - "Catalog"
+      - "Category"
+      - "Catch"
+    correct_answer: "Concatenate"
+    explanation: "cat is short for concatenate - it joins and displays files."
+    points: 10
+    hint: "It's about joining things together."
+
+  - id: "cat_mc_002"
+    type: "multiple_choice"
+    command: "cat"
+    difficulty: "essential"
+    question_text: "What does 'cat file.txt' do?"
+    options:
+      - "Displays the contents of file.txt"
+      - "Creates a new file called file.txt"
+      - "Deletes file.txt"
+      - "Copies file.txt"
+    correct_answer: "Displays the contents of file.txt"
+    explanation: "cat with a filename displays that file's contents on screen."
+    points: 10
+    hint: "It shows you what's inside the file."
+
+  - id: "cat_mc_003"
+    type: "multiple_choice"
+    command: "cat"
+    difficulty: "essential"
+    question_text: "What does 'cat file1.txt file2.txt' do?"
+    options:
+      - "Displays contents of both files one after another"
+      - "Merges files into a new file"
+      - "Compares the two files"
+      - "Copies file1 to file2"
+    correct_answer: "Displays contents of both files one after another"
+    explanation: "cat displays multiple files sequentially - that's the concatenation."
+    points: 15
+    hint: "It concatenates (joins) the output."
+
+  - id: "cat_mc_004"
+    type: "multiple_choice"
+    command: "cat"
+    difficulty: "essential"
+    question_text: "What does 'cat -n file.txt' do?"
+    options:
+      - "Shows contents with line numbers"
+      - "Creates a new file"
+      - "Shows file without content"
+      - "Counts words in file"
+    correct_answer: "Shows contents with line numbers"
+    explanation: "-n adds line numbers to the output."
+    points: 15
+    hint: "How do you see which line each item is on?"
+
+  - id: "cat_mc_005"
+    type: "multiple_choice"
+    command: "cat"
+    difficulty: "essential"
+    question_text: "What does 'cat > newfile.txt' do?"
+    options:
+      - "Creates a new file and waits for input"
+      - "Displays newfile.txt"
+      - "Deletes newfile.txt"
+      - "Copies to newfile.txt"
+    correct_answer: "Creates a new file and waits for input"
+    explanation: "The > redirects input to a new file. Type text, then Ctrl+D to save."
+    points: 20
+    hint: "The > symbol redirects output."
+
+  - id: "cat_mc_006"
+    type: "multiple_choice"
+    command: "cat"
+    difficulty: "essential"
+    question_text: "What does 'cat >> file.txt' do?"
+    options:
+      - "Appends input to the end of file.txt"
+      - "Overwrites file.txt"
+      - "Reads file.txt backwards"
+      - "Deletes file.txt"
+    correct_answer: "Appends input to the end of file.txt"
+    explanation: ">> appends to a file instead of overwriting it."
+    points: 20
+    hint: "Double > means append, single > means overwrite."
+
+  - id: "cat_mc_007"
+    type: "multiple_choice"
+    command: "cat"
+    difficulty: "essential"
+    question_text: "What does 'cat -E file.txt' show?"
+    options:
+      - "$ at the end of each line"
+      - "Empty lines only"
+      - "Errors in the file"
+      - "Environment variables"
+    correct_answer: "$ at the end of each line"
+    explanation: "-E displays a $ symbol at the end of each line."
+    points: 20
+    hint: "It shows where lines end."
+
+  - id: "cat_mc_008"
+    type: "multiple_choice"
+    command: "cat"
+    difficulty: "essential"
+    question_text: "What is a downside of using cat on very large files?"
+    options:
+      - "It floods your terminal with too much text"
+      - "It deletes the file"
+      - "It corrupts the file"
+      - "It compresses the file"
+    correct_answer: "It floods your terminal with too much text"
+    explanation: "For large files, use less, head, or tail instead of cat."
+    points: 15
+    hint: "Think about what happens with thousands of lines."
+
+  - id: "cat_fb_001"
+    type: "fill_blank"
+    command: "cat"
+    difficulty: "essential"
+    question_text: "Display file contents with line numbers: cat ___ file.txt"
+    correct_answer: "-n"
+    explanation: "-n adds line numbers to the output."
+    points: 15
+    hint: "How do you identify specific lines?"
+
+  - id: "cat_fb_002"
+    type: "fill_blank"
+    command: "cat"
+    difficulty: "essential"
+    question_text: "Append text to a file: cat ___ file.txt"
+    correct_answer: ">>"
+    explanation: ">> appends to a file instead of overwriting."
+    points: 20
+    hint: "How do you add to a file without replacing its contents?"
+
+  - id: "cat_cb_001"
+    type: "command_builder"
+    command: "cat"
+    difficulty: "essential"
+    question_text: "Write a command to display config.txt with line numbers"
+    correct_answer:
+      - "cat -n config.txt"
+    explanation: "Use -n for line numbers."
+    points: 15
+    hint: "How do you see which line is which in the output?"
+
+  # ============================================================
+  # HEAD COMMAND - 30 Questions
+  # ============================================================
+
+  - id: "head_mc_001"
+    type: "multiple_choice"
+    command: "head"
+    difficulty: "essential"
+    question_text: "By default, how many lines does 'head' display?"
+    options:
+      - "10 lines"
+      - "5 lines"
+      - "20 lines"
+      - "All lines"
+    correct_answer: "10 lines"
+    explanation: "head shows the first 10 lines by default."
+    points: 10
+    hint: "It's a round number."
+
+  - id: "head_mc_002"
+    type: "multiple_choice"
+    command: "head"
+    difficulty: "essential"
+    question_text: "What does 'head -n 5 file.txt' do?"
+    options:
+      - "Shows the first 5 lines"
+      - "Shows lines containing '5'"
+      - "Shows every 5th line"
+      - "Shows the last 5 lines"
+    correct_answer: "Shows the first 5 lines"
+    explanation: "-n specifies the number of lines to show from the beginning."
+    points: 15
+    hint: "-n controls the number of lines."
+
+  - id: "head_mc_003"
+    type: "multiple_choice"
+    command: "head"
+    difficulty: "essential"
+    question_text: "What's the difference between head and tail?"
+    options:
+      - "head shows beginning, tail shows end"
+      - "head shows end, tail shows beginning"
+      - "They do the same thing"
+      - "head creates files, tail deletes them"
+    correct_answer: "head shows beginning, tail shows end"
+    explanation: "head shows the start of a file, tail shows the end."
+    points: 15
+    hint: "Think about body parts - head is at the top."
+
+  - id: "head_mc_004"
+    type: "multiple_choice"
+    command: "head"
+    difficulty: "essential"
+    question_text: "What does 'head -c 100 file.txt' do?"
+    options:
+      - "Shows the first 100 bytes/characters"
+      - "Shows 100 lines"
+      - "Shows lines with 100 characters"
+      - "Shows the 100th line"
+    correct_answer: "Shows the first 100 bytes/characters"
+    explanation: "-c specifies bytes/characters instead of lines."
+    points: 20
+    hint: "What if you want bytes instead of lines?"
+
+  - id: "head_mc_005"
+    type: "multiple_choice"
+    command: "head"
+    difficulty: "essential"
+    question_text: "What does 'head -20 file.txt' do?"
+    options:
+      - "Shows the first 20 lines"
+      - "Shows line 20 only"
+      - "Skips first 20 lines"
+      - "Shows 20 files"
+    correct_answer: "Shows the first 20 lines"
+    explanation: "A number after head specifies how many lines to show."
+    points: 15
+    hint: "The number specifies the line count."
+
+  - id: "head_fb_001"
+    type: "fill_blank"
+    command: "head"
+    difficulty: "essential"
+    question_text: "Show first 15 lines: head ___ 15 file.txt"
+    correct_answer: "-n"
+    explanation: "-n specifies the number of lines."
+    points: 15
+    hint: "How do you identify specific lines?"
+
+  - id: "head_cb_001"
+    type: "command_builder"
+    command: "head"
+    difficulty: "essential"
+    question_text: "Write a command to show the first 3 lines of log.txt"
+    correct_answer:
+      - "head -n 3 log.txt"
+      - "head -3 log.txt"
+    explanation: "Use -n 3 or just -3 to show 3 lines."
+    points: 15
+    hint: "How do you limit how much you see from the top?"
+
+  # ============================================================
+  # TAIL COMMAND - 30 Questions
+  # ============================================================
+
+  - id: "tail_mc_001"
+    type: "multiple_choice"
+    command: "tail"
+    difficulty: "essential"
+    question_text: "What does 'tail' display by default?"
+    options:
+      - "The last 10 lines of a file"
+      - "The first 10 lines of a file"
+      - "All lines of a file"
+      - "Random lines from a file"
+    correct_answer: "The last 10 lines of a file"
+    explanation: "tail shows the last 10 lines by default."
+    points: 10
+    hint: "tail is the opposite of head."
+
+  - id: "tail_mc_002"
+    type: "multiple_choice"
+    command: "tail"
+    difficulty: "essential"
+    question_text: "What does 'tail -f file.log' do?"
+    options:
+      - "Follows the file, showing new lines as they're added"
+      - "Shows the first lines"
+      - "Filters the file"
+      - "Formats the file"
+    correct_answer: "Follows the file, showing new lines as they're added"
+    explanation: "-f means 'follow' - it watches for new content in real-time."
+    points: 20
+    hint: "Think about monitoring a file that's being written to."
+
+  - id: "tail_mc_003"
+    type: "multiple_choice"
+    command: "tail"
+    difficulty: "essential"
+    question_text: "What does 'tail -n 20 file.txt' do?"
+    options:
+      - "Shows the last 20 lines"
+      - "Shows the first 20 lines"
+      - "Skips 20 lines"
+      - "Shows line 20"
+    correct_answer: "Shows the last 20 lines"
+    explanation: "-n specifies how many lines to show from the end."
+    points: 15
+    hint: "-n controls the number of lines."
+
+  - id: "tail_mc_004"
+    type: "multiple_choice"
+    command: "tail"
+    difficulty: "essential"
+    question_text: "Why is 'tail -f' commonly used with log files?"
+    options:
+      - "To monitor logs in real-time as new entries are added"
+      - "To delete old log entries"
+      - "To compress log files"
+      - "To format log files"
+    correct_answer: "To monitor logs in real-time as new entries are added"
+    explanation: "tail -f is perfect for watching live logs, like web server or application logs."
+    points: 20
+    hint: "Think about watching live updates."
+
+  - id: "tail_mc_005"
+    type: "multiple_choice"
+    command: "tail"
+    difficulty: "essential"
+    question_text: "How do you stop 'tail -f'?"
+    options:
+      - "Press Ctrl+C"
+      - "Press Escape"
+      - "Type 'quit'"
+      - "Press Enter"
+    correct_answer: "Press Ctrl+C"
+    explanation: "Ctrl+C stops most running terminal commands, including tail -f."
+    points: 15
+    hint: "It's the standard way to interrupt commands."
+
+  - id: "tail_fb_001"
+    type: "fill_blank"
+    command: "tail"
+    difficulty: "essential"
+    question_text: "Follow a log file in real-time: tail ___ /var/log/syslog"
+    correct_answer: "-f"
+    explanation: "-f means follow - shows new content as it's added."
+    points: 20
+    hint: "How do you watch a file for new content?"
+
+  - id: "tail_cb_001"
+    type: "command_builder"
+    command: "tail"
+    difficulty: "essential"
+    question_text: "Write a command to show the last 50 lines of errors.log"
+    correct_answer:
+      - "tail -n 50 errors.log"
+      - "tail -50 errors.log"
+    explanation: "Use -n 50 or -50 to show 50 lines."
+    points: 15
+    hint: "How do you specify how many lines from the end?"
+
+  # ============================================================
+  # CP COMMAND - 40 Questions
+  # ============================================================
+
+  - id: "cp_mc_001"
+    type: "multiple_choice"
+    command: "cp"
+    difficulty: "essential"
+    question_text: "What does 'cp' stand for?"
+    options:
+      - "Copy"
+      - "Capture"
+      - "Compress"
+      - "Compare"
+    correct_answer: "Copy"
+    explanation: "cp is short for copy - it duplicates files and directories."
+    points: 10
+    hint: "It makes a duplicate."
+
+  - id: "cp_mc_002"
+    type: "multiple_choice"
+    command: "cp"
+    difficulty: "essential"
+    question_text: "What does 'cp file1.txt file2.txt' do?"
+    options:
+      - "Copies file1.txt to a new file called file2.txt"
+      - "Merges the two files"
+      - "Compares the two files"
+      - "Deletes both files"
+    correct_answer: "Copies file1.txt to a new file called file2.txt"
+    explanation: "cp creates a copy of the first file with the second filename."
+    points: 10
+    hint: "First argument is source, second is destination."
+
+  - id: "cp_mc_003"
+    type: "multiple_choice"
+    command: "cp"
+    difficulty: "essential"
+    question_text: "What does 'cp -r' do?"
+    options:
+      - "Copies directories recursively"
+      - "Renames files"
+      - "Removes files"
+      - "Reverses copy"
+    correct_answer: "Copies directories recursively"
+    explanation: "-r (recursive) is needed to copy directories with their contents."
+    points: 15
+    hint: "You need this flag for directories."
+
+  - id: "cp_mc_004"
+    type: "multiple_choice"
+    command: "cp"
+    difficulty: "essential"
+    question_text: "What does 'cp -i' do?"
+    options:
+      - "Asks for confirmation before overwriting"
+      - "Ignores errors"
+      - "Copies invisible files"
+      - "Shows information"
+    correct_answer: "Asks for confirmation before overwriting"
+    explanation: "-i means interactive - it prompts before overwriting existing files."
+    points: 20
+    hint: "What if you want to be asked before overwriting?"
+
+  - id: "cp_mc_005"
+    type: "multiple_choice"
+    command: "cp"
+    difficulty: "essential"
+    question_text: "What does 'cp -v' do?"
+    options:
+      - "Shows verbose output (what's being copied)"
+      - "Verifies the copy"
+      - "Copies very fast"
+      - "Copies version info"
+    correct_answer: "Shows verbose output (what's being copied)"
+    explanation: "-v means verbose - it shows each file as it's copied."
+    points: 15
+    hint: "How do you see what's happening during the operation?"
+
+  - id: "cp_mc_006"
+    type: "multiple_choice"
+    command: "cp"
+    difficulty: "essential"
+    question_text: "What does 'cp file.txt /tmp/' do?"
+    options:
+      - "Copies file.txt to the /tmp directory"
+      - "Copies /tmp to file.txt"
+      - "Creates file.txt in current directory"
+      - "Deletes file.txt"
+    correct_answer: "Copies file.txt to the /tmp directory"
+    explanation: "When destination is a directory, the file is copied there with the same name."
+    points: 15
+    hint: "The second argument is the destination."
+
+  - id: "cp_mc_007"
+    type: "multiple_choice"
+    command: "cp"
+    difficulty: "essential"
+    question_text: "What happens if you 'cp' to an existing file without -i?"
+    options:
+      - "It overwrites without asking"
+      - "It shows an error"
+      - "It creates a backup"
+      - "It appends to the file"
+    correct_answer: "It overwrites without asking"
+    explanation: "By default, cp silently overwrites. Use -i to be prompted."
+    points: 20
+    hint: "Be careful - it replaces without warning!"
+
+  - id: "cp_mc_008"
+    type: "multiple_choice"
+    command: "cp"
+    difficulty: "essential"
+    question_text: "What does 'cp -p' preserve?"
+    options:
+      - "File permissions, timestamps, and ownership"
+      - "The path"
+      - "The password"
+      - "The parent directory"
+    correct_answer: "File permissions, timestamps, and ownership"
+    explanation: "-p preserves the file's attributes during copy."
+    points: 20
+    hint: "Sometimes you want to keep the original file's metadata."
+
+  - id: "cp_fb_001"
+    type: "fill_blank"
+    command: "cp"
+    difficulty: "essential"
+    question_text: "Copy a directory with contents: cp ___ folder/ backup/"
+    correct_answer:
+      - "-r"
+      - "-R"
+    explanation: "-r (recursive) is required for directories."
+    points: 15
+    hint: "Directories need special handling to include their contents."
+
+  - id: "cp_fb_002"
+    type: "fill_blank"
+    command: "cp"
+    difficulty: "essential"
+    question_text: "Copy with confirmation before overwriting: cp ___ file.txt dest/"
+    correct_answer: "-i"
+    explanation: "-i prompts before overwriting."
+    points: 15
+    hint: "What if you want to be asked before overwriting?"
+
+  - id: "cp_cb_001"
+    type: "command_builder"
+    command: "cp"
+    difficulty: "essential"
+    question_text: "Write a command to copy the entire /var/www folder to /backup"
+    correct_answer:
+      - "cp -r /var/www /backup"
+      - "cp -R /var/www /backup"
+      - "cp -r /var/www/ /backup/"
+    explanation: "Use -r for recursive copy of directories."
+    points: 20
+    hint: "How do you copy a folder and everything inside it?"
+
+  # Fix the error
+  - id: "cp_fe_001"
+    type: "fix_error"
+    command: "cp"
+    difficulty: "essential"
+    question_text: "Fix this command to copy a directory: cp mydir/ backup/"
+    correct_answer:
+      - "cp -r mydir/ backup/"
+      - "cp -R mydir/ backup/"
+    explanation: "Directories require -r (recursive) flag."
+    points: 25
+    hint: "Copying directories requires including their contents."
+
+  # ============================================================
+  # MV COMMAND - 35 Questions
+  # ============================================================
+
+  - id: "mv_mc_001"
+    type: "multiple_choice"
+    command: "mv"
+    difficulty: "essential"
+    question_text: "What does 'mv' stand for?"
+    options:
+      - "Move"
+      - "Merge"
+      - "Modify"
+      - "Mount"
+    correct_answer: "Move"
+    explanation: "mv is short for move - it moves or renames files."
+    points: 10
+    hint: "It relocates files."
+
+  - id: "mv_mc_002"
+    type: "multiple_choice"
+    command: "mv"
+    difficulty: "essential"
+    question_text: "What does 'mv old.txt new.txt' do?"
+    options:
+      - "Renames old.txt to new.txt"
+      - "Merges the files"
+      - "Creates a copy called new.txt"
+      - "Deletes old.txt"
+    correct_answer: "Renames old.txt to new.txt"
+    explanation: "When both arguments are in the same directory, mv renames the file."
+    points: 10
+    hint: "In the same directory, it's a rename."
+
+  - id: "mv_mc_003"
+    type: "multiple_choice"
+    command: "mv"
+    difficulty: "essential"
+    question_text: "What does 'mv file.txt /tmp/' do?"
+    options:
+      - "Moves file.txt to /tmp directory"
+      - "Copies file.txt to /tmp"
+      - "Creates file.txt in /tmp"
+      - "Links file.txt to /tmp"
+    correct_answer: "Moves file.txt to /tmp directory"
+    explanation: "mv relocates the file - it's no longer in the original location."
+    points: 15
+    hint: "The file is moved, not copied."
+
+  - id: "mv_mc_004"
+    type: "multiple_choice"
+    command: "mv"
+    difficulty: "essential"
+    question_text: "What's the main difference between cp and mv?"
+    options:
+      - "mv removes the original, cp keeps it"
+      - "cp removes the original, mv keeps it"
+      - "They are identical"
+      - "mv is faster but less safe"
+    correct_answer: "mv removes the original, cp keeps it"
+    explanation: "mv moves (relocates), cp copies (duplicates)."
+    points: 15
+    hint: "One leaves the original, one doesn't."
+
+  - id: "mv_mc_005"
+    type: "multiple_choice"
+    command: "mv"
+    difficulty: "essential"
+    question_text: "Does mv need -r to move directories?"
+    options:
+      - "No, mv moves directories without -r"
+      - "Yes, -r is required"
+      - "Only for large directories"
+      - "Only for empty directories"
+    correct_answer: "No, mv moves directories without -r"
+    explanation: "Unlike cp, mv can move directories without any special flags."
+    points: 20
+    hint: "mv is simpler than cp for directories."
+
+  - id: "mv_mc_006"
+    type: "multiple_choice"
+    command: "mv"
+    difficulty: "essential"
+    question_text: "What does 'mv -i' do?"
+    options:
+      - "Asks before overwriting files"
+      - "Ignores errors"
+      - "Moves interactively"
+      - "Shows information"
+    correct_answer: "Asks before overwriting files"
+    explanation: "-i is interactive - it prompts before overwriting."
+    points: 15
+    hint: "Same as cp -i."
+
+  - id: "mv_mc_007"
+    type: "multiple_choice"
+    command: "mv"
+    difficulty: "essential"
+    question_text: "What does 'mv *.txt archive/' do?"
+    options:
+      - "Moves all .txt files to archive folder"
+      - "Renames .txt files to archive"
+      - "Copies .txt files to archive"
+      - "Deletes .txt files"
+    correct_answer: "Moves all .txt files to archive folder"
+    explanation: "The wildcard *.txt matches all text files, which are moved to archive/."
+    points: 20
+    hint: "* matches multiple files."
+
+  - id: "mv_fb_001"
+    type: "fill_blank"
+    command: "mv"
+    difficulty: "essential"
+    question_text: "Rename file.txt to document.txt: mv ___ document.txt"
+    correct_answer: "file.txt"
+    explanation: "mv source destination - renames file.txt to document.txt."
+    points: 10
+    hint: "First argument is the original filename."
+
+  - id: "mv_cb_001"
+    type: "command_builder"
+    command: "mv"
+    difficulty: "essential"
+    question_text: "Write a command to move all .jpg files to the images folder"
+    correct_answer:
+      - "mv *.jpg images/"
+      - "mv *.jpg images"
+    explanation: "Use wildcard *.jpg to match all jpg files."
+    points: 20
+    hint: "Use a wildcard pattern."
+
+  # ============================================================
+  # RM COMMAND - 40 Questions
+  # ============================================================
+
+  - id: "rm_mc_001"
+    type: "multiple_choice"
+    command: "rm"
+    difficulty: "essential"
+    question_text: "What does 'rm' stand for?"
+    options:
+      - "Remove"
+      - "Rename"
+      - "Remind"
+      - "Remap"
+    correct_answer: "Remove"
+    explanation: "rm is short for remove - it deletes files and directories."
+    points: 10
+    hint: "It deletes things."
+
+  - id: "rm_mc_002"
+    type: "multiple_choice"
+    command: "rm"
+    difficulty: "essential"
+    question_text: "What happens when you rm a file?"
+    options:
+      - "It's permanently deleted (no recycle bin)"
+      - "It goes to trash"
+      - "It's hidden"
+      - "It's compressed"
+    correct_answer: "It's permanently deleted (no recycle bin)"
+    explanation: "Unlike GUI, rm permanently deletes - there's no trash to recover from."
+    points: 15
+    hint: "Be careful - it's gone forever!"
+
+  - id: "rm_mc_003"
+    type: "multiple_choice"
+    command: "rm"
+    difficulty: "essential"
+    question_text: "What does 'rm -r' do?"
+    options:
+      - "Removes directories recursively"
+      - "Removes read-only files"
+      - "Removes recently created files"
+      - "Removes with recovery option"
+    correct_answer: "Removes directories recursively"
+    explanation: "-r is required to delete directories and their contents."
+    points: 15
+    hint: "Directories have contents that need to be handled too."
+
+  - id: "rm_mc_004"
+    type: "multiple_choice"
+    command: "rm"
+    difficulty: "essential"
+    question_text: "What does 'rm -f' do?"
+    options:
+      - "Forces deletion without prompting"
+      - "Deletes files only"
+      - "Deletes folders only"
+      - "Finds and removes"
+    correct_answer: "Forces deletion without prompting"
+    explanation: "-f means force - no confirmation prompts, no errors for missing files."
+    points: 20
+    hint: "What if you don't want any confirmation prompts?"
+
+  - id: "rm_mc_005"
+    type: "multiple_choice"
+    command: "rm"
+    difficulty: "essential"
+    question_text: "Why is 'rm -rf /' extremely dangerous?"
+    options:
+      - "It deletes everything on the entire system"
+      - "It removes only files"
+      - "It creates backup first"
+      - "It shows an error"
+    correct_answer: "It deletes everything on the entire system"
+    explanation: "rm -rf / would delete all files starting from root. Never run this!"
+    points: 25
+    hint: "/ is the root of the entire filesystem."
+
+  - id: "rm_mc_006"
+    type: "multiple_choice"
+    command: "rm"
+    difficulty: "essential"
+    question_text: "What does 'rm -i' do?"
+    options:
+      - "Asks for confirmation before each deletion"
+      - "Ignores errors"
+      - "Removes instantly"
+      - "Removes invisible files"
+    correct_answer: "Asks for confirmation before each deletion"
+    explanation: "-i is interactive - it asks yes/no for each file."
+    points: 15
+    hint: "What if you want to be asked before overwriting?"
+
+  - id: "rm_mc_007"
+    type: "multiple_choice"
+    command: "rm"
+    difficulty: "essential"
+    question_text: "What does 'rm *.tmp' do?"
+    options:
+      - "Deletes all files ending in .tmp"
+      - "Deletes temporary directory"
+      - "Creates .tmp files"
+      - "Renames .tmp files"
+    correct_answer: "Deletes all files ending in .tmp"
+    explanation: "The wildcard * matches any characters before .tmp."
+    points: 15
+    hint: "* is a wildcard."
+
+  - id: "rm_mc_008"
+    type: "multiple_choice"
+    command: "rm"
+    difficulty: "essential"
+    question_text: "What does 'rm -v' do?"
+    options:
+      - "Shows each file as it's deleted"
+      - "Validates files before deletion"
+      - "Deletes very fast"
+      - "Verifies deletion"
+    correct_answer: "Shows each file as it's deleted"
+    explanation: "-v is verbose - it reports what's being removed."
+    points: 15
+    hint: "How do you see what's happening during the operation?"
+
+  - id: "rm_fb_001"
+    type: "fill_blank"
+    command: "rm"
+    difficulty: "essential"
+    question_text: "Remove a directory and all its contents: rm ___ folder/"
+    correct_answer:
+      - "-r"
+      - "-rf"
+      - "-R"
+    explanation: "-r (recursive) is required for directories."
+    points: 15
+    hint: "Directories need special handling to include their contents."
+
+  - id: "rm_fb_002"
+    type: "fill_blank"
+    command: "rm"
+    difficulty: "essential"
+    question_text: "Force remove without prompting: rm ___ file.txt"
+    correct_answer: "-f"
+    explanation: "-f forces deletion without confirmation."
+    points: 15
+    hint: "What if you don't want any confirmation prompts?"
+
+  - id: "rm_cb_001"
+    type: "command_builder"
+    command: "rm"
+    difficulty: "essential"
+    question_text: "Write a command to delete all .log files with confirmation for each"
+    correct_answer:
+      - "rm -i *.log"
+    explanation: "-i prompts for each file."
+    points: 20
+    hint: "How do you get asked before each file is affected?"
+
+  - id: "rm_fe_001"
+    type: "fix_error"
+    command: "rm"
+    difficulty: "essential"
+    question_text: "This command fails: 'rm mydir/'. What flag is missing?"
+    correct_answer:
+      - "rm -r mydir/"
+      - "-r"
+    explanation: "Directories require -r (recursive) flag."
+    points: 20
+    hint: "What's needed to remove a directory with contents?"
+
+  # ============================================================
+  # TOUCH COMMAND - 25 Questions
+  # ============================================================
+
+  - id: "touch_mc_001"
+    type: "multiple_choice"
+    command: "touch"
+    difficulty: "essential"
+    question_text: "What does 'touch newfile.txt' do if the file doesn't exist?"
+    options:
+      - "Creates an empty file called newfile.txt"
+      - "Opens newfile.txt in an editor"
+      - "Searches for newfile.txt"
+      - "Shows an error"
+    correct_answer: "Creates an empty file called newfile.txt"
+    explanation: "touch creates empty files if they don't exist."
+    points: 10
+    hint: "It brings a file into existence."
+
+  - id: "touch_mc_002"
+    type: "multiple_choice"
+    command: "touch"
+    difficulty: "essential"
+    question_text: "What does 'touch' do if the file already exists?"
+    options:
+      - "Updates the file's timestamp"
+      - "Deletes the file"
+      - "Shows an error"
+      - "Opens the file"
+    correct_answer: "Updates the file's timestamp"
+    explanation: "touch updates the modification time of existing files."
+    points: 15
+    hint: "It 'touches' the timestamp."
+
+  - id: "touch_mc_003"
+    type: "multiple_choice"
+    command: "touch"
+    difficulty: "essential"
+    question_text: "What does 'touch file1.txt file2.txt file3.txt' do?"
+    options:
+      - "Creates/updates all three files"
+      - "Merges the files"
+      - "Shows an error"
+      - "Creates only the first file"
+    correct_answer: "Creates/updates all three files"
+    explanation: "touch can handle multiple filenames at once."
+    points: 15
+    hint: "It processes all arguments."
+
+  - id: "touch_mc_004"
+    type: "multiple_choice"
+    command: "touch"
+    difficulty: "essential"
+    question_text: "Why would you use touch on an existing file?"
+    options:
+      - "To update its modification timestamp"
+      - "To delete its contents"
+      - "To rename it"
+      - "To compress it"
+    correct_answer: "To update its modification timestamp"
+    explanation: "Useful for build systems or to indicate a file was reviewed."
+    points: 20
+    hint: "Think about file timestamps."
+
+  - id: "touch_fb_001"
+    type: "fill_blank"
+    command: "touch"
+    difficulty: "essential"
+    question_text: "Create an empty file called notes.txt: ___ notes.txt"
+    correct_answer: "touch"
+    explanation: "touch creates empty files."
+    points: 10
+    hint: "The command that creates empty files."
+
+  - id: "touch_cb_001"
+    type: "command_builder"
+    command: "touch"
+    difficulty: "essential"
+    question_text: "Create three empty files: index.html, style.css, and script.js"
+    correct_answer:
+      - "touch index.html style.css script.js"
+    explanation: "touch can create multiple files at once."
+    points: 15
+    hint: "List all files after touch."
+
+  # ============================================================
+  # MKDIR COMMAND - 25 Questions
+  # ============================================================
+
+  - id: "mkdir_mc_001"
+    type: "multiple_choice"
+    command: "mkdir"
+    difficulty: "essential"
+    question_text: "What does 'mkdir' stand for?"
+    options:
+      - "Make Directory"
+      - "Move Directory"
+      - "Modify Directory"
+      - "Mount Directory"
+    correct_answer: "Make Directory"
+    explanation: "mkdir creates new directories."
+    points: 10
+    hint: "It creates something."
+
+  - id: "mkdir_mc_002"
+    type: "multiple_choice"
+    command: "mkdir"
+    difficulty: "essential"
+    question_text: "What does 'mkdir myproject' do?"
+    options:
+      - "Creates a directory called myproject"
+      - "Moves to myproject directory"
+      - "Deletes myproject directory"
+      - "Lists myproject contents"
+    correct_answer: "Creates a directory called myproject"
+    explanation: "mkdir with a name creates that directory."
+    points: 10
+    hint: "It makes a directory."
+
+  - id: "mkdir_mc_003"
+    type: "multiple_choice"
+    command: "mkdir"
+    difficulty: "essential"
+    question_text: "What does 'mkdir -p path/to/dir' do?"
+    options:
+      - "Creates all parent directories if they don't exist"
+      - "Creates with permissions"
+      - "Creates in parallel"
+      - "Creates a private directory"
+    correct_answer: "Creates all parent directories if they don't exist"
+    explanation: "-p creates the entire path, making parent directories as needed."
+    points: 20
+    hint: "How do you create missing directories in the path?"
+
+  - id: "mkdir_mc_004"
+    type: "multiple_choice"
+    command: "mkdir"
+    difficulty: "essential"
+    question_text: "What happens if you 'mkdir existingdir' where it already exists?"
+    options:
+      - "Shows an error"
+      - "Deletes and recreates it"
+      - "Does nothing silently"
+      - "Renames the existing directory"
+    correct_answer: "Shows an error"
+    explanation: "mkdir fails if the directory already exists (use -p to ignore)."
+    points: 15
+    hint: "It won't overwrite."
+
+  - id: "mkdir_mc_005"
+    type: "multiple_choice"
+    command: "mkdir"
+    difficulty: "essential"
+    question_text: "What does 'mkdir dir1 dir2 dir3' do?"
+    options:
+      - "Creates all three directories"
+      - "Creates nested directories"
+      - "Shows an error"
+      - "Creates only the first"
+    correct_answer: "Creates all three directories"
+    explanation: "mkdir can create multiple directories at once."
+    points: 15
+    hint: "It processes all arguments."
+
+  - id: "mkdir_fb_001"
+    type: "fill_blank"
+    command: "mkdir"
+    difficulty: "essential"
+    question_text: "Create nested directories: mkdir ___ parent/child/grandchild"
+    correct_answer: "-p"
+    explanation: "-p creates parent directories as needed."
+    points: 20
+    hint: "What option handles missing intermediate directories?"
+
+  - id: "mkdir_cb_001"
+    type: "command_builder"
+    command: "mkdir"
+    difficulty: "essential"
+    question_text: "Create the directory structure: src/components/Button"
+    correct_answer:
+      - "mkdir -p src/components/Button"
+    explanation: "Use -p to create all directories in the path."
+    points: 20
+    hint: "What if parent directories don't exist yet?"
+
+  # ============================================================
+  # GREP COMMAND - 60 Questions
+  # ============================================================
+
+  - id: "grep_mc_001"
+    type: "multiple_choice"
+    command: "grep"
+    difficulty: "essential"
+    question_text: "What does 'grep' do?"
+    options:
+      - "Searches for patterns in files"
+      - "Groups files together"
+      - "Creates graphical output"
+      - "Generates reports"
+    correct_answer: "Searches for patterns in files"
+    explanation: "grep searches for text patterns within files."
+    points: 10
+    hint: "It's a search tool."
+
+  - id: "grep_mc_002"
+    type: "multiple_choice"
+    command: "grep"
+    difficulty: "essential"
+    question_text: "What does 'grep 'error' log.txt' do?"
+    options:
+      - "Shows all lines containing 'error'"
+      - "Removes lines with 'error'"
+      - "Counts errors"
+      - "Creates error log"
+    correct_answer: "Shows all lines containing 'error'"
+    explanation: "grep displays lines that match the search pattern."
+    points: 10
+    hint: "It finds and shows matching lines."
+
+  - id: "grep_mc_003"
+    type: "multiple_choice"
+    command: "grep"
+    difficulty: "essential"
+    question_text: "What does 'grep -i' do?"
+    options:
+      - "Case-insensitive search"
+      - "Inverse search"
+      - "Interactive mode"
+      - "Include line numbers"
+    correct_answer: "Case-insensitive search"
+    explanation: "-i ignores case, so 'Error', 'ERROR', 'error' all match."
+    points: 15
+    hint: "What if you don't care about uppercase or lowercase?"
+
+  - id: "grep_mc_004"
+    type: "multiple_choice"
+    command: "grep"
+    difficulty: "essential"
+    question_text: "What does 'grep -n' do?"
+    options:
+      - "Shows line numbers with matches"
+      - "Shows number of matches"
+      - "Searches n files"
+      - "Shows nearby lines"
+    correct_answer: "Shows line numbers with matches"
+    explanation: "-n prefixes each matching line with its line number."
+    points: 15
+    hint: "How do you identify specific lines?"
+
+  - id: "grep_mc_005"
+    type: "multiple_choice"
+    command: "grep"
+    difficulty: "essential"
+    question_text: "What does 'grep -r' do?"
+    options:
+      - "Searches recursively in directories"
+      - "Reverses the search"
+      - "Shows raw output"
+      - "Removes matches"
+    correct_answer: "Searches recursively in directories"
+    explanation: "-r searches through all files in subdirectories too."
+    points: 20
+    hint: "Directories have contents that need to be handled too."
+
+  - id: "grep_mc_006"
+    type: "multiple_choice"
+    command: "grep"
+    difficulty: "essential"
+    question_text: "What does 'grep -v' do?"
+    options:
+      - "Shows lines that DON'T match"
+      - "Shows version"
+      - "Verbose output"
+      - "Validates pattern"
+    correct_answer: "Shows lines that DON'T match"
+    explanation: "-v inverts the match - shows non-matching lines."
+    points: 20
+    hint: "What if you want the lines that don't match?"
+
+  - id: "grep_mc_007"
+    type: "multiple_choice"
+    command: "grep"
+    difficulty: "essential"
+    question_text: "What does 'grep -c' do?"
+    options:
+      - "Counts matching lines"
+      - "Creates output file"
+      - "Colors the output"
+      - "Copies matches"
+    correct_answer: "Counts matching lines"
+    explanation: "-c outputs only the count of matching lines."
+    points: 15
+    hint: "What if you just need the number, not the actual lines?"
+
+  - id: "grep_mc_008"
+    type: "multiple_choice"
+    command: "grep"
+    difficulty: "essential"
+    question_text: "What does 'grep -l' do?"
+    options:
+      - "Shows only filenames with matches"
+      - "Shows line numbers"
+      - "Shows last match"
+      - "Shows long output"
+    correct_answer: "Shows only filenames with matches"
+    explanation: "-l lists only the names of files containing matches."
+    points: 20
+    hint: "What if you only need the filenames, not the content?"
+
+  - id: "grep_mc_009"
+    type: "multiple_choice"
+    command: "grep"
+    difficulty: "essential"
+    question_text: "What does 'grep -w' do?"
+    options:
+      - "Matches whole words only"
+      - "Shows warnings"
+      - "Searches web"
+      - "Wide output"
+    correct_answer: "Matches whole words only"
+    explanation: "-w matches complete words, not partial matches."
+    points: 20
+    hint: "What if 'cat' shouldn't match 'category'?"
+
+  - id: "grep_mc_010"
+    type: "multiple_choice"
+    command: "grep"
+    difficulty: "essential"
+    question_text: "What does 'grep -A 2' do?"
+    options:
+      - "Shows 2 lines after each match"
+      - "Shows 2 matches"
+      - "Searches 2 files"
+      - "Shows all matches twice"
+    correct_answer: "Shows 2 lines after each match"
+    explanation: "-A (after) shows context lines following each match."
+    points: 25
+    hint: "How do you see what comes after a match?"
+
+  - id: "grep_mc_011"
+    type: "multiple_choice"
+    command: "grep"
+    difficulty: "essential"
+    question_text: "What does 'grep -B 3' do?"
+    options:
+      - "Shows 3 lines before each match"
+      - "Shows best 3 matches"
+      - "Searches 3 bytes"
+      - "Binary search mode"
+    correct_answer: "Shows 3 lines before each match"
+    explanation: "-B (before) shows context lines preceding each match."
+    points: 25
+    hint: "How do you see what comes before a match?"
+
+  - id: "grep_mc_012"
+    type: "multiple_choice"
+    command: "grep"
+    difficulty: "essential"
+    question_text: "What does 'grep -E' enable?"
+    options:
+      - "Extended regular expressions"
+      - "Error mode"
+      - "Exact matching"
+      - "Export results"
+    correct_answer: "Extended regular expressions"
+    explanation: "-E enables extended regex with +, ?, |, etc."
+    points: 25
+    hint: "What if you need more powerful pattern matching?"
+
+  - id: "grep_fb_001"
+    type: "fill_blank"
+    command: "grep"
+    difficulty: "essential"
+    question_text: "Case-insensitive search: grep ___ 'error' log.txt"
+    correct_answer: "-i"
+    explanation: "-i ignores case."
+    points: 15
+    hint: "How do you match regardless of capitalization?"
+
+  - id: "grep_fb_002"
+    type: "fill_blank"
+    command: "grep"
+    difficulty: "essential"
+    question_text: "Show line numbers: grep ___ 'TODO' *.py"
+    correct_answer: "-n"
+    explanation: "-n shows line numbers."
+    points: 15
+    hint: "How do you see where in the file each match is?"
+
+  - id: "grep_fb_003"
+    type: "fill_blank"
+    command: "grep"
+    difficulty: "essential"
+    question_text: "Search recursively: grep ___ 'password' /etc/"
+    correct_answer:
+      - "-r"
+      - "-R"
+    explanation: "-r searches subdirectories."
+    points: 20
+    hint: "How do you search inside subdirectories too?"
+
+  - id: "grep_fb_004"
+    type: "fill_blank"
+    command: "grep"
+    difficulty: "essential"
+    question_text: "Show lines NOT containing 'debug': grep ___ 'debug' app.log"
+    correct_answer: "-v"
+    explanation: "-v inverts the match."
+    points: 20
+    hint: "How do you exclude lines that match?"
+
+  - id: "grep_cb_001"
+    type: "command_builder"
+    command: "grep"
+    difficulty: "essential"
+    question_text: "Find all lines with 'function' in .js files, showing line numbers"
+    correct_answer:
+      - "grep -n 'function' *.js"
+      - "grep -n function *.js"
+    explanation: "Use -n for line numbers."
+    points: 20
+    hint: "How do you see which line each match is on?"
+
+  - id: "grep_cb_002"
+    type: "command_builder"
+    command: "grep"
+    difficulty: "essential"
+    question_text: "Count how many lines contain 'error' in server.log"
+    correct_answer:
+      - "grep -c 'error' server.log"
+      - "grep -c error server.log"
+    explanation: "-c counts matching lines."
+    points: 20
+    hint: "How do you get just the number of matches?"
+
+  # ============================================================
+  # FIND COMMAND - 50 Questions
+  # ============================================================
+
+  - id: "find_mc_001"
+    type: "multiple_choice"
+    command: "find"
+    difficulty: "essential"
+    question_text: "What does 'find' do?"
+    options:
+      - "Searches for files and directories"
+      - "Finds text in files"
+      - "Finds users"
+      - "Finds processes"
+    correct_answer: "Searches for files and directories"
+    explanation: "find searches the filesystem for files matching criteria."
+    points: 10
+    hint: "It locates files."
+
+  - id: "find_mc_002"
+    type: "multiple_choice"
+    command: "find"
+    difficulty: "essential"
+    question_text: "What does 'find . -name '*.txt'' do?"
+    options:
+      - "Finds all .txt files in current directory and subdirectories"
+      - "Creates .txt files"
+      - "Deletes .txt files"
+      - "Renames .txt files"
+    correct_answer: "Finds all .txt files in current directory and subdirectories"
+    explanation: "find . starts from current dir, -name matches filenames."
+    points: 15
+    hint: "The dot means current directory."
+
+  - id: "find_mc_003"
+    type: "multiple_choice"
+    command: "find"
+    difficulty: "essential"
+    question_text: "What does 'find /home -type d' do?"
+    options:
+      - "Finds all directories in /home"
+      - "Finds all files in /home"
+      - "Deletes directories"
+      - "Creates directories"
+    correct_answer: "Finds all directories in /home"
+    explanation: "-type d means directories only."
+    points: 20
+    hint: "What type specifier finds folders?"
+
+  - id: "find_mc_004"
+    type: "multiple_choice"
+    command: "find"
+    difficulty: "essential"
+    question_text: "What does 'find . -type f' do?"
+    options:
+      - "Finds all regular files"
+      - "Finds all folders"
+      - "Finds hidden files"
+      - "Finds formatted files"
+    correct_answer: "Finds all regular files"
+    explanation: "-type f means regular files (not directories or links)."
+    points: 20
+    hint: "What type specifier finds regular files?"
+
+  - id: "find_mc_005"
+    type: "multiple_choice"
+    command: "find"
+    difficulty: "essential"
+    question_text: "What does 'find . -mtime -7' find?"
+    options:
+      - "Files modified in the last 7 days"
+      - "Files older than 7 days"
+      - "Files exactly 7 days old"
+      - "7 files"
+    correct_answer: "Files modified in the last 7 days"
+    explanation: "-mtime -7 means modified less than 7 days ago."
+    points: 25
+    hint: "Minus means less than."
+
+  - id: "find_mc_006"
+    type: "multiple_choice"
+    command: "find"
+    difficulty: "essential"
+    question_text: "What does 'find . -size +10M' find?"
+    options:
+      - "Files larger than 10 megabytes"
+      - "Files smaller than 10 MB"
+      - "Exactly 10 MB files"
+      - "10 files"
+    correct_answer: "Files larger than 10 megabytes"
+    explanation: "+10M means greater than 10 megabytes."
+    points: 25
+    hint: "Plus means greater than."
+
+  - id: "find_mc_007"
+    type: "multiple_choice"
+    command: "find"
+    difficulty: "essential"
+    question_text: "What does 'find . -name '*.log' -delete' do?"
+    options:
+      - "Finds and deletes all .log files"
+      - "Finds but doesn't delete"
+      - "Deletes the find command"
+      - "Creates log files"
+    correct_answer: "Finds and deletes all .log files"
+    explanation: "-delete removes all matching files. Use with caution!"
+    points: 30
+    hint: "The -delete action is dangerous!"
+
+  - id: "find_mc_008"
+    type: "multiple_choice"
+    command: "find"
+    difficulty: "essential"
+    question_text: "What does 'find . -empty' find?"
+    options:
+      - "Empty files and directories"
+      - "Full files"
+      - "Nothing"
+      - "Recently emptied files"
+    correct_answer: "Empty files and directories"
+    explanation: "-empty matches files with zero size or empty directories."
+    points: 20
+    hint: "Files with nothing in them."
+
+  - id: "find_fb_001"
+    type: "fill_blank"
+    command: "find"
+    difficulty: "essential"
+    question_text: "Find files by name: find /var -___ 'error.log'"
+    correct_answer: "name"
+    explanation: "-name matches filenames."
+    points: 15
+    hint: "The option for matching filenames."
+
+  - id: "find_fb_002"
+    type: "fill_blank"
+    command: "find"
+    difficulty: "essential"
+    question_text: "Find only directories: find . -type ___"
+    correct_answer: "d"
+    explanation: "d means directory type."
+    points: 15
+    hint: "Think about what kind of item you're looking for."
+
+  - id: "find_cb_001"
+    type: "command_builder"
+    command: "find"
+    difficulty: "essential"
+    question_text: "Find all .py files in /home/user"
+    correct_answer:
+      - "find /home/user -name '*.py'"
+      - "find /home/user -name \"*.py\""
+    explanation: "Use -name with a wildcard pattern."
+    points: 20
+    hint: "find path -name pattern."
+
+  - id: "find_cb_002"
+    type: "command_builder"
+    command: "find"
+    difficulty: "essential"
+    question_text: "Find files larger than 100MB in current directory"
+    correct_answer:
+      - "find . -size +100M"
+    explanation: "+100M means greater than 100 megabytes."
+    points: 25
+    hint: "Use -size with a plus sign."
+
+  # ============================================================
+  # CHMOD COMMAND - 40 Questions
+  # ============================================================
+
+  - id: "chmod_mc_001"
+    type: "multiple_choice"
+    command: "chmod"
+    difficulty: "essential"
+    question_text: "What does 'chmod' stand for?"
+    options:
+      - "Change Mode"
+      - "Check Mode"
+      - "Change Modify"
+      - "Check Modify"
+    correct_answer: "Change Mode"
+    explanation: "chmod changes the file mode (permissions)."
+    points: 10
+    hint: "It modifies permissions."
+
+  - id: "chmod_mc_002"
+    type: "multiple_choice"
+    command: "chmod"
+    difficulty: "essential"
+    question_text: "What does 'chmod +x script.sh' do?"
+    options:
+      - "Makes the file executable"
+      - "Makes the file writable"
+      - "Deletes the file"
+      - "Creates the file"
+    correct_answer: "Makes the file executable"
+    explanation: "+x adds execute permission."
+    points: 15
+    hint: "What lets you run a script?"
+
+  - id: "chmod_mc_003"
+    type: "multiple_choice"
+    command: "chmod"
+    difficulty: "essential"
+    question_text: "What does 'chmod 755' mean?"
+    options:
+      - "Owner: rwx, Group: rx, Others: rx"
+      - "Everyone has full access"
+      - "No one has access"
+      - "Only owner can read"
+    correct_answer: "Owner: rwx, Group: rx, Others: rx"
+    explanation: "7=rwx, 5=r-x. Owner can read/write/execute, others can read/execute."
+    points: 25
+    hint: "7=all permissions, 5=read+execute."
+
+  - id: "chmod_mc_004"
+    type: "multiple_choice"
+    command: "chmod"
+    difficulty: "essential"
+    question_text: "What does 'chmod 644' mean?"
+    options:
+      - "Owner: rw, Group: r, Others: r"
+      - "Everyone can write"
+      - "No one can read"
+      - "Owner only execute"
+    correct_answer: "Owner: rw, Group: r, Others: r"
+    explanation: "6=rw-, 4=r--. Common for regular files."
+    points: 25
+    hint: "6=read+write, 4=read only."
+
+  - id: "chmod_mc_005"
+    type: "multiple_choice"
+    command: "chmod"
+    difficulty: "essential"
+    question_text: "What does 'r' permission allow?"
+    options:
+      - "Reading the file"
+      - "Running the file"
+      - "Removing the file"
+      - "Renaming the file"
+    correct_answer: "Reading the file"
+    explanation: "r = read permission."
+    points: 10
+    hint: "What do you need to see a file's contents?"
+
+  - id: "chmod_mc_006"
+    type: "multiple_choice"
+    command: "chmod"
+    difficulty: "essential"
+    question_text: "What does 'w' permission allow?"
+    options:
+      - "Writing/modifying the file"
+      - "Watching the file"
+      - "Warning about the file"
+      - "Wrapping the file"
+    correct_answer: "Writing/modifying the file"
+    explanation: "w = write permission."
+    points: 10
+    hint: "What do you need to change a file?"
+
+  - id: "chmod_mc_007"
+    type: "multiple_choice"
+    command: "chmod"
+    difficulty: "essential"
+    question_text: "What does 'x' permission allow?"
+    options:
+      - "Executing the file as a program"
+      - "Examining the file"
+      - "Exporting the file"
+      - "Extending the file"
+    correct_answer: "Executing the file as a program"
+    explanation: "x = execute permission."
+    points: 10
+    hint: "What do you need to run a file?"
+
+  - id: "chmod_mc_008"
+    type: "multiple_choice"
+    command: "chmod"
+    difficulty: "essential"
+    question_text: "What does 'chmod -R 755 folder/' do?"
+    options:
+      - "Applies 755 to folder and all contents recursively"
+      - "Removes 755 permission"
+      - "Reverts permissions"
+      - "Creates folder with 755"
+    correct_answer: "Applies 755 to folder and all contents recursively"
+    explanation: "-R applies changes recursively to all files and subdirectories."
+    points: 20
+    hint: "How do you apply changes to all contents?"
+
+  - id: "chmod_mc_009"
+    type: "multiple_choice"
+    command: "chmod"
+    difficulty: "essential"
+    question_text: "What's 'chmod 777' called and why is it risky?"
+    options:
+      - "Full access - everyone can read, write, and execute"
+      - "No access - no one can do anything"
+      - "Read only - safe mode"
+      - "Execute only - run mode"
+    correct_answer: "Full access - everyone can read, write, and execute"
+    explanation: "777 gives everyone all permissions - security risk!"
+    points: 25
+    hint: "7 = all three permissions (rwx)."
+
+  - id: "chmod_fb_001"
+    type: "fill_blank"
+    command: "chmod"
+    difficulty: "essential"
+    question_text: "Make script.sh executable: chmod ___ script.sh"
+    correct_answer:
+      - "+x"
+      - "755"
+      - "a+x"
+    explanation: "+x adds execute permission."
+    points: 15
+    hint: "Scripts need a certain permission to run."
+
+  - id: "chmod_cb_001"
+    type: "command_builder"
+    command: "chmod"
+    difficulty: "essential"
+    question_text: "Make backup.sh executable by everyone"
+    correct_answer:
+      - "chmod +x backup.sh"
+      - "chmod a+x backup.sh"
+      - "chmod 755 backup.sh"
+    explanation: "+x or 755 adds execute permission."
+    points: 20
+    hint: "What permission do scripts need to run?"
+
+  - id: "chmod_fe_001"
+    type: "fix_error"
+    command: "chmod"
+    difficulty: "essential"
+    question_text: "This script won't run: './script.sh: Permission denied'. Fix it."
+    correct_answer:
+      - "chmod +x script.sh"
+      - "chmod 755 script.sh"
+    explanation: "The script needs execute permission."
+    points: 25
+    hint: "What permission do scripts need to run?"
+
+  # ============================================================
+  # ECHO COMMAND - 25 Questions
+  # ============================================================
+
+  - id: "echo_mc_001"
+    type: "multiple_choice"
+    command: "echo"
+    difficulty: "essential"
+    question_text: "What does 'echo' do?"
+    options:
+      - "Prints text to the terminal"
+      - "Records audio"
+      - "Creates files"
+      - "Searches for text"
+    correct_answer: "Prints text to the terminal"
+    explanation: "echo outputs text or variables to stdout."
+    points: 10
+    hint: "It displays text."
+
+  - id: "echo_mc_002"
+    type: "multiple_choice"
+    command: "echo"
+    difficulty: "essential"
+    question_text: "What does 'echo $HOME' display?"
+    options:
+      - "Your home directory path"
+      - "The word HOME"
+      - "Nothing"
+      - "An error"
+    correct_answer: "Your home directory path"
+    explanation: "$HOME is an environment variable containing your home path."
+    points: 15
+    hint: "$ accesses variables."
+
+  - id: "echo_mc_003"
+    type: "multiple_choice"
+    command: "echo"
+    difficulty: "essential"
+    question_text: "What does 'echo 'Hello World'' display?"
+    options:
+      - "Hello World"
+      - "'Hello World'"
+      - "Hello"
+      - "World"
+    correct_answer: "Hello World"
+    explanation: "echo prints the text between quotes."
+    points: 10
+    hint: "It prints what you tell it."
+
+  - id: "echo_mc_004"
+    type: "multiple_choice"
+    command: "echo"
+    difficulty: "essential"
+    question_text: "What does 'echo $USER' display?"
+    options:
+      - "Your username"
+      - "The word USER"
+      - "All users"
+      - "Nothing"
+    correct_answer: "Your username"
+    explanation: "$USER contains your current username."
+    points: 15
+    hint: "It's a variable about you."
+
+  - id: "echo_mc_005"
+    type: "multiple_choice"
+    command: "echo"
+    difficulty: "essential"
+    question_text: "What does 'echo -n 'Hello'' do?"
+    options:
+      - "Prints Hello without a newline"
+      - "Prints Hello n times"
+      - "Prints nothing"
+      - "Prints in bold"
+    correct_answer: "Prints Hello without a newline"
+    explanation: "-n suppresses the trailing newline."
+    points: 20
+    hint: "What if you don't want the cursor to go to the next line?"
+
+  - id: "echo_fb_001"
+    type: "fill_blank"
+    command: "echo"
+    difficulty: "essential"
+    question_text: "Print your home directory: echo ___"
+    correct_answer:
+      - "$HOME"
+      - "~"
+    explanation: "$HOME is the environment variable for your home directory."
+    points: 15
+    hint: "There's an environment variable for this."
+
+  - id: "echo_cb_001"
+    type: "command_builder"
+    command: "echo"
+    difficulty: "essential"
+    question_text: "Print the current user's name"
+    correct_answer:
+      - "echo $USER"
+    explanation: "$USER contains your username."
+    points: 15
+    hint: "There's an environment variable for this."
+
+  # ============================================================
+  # MAN COMMAND - 20 Questions
+  # ============================================================
+
+  - id: "man_mc_001"
+    type: "multiple_choice"
+    command: "man"
+    difficulty: "essential"
+    question_text: "What does 'man' stand for?"
+    options:
+      - "Manual"
+      - "Manage"
+      - "Manipulate"
+      - "Mandate"
+    correct_answer: "Manual"
+    explanation: "man displays manual pages for commands."
+    points: 10
+    hint: "It shows documentation."
+
+  - id: "man_mc_002"
+    type: "multiple_choice"
+    command: "man"
+    difficulty: "essential"
+    question_text: "What does 'man ls' do?"
+    options:
+      - "Shows the manual page for ls command"
+      - "Lists manual pages"
+      - "Creates manual"
+      - "Manages ls"
+    correct_answer: "Shows the manual page for ls command"
+    explanation: "man followed by a command shows its documentation."
+    points: 10
+    hint: "It opens documentation."
+
+  - id: "man_mc_003"
+    type: "multiple_choice"
+    command: "man"
+    difficulty: "essential"
+    question_text: "How do you exit a man page?"
+    options:
+      - "Press 'q'"
+      - "Press Escape"
+      - "Press Enter"
+      - "Press Ctrl+C"
+    correct_answer: "Press 'q'"
+    explanation: "q for quit exits the man page viewer."
+    points: 15
+    hint: "How do you close the viewer?"
+
+  - id: "man_mc_004"
+    type: "multiple_choice"
+    command: "man"
+    difficulty: "essential"
+    question_text: "How do you search within a man page?"
+    options:
+      - "Press / followed by search term"
+      - "Press S"
+      - "Press F"
+      - "Press Ctrl+F"
+    correct_answer: "Press / followed by search term"
+    explanation: "/ starts a forward search in the man page viewer."
+    points: 20
+    hint: "Same as vim search."
+
+  - id: "man_mc_005"
+    type: "multiple_choice"
+    command: "man"
+    difficulty: "essential"
+    question_text: "What are 'man sections' for?"
+    options:
+      - "Organizing different types of documentation"
+      - "Creating bookmarks"
+      - "Splitting man pages"
+      - "Version control"
+    correct_answer: "Organizing different types of documentation"
+    explanation: "Sections separate user commands (1), system calls (2), etc."
+    points: 25
+    hint: "Like chapters in a book."
+
+  - id: "man_fb_001"
+    type: "fill_blank"
+    command: "man"
+    difficulty: "essential"
+    question_text: "View the manual for grep: ___ grep"
+    correct_answer: "man"
+    explanation: "man command shows the manual."
+    points: 10
+    hint: "The manual command."
+
+  - id: "man_cb_001"
+    type: "command_builder"
+    command: "man"
+    difficulty: "essential"
+    question_text: "Show the manual page for the chmod command"
+    correct_answer:
+      - "man chmod"
+    explanation: "man followed by the command name."
+    points: 10
+    hint: "Simple: man commandname."
+
+  # ============================================================
+  # ADDITIONAL CD QUESTIONS
+  # ============================================================
+
+  - id: "cd_mc_009"
+    type: "multiple_choice"
+    command: "cd"
+    difficulty: "essential"
+    question_text: "What is the difference between 'cd /tmp' and 'cd tmp'?"
+    options:
+      - "/tmp is absolute path, tmp is relative to current directory"
+      - "They are the same"
+      - "/tmp is faster"
+      - "tmp is safer"
+    correct_answer: "/tmp is absolute path, tmp is relative to current directory"
+    explanation: "Paths starting with / are absolute (from root), others are relative."
+    points: 20
+    hint: "Think about where each path starts from."
+
+  - id: "cd_mc_010"
+    type: "multiple_choice"
+    command: "cd"
+    difficulty: "essential"
+    question_text: "What does 'cd ~/Downloads' do?"
+    options:
+      - "Goes to Downloads folder in your home directory"
+      - "Goes to a folder called ~Downloads"
+      - "Shows an error"
+      - "Creates Downloads folder"
+    correct_answer: "Goes to Downloads folder in your home directory"
+    explanation: "~ expands to your home directory, so ~/Downloads is /home/user/Downloads."
+    points: 15
+    hint: "The tilde is a shortcut for home."
+
+  - id: "cd_mc_011"
+    type: "multiple_choice"
+    command: "cd"
+    difficulty: "essential"
+    question_text: "If you're in /var/log, what does 'cd ../lib' take you?"
+    options:
+      - "/var/lib"
+      - "/lib"
+      - "/var/log/lib"
+      - "/var"
+    correct_answer: "/var/lib"
+    explanation: ".. goes up to /var, then /lib goes into the lib subdirectory."
+    points: 25
+    hint: "First go up, then into lib."
+
+  - id: "cd_mc_012"
+    type: "multiple_choice"
+    command: "cd"
+    difficulty: "essential"
+    question_text: "What happens if you 'cd' into a file instead of a directory?"
+    options:
+      - "You get an error: Not a directory"
+      - "It opens the file"
+      - "It deletes the file"
+      - "It works normally"
+    correct_answer: "You get an error: Not a directory"
+    explanation: "cd only works with directories, not files."
+    points: 15
+    hint: "cd is only for directories."
+
+  - id: "cd_fb_005"
+    type: "fill_blank"
+    command: "cd"
+    difficulty: "essential"
+    question_text: "Go to the /etc/nginx directory: cd ___"
+    correct_answer: "/etc/nginx"
+    explanation: "Use the absolute path to navigate."
+    points: 10
+    hint: "Type the full path."
+
+  - id: "cd_fb_006"
+    type: "fill_blank"
+    command: "cd"
+    difficulty: "essential"
+    question_text: "From /home/user/docs, go to /home/user: cd ___"
+    correct_answer:
+      - ".."
+      - "../"
+    explanation: ".. navigates to the parent directory."
+    points: 15
+    hint: "Go up one level."
+
+  - id: "cd_wd_003"
+    type: "what_does_it_do"
+    command: "cd"
+    difficulty: "essential"
+    question_text: "What does 'cd && pwd' do?"
+    options:
+      - "Goes home and prints the home directory path"
+      - "Shows an error"
+      - "Prints current directory only"
+      - "Creates a directory called pwd"
+    correct_answer: "Goes home and prints the home directory path"
+    explanation: "&& runs the second command if the first succeeds. cd goes home, pwd prints it."
+    points: 25
+    hint: "&& chains commands together."
+
+  - id: "cd_cb_003"
+    type: "command_builder"
+    command: "cd"
+    difficulty: "essential"
+    question_text: "Write the command to navigate to /usr/local/bin"
+    correct_answer:
+      - "cd /usr/local/bin"
+    explanation: "Use the absolute path with cd."
+    points: 15
+    hint: "cd followed by the path."
+
+  # ============================================================
+  # ADDITIONAL PWD QUESTIONS
+  # ============================================================
+
+  - id: "pwd_mc_006"
+    type: "multiple_choice"
+    command: "pwd"
+    difficulty: "essential"
+    question_text: "What does 'pwd -P' show?"
+    options:
+      - "The physical path (resolving symlinks)"
+      - "The parent directory"
+      - "The path with permissions"
+      - "The previous directory"
+    correct_answer: "The physical path (resolving symlinks)"
+    explanation: "-P shows the actual physical path, following symbolic links."
+    points: 25
+    hint: "What if you want to see the real path without symlinks?"
+
+  - id: "pwd_mc_007"
+    type: "multiple_choice"
+    command: "pwd"
+    difficulty: "essential"
+    question_text: "What does 'pwd -L' show?"
+    options:
+      - "The logical path (keeping symlinks)"
+      - "The last directory"
+      - "Only the last component"
+      - "The link target"
+    correct_answer: "The logical path (keeping symlinks)"
+    explanation: "-L shows the path as you navigated, keeping symbolic links intact."
+    points: 25
+    hint: "What if you want the path as you navigated it?"
+
+  - id: "pwd_wd_002"
+    type: "what_does_it_do"
+    command: "pwd"
+    difficulty: "essential"
+    question_text: "What does 'echo $(pwd)' do?"
+    options:
+      - "Prints the current directory path"
+      - "Creates a directory"
+      - "Shows an error"
+      - "Changes directory"
+    correct_answer: "Prints the current directory path"
+    explanation: "$(pwd) runs pwd and its output is printed by echo."
+    points: 20
+    hint: "$() runs a command and uses its output."
+
+  - id: "pwd_cb_002"
+    type: "command_builder"
+    command: "pwd"
+    difficulty: "essential"
+    question_text: "Write a command to show the physical path of current directory"
+    correct_answer:
+      - "pwd -P"
+    explanation: "-P shows the physical path resolving symlinks."
+    points: 20
+    hint: "How do you resolve symlinks to see the actual path?"
+
+  # ============================================================
+  # ADDITIONAL LS QUESTIONS
+  # ============================================================
+
+  - id: "ls_mc_016"
+    type: "multiple_choice"
+    command: "ls"
+    difficulty: "essential"
+    question_text: "What does 'ls -d */' do?"
+    options:
+      - "Lists only directories"
+      - "Lists only dot files"
+      - "Deletes directories"
+      - "Shows directory sizes"
+    correct_answer: "Lists only directories"
+    explanation: "*/ matches directories, -d prevents descending into them."
+    points: 25
+    hint: "The pattern */ matches directories."
+
+  - id: "ls_mc_017"
+    type: "multiple_choice"
+    command: "ls"
+    difficulty: "essential"
+    question_text: "What does 'ls -F' show?"
+    options:
+      - "Adds indicators like / for directories, * for executables"
+      - "Shows file dates"
+      - "Shows full paths"
+      - "Filters hidden files"
+    correct_answer: "Adds indicators like / for directories, * for executables"
+    explanation: "-F appends file type indicators: / for dirs, * for executables, @ for links."
+    points: 20
+    hint: "What if you want visual markers for directories and executables?"
+
+  - id: "ls_mc_018"
+    type: "multiple_choice"
+    command: "ls"
+    difficulty: "essential"
+    question_text: "What does 'ls -i' show?"
+    options:
+      - "The inode number of each file"
+      - "Interactive mode"
+      - "File information"
+      - "Image files only"
+    correct_answer: "The inode number of each file"
+    explanation: "-i displays the inode number, a unique identifier for each file."
+    points: 25
+    hint: "What's the unique filesystem identifier for files?"
+
+  - id: "ls_mc_019"
+    type: "multiple_choice"
+    command: "ls"
+    difficulty: "essential"
+    question_text: "What does 'ls -u' sort by?"
+    options:
+      - "Access time (last read)"
+      - "User name"
+      - "Upload date"
+      - "Unique files"
+    correct_answer: "Access time (last read)"
+    explanation: "-u uses access time instead of modification time."
+    points: 25
+    hint: "When was a file last opened?"
+
+  - id: "ls_mc_020"
+    type: "multiple_choice"
+    command: "ls"
+    difficulty: "essential"
+    question_text: "What does 'ls -ltr' show?"
+    options:
+      - "Long format, sorted by time, reversed (oldest first)"
+      - "Long format, trees only, recursive"
+      - "Lists, types, and reads"
+      - "Long, total, readable"
+    correct_answer: "Long format, sorted by time, reversed (oldest first)"
+    explanation: "-l long, -t time sort, -r reverse. Shows oldest files first."
+    points: 25
+    hint: "Combine the meaning of each flag."
+
+  - id: "ls_mc_021"
+    type: "multiple_choice"
+    command: "ls"
+    difficulty: "essential"
+    question_text: "In ls -l output, what does the second column show?"
+    options:
+      - "Number of hard links"
+      - "File size"
+      - "Owner name"
+      - "Permissions"
+    correct_answer: "Number of hard links"
+    explanation: "The second column shows how many hard links point to this file."
+    points: 25
+    hint: "It's a number that relates to linking."
+
+  - id: "ls_mc_022"
+    type: "multiple_choice"
+    command: "ls"
+    difficulty: "essential"
+    question_text: "What does 'ls file?.txt' match?"
+    options:
+      - "file1.txt, file2.txt, fileA.txt (single character)"
+      - "Any file ending in .txt"
+      - "Only file.txt"
+      - "file followed by anything"
+    correct_answer: "file1.txt, file2.txt, fileA.txt (single character)"
+    explanation: "? matches exactly one character."
+    points: 20
+    hint: "? is a single-character wildcard."
+
+  - id: "ls_mc_023"
+    type: "multiple_choice"
+    command: "ls"
+    difficulty: "essential"
+    question_text: "What does 'ls [abc]*' match?"
+    options:
+      - "Files starting with a, b, or c"
+      - "Files containing abc"
+      - "Files named abc"
+      - "All files"
+    correct_answer: "Files starting with a, b, or c"
+    explanation: "[abc] matches any single character in the brackets."
+    points: 20
+    hint: "Brackets define a character set."
+
+  - id: "ls_fb_005"
+    type: "fill_blank"
+    command: "ls"
+    difficulty: "essential"
+    question_text: "List files sorted by time, newest first: ls ___"
+    correct_answer:
+      - "-lt"
+      - "-t"
+    explanation: "-t sorts by modification time, newest first."
+    points: 15
+    hint: "How do you sort by when files were last changed?"
+
+  - id: "ls_fb_006"
+    type: "fill_blank"
+    command: "ls"
+    difficulty: "essential"
+    question_text: "List subdirectories recursively: ls ___"
+    correct_answer:
+      - "-R"
+    explanation: "-R lists contents recursively."
+    points: 15
+    hint: "How do you apply changes to all contents?"
+
+  - id: "ls_fb_007"
+    type: "fill_blank"
+    command: "ls"
+    difficulty: "essential"
+    question_text: "Show file type indicators: ls ___"
+    correct_answer:
+      - "-F"
+    explanation: "-F appends / for directories, * for executables."
+    points: 15
+    hint: "What adds visual markers like / and * to entries?"
+
+  - id: "ls_wd_003"
+    type: "what_does_it_do"
+    command: "ls"
+    difficulty: "essential"
+    question_text: "What does 'ls -la ~' do?"
+    options:
+      - "Shows all files in home directory with details"
+      - "Lists and archives home"
+      - "Creates backup of home"
+      - "Shows link to home"
+    correct_answer: "Shows all files in home directory with details"
+    explanation: "-l long format, -a all files, ~ is home directory."
+    points: 15
+    hint: "Combine all the flags' meanings."
+
+  - id: "ls_wd_004"
+    type: "what_does_it_do"
+    command: "ls"
+    difficulty: "essential"
+    question_text: "What does 'ls -Sr' show?"
+    options:
+      - "Files sorted by size, smallest first"
+      - "Files sorted by size, largest first"
+      - "System files reversed"
+      - "Special files recursively"
+    correct_answer: "Files sorted by size, smallest first"
+    explanation: "-S sorts by size (largest first), -r reverses it."
+    points: 20
+    hint: "-r reverses the sort order."
+
+  - id: "ls_cb_003"
+    type: "command_builder"
+    command: "ls"
+    difficulty: "essential"
+    question_text: "List all files with human-readable sizes in current directory"
+    correct_answer:
+      - "ls -lah"
+      - "ls -alh"
+      - "ls -lha"
+    explanation: "-l long, -a all, -h human-readable."
+    points: 20
+    hint: "Combine long, all, and human-readable flags."
+
+  - id: "ls_cb_004"
+    type: "command_builder"
+    command: "ls"
+    difficulty: "essential"
+    question_text: "List only .sh files sorted by modification time"
+    correct_answer:
+      - "ls -t *.sh"
+      - "ls -lt *.sh"
+    explanation: "-t sorts by time, *.sh matches shell scripts."
+    points: 20
+    hint: "Use time sort and wildcard pattern."
+
+  # ============================================================
+  # ADDITIONAL CAT QUESTIONS
+  # ============================================================
+
+  - id: "cat_mc_009"
+    type: "multiple_choice"
+    command: "cat"
+    difficulty: "essential"
+    question_text: "What does 'cat -b file.txt' do?"
+    options:
+      - "Numbers only non-empty lines"
+      - "Shows binary content"
+      - "Creates backup"
+      - "Shows bottom of file"
+    correct_answer: "Numbers only non-empty lines"
+    explanation: "-b numbers non-blank lines only, unlike -n which numbers all."
+    points: 20
+    hint: "What if you only want to number lines with content?"
+
+  - id: "cat_mc_010"
+    type: "multiple_choice"
+    command: "cat"
+    difficulty: "essential"
+    question_text: "What does 'cat -s file.txt' do?"
+    options:
+      - "Squeezes multiple blank lines into one"
+      - "Shows silently"
+      - "Sorts the content"
+      - "Shows size"
+    correct_answer: "Squeezes multiple blank lines into one"
+    explanation: "-s compresses consecutive empty lines into a single empty line."
+    points: 20
+    hint: "What if you want to reduce excessive whitespace?"
+
+  - id: "cat_mc_011"
+    type: "multiple_choice"
+    command: "cat"
+    difficulty: "essential"
+    question_text: "What does 'cat -T file.txt' show?"
+    options:
+      - "Displays tabs as ^I"
+      - "Shows total lines"
+      - "Truncates long lines"
+      - "Shows file type"
+    correct_answer: "Displays tabs as ^I"
+    explanation: "-T makes tabs visible as ^I."
+    points: 20
+    hint: "How do you see invisible tab characters?"
+
+  - id: "cat_mc_012"
+    type: "multiple_choice"
+    command: "cat"
+    difficulty: "essential"
+    question_text: "What does 'cat -A file.txt' show?"
+    options:
+      - "All non-printing characters (tabs, line ends)"
+      - "All files"
+      - "ASCII only"
+      - "Append mode"
+    correct_answer: "All non-printing characters (tabs, line ends)"
+    explanation: "-A is equivalent to -vET, showing all special characters."
+    points: 25
+    hint: "How do you reveal all hidden characters?"
+
+  - id: "cat_wd_001"
+    type: "what_does_it_do"
+    command: "cat"
+    difficulty: "essential"
+    question_text: "What does 'cat file1.txt > file2.txt' do?"
+    options:
+      - "Copies content of file1 to file2"
+      - "Appends file1 to file2"
+      - "Compares the files"
+      - "Merges files into one"
+    correct_answer: "Copies content of file1 to file2"
+    explanation: "> redirects cat output to file2, overwriting it."
+    points: 20
+    hint: "> redirects output to a file."
+
+  - id: "cat_wd_002"
+    type: "what_does_it_do"
+    command: "cat"
+    difficulty: "essential"
+    question_text: "What does 'cat a.txt b.txt > combined.txt' do?"
+    options:
+      - "Combines both files into combined.txt"
+      - "Copies a.txt to b.txt"
+      - "Deletes combined.txt"
+      - "Shows error"
+    correct_answer: "Combines both files into combined.txt"
+    explanation: "cat concatenates the files and > saves the output."
+    points: 25
+    hint: "This is the classic use of cat - concatenation."
+
+  - id: "cat_cb_002"
+    type: "command_builder"
+    command: "cat"
+    difficulty: "essential"
+    question_text: "Display file.txt with non-blank lines numbered"
+    correct_answer:
+      - "cat -b file.txt"
+    explanation: "-b numbers non-empty lines only."
+    points: 15
+    hint: "How do you skip numbering empty lines?"
+
+  - id: "cat_cb_003"
+    type: "command_builder"
+    command: "cat"
+    difficulty: "essential"
+    question_text: "Combine header.txt and body.txt into report.txt"
+    correct_answer:
+      - "cat header.txt body.txt > report.txt"
+    explanation: "cat concatenates files, > saves to new file."
+    points: 20
+    hint: "Use output redirection."
+
+  # ============================================================
+  # ADDITIONAL HEAD QUESTIONS
+  # ============================================================
+
+  - id: "head_mc_006"
+    type: "multiple_choice"
+    command: "head"
+    difficulty: "essential"
+    question_text: "What does 'head -n -5 file.txt' do?"
+    options:
+      - "Shows all lines except the last 5"
+      - "Shows the first 5 lines"
+      - "Shows line -5 only"
+      - "Shows an error"
+    correct_answer: "Shows all lines except the last 5"
+    explanation: "-n -5 means all lines except the last 5."
+    points: 30
+    hint: "Negative numbers have special meaning."
+
+  - id: "head_mc_007"
+    type: "multiple_choice"
+    command: "head"
+    difficulty: "essential"
+    question_text: "What does 'head file1.txt file2.txt' show?"
+    options:
+      - "First 10 lines of each file with headers"
+      - "First 10 lines of both combined"
+      - "Only the first file"
+      - "An error"
+    correct_answer: "First 10 lines of each file with headers"
+    explanation: "head shows each file's content with a header naming the file."
+    points: 20
+    hint: "Multiple files get labeled."
+
+  - id: "head_mc_008"
+    type: "multiple_choice"
+    command: "head"
+    difficulty: "essential"
+    question_text: "What does 'head -q file1.txt file2.txt' do?"
+    options:
+      - "Shows first lines without file headers"
+      - "Quits after first file"
+      - "Quick mode"
+      - "Quiet mode with no output"
+    correct_answer: "Shows first lines without file headers"
+    explanation: "-q (quiet) suppresses the ==> filename <== headers."
+    points: 25
+    hint: "What if you don't want the filename headers?"
+
+  - id: "head_wd_001"
+    type: "what_does_it_do"
+    command: "head"
+    difficulty: "essential"
+    question_text: "What does 'cat file.txt | head -5' do?"
+    options:
+      - "Shows the first 5 lines of file.txt"
+      - "Shows 5 cats"
+      - "Creates a header"
+      - "Shows file size"
+    correct_answer: "Shows the first 5 lines of file.txt"
+    explanation: "cat outputs the file, head takes the first 5 lines."
+    points: 20
+    hint: "The pipe passes output to head."
+
+  - id: "head_cb_002"
+    type: "command_builder"
+    command: "head"
+    difficulty: "essential"
+    question_text: "Show the first 100 characters of data.bin"
+    correct_answer:
+      - "head -c 100 data.bin"
+    explanation: "-c specifies bytes/characters instead of lines."
+    points: 20
+    hint: "How do you work with bytes instead of lines?"
+
+  # ============================================================
+  # ADDITIONAL TAIL QUESTIONS
+  # ============================================================
+
+  - id: "tail_mc_006"
+    type: "multiple_choice"
+    command: "tail"
+    difficulty: "essential"
+    question_text: "What does 'tail -n +5 file.txt' do?"
+    options:
+      - "Shows from line 5 to end of file"
+      - "Shows last 5 lines"
+      - "Adds 5 lines"
+      - "Shows 5 files"
+    correct_answer: "Shows from line 5 to end of file"
+    explanation: "+5 means starting from line 5 (inclusive) to the end."
+    points: 30
+    hint: "Plus sign changes the behavior."
+
+  - id: "tail_mc_007"
+    type: "multiple_choice"
+    command: "tail"
+    difficulty: "essential"
+    question_text: "What does 'tail -F file.log' do differently than -f?"
+    options:
+      - "Keeps following even if file is rotated/replaced"
+      - "Filters output"
+      - "Follows faster"
+      - "Forces follow"
+    correct_answer: "Keeps following even if file is rotated/replaced"
+    explanation: "-F (capital) keeps trying if file is renamed/rotated, useful for logs."
+    points: 30
+    hint: "Capital F handles log rotation."
+
+  - id: "tail_mc_008"
+    type: "multiple_choice"
+    command: "tail"
+    difficulty: "essential"
+    question_text: "What does 'tail -c 50 file.txt' do?"
+    options:
+      - "Shows the last 50 bytes/characters"
+      - "Shows 50 lines"
+      - "Cuts at character 50"
+      - "Creates 50 copies"
+    correct_answer: "Shows the last 50 bytes/characters"
+    explanation: "-c specifies bytes instead of lines."
+    points: 20
+    hint: "What if you need a specific byte count instead of lines?"
+
+  - id: "tail_wd_001"
+    type: "what_does_it_do"
+    command: "tail"
+    difficulty: "essential"
+    question_text: "What does 'dmesg | tail' do?"
+    options:
+      - "Shows the last 10 kernel messages"
+      - "Shows system errors"
+      - "Creates a log"
+      - "Deletes messages"
+    correct_answer: "Shows the last 10 kernel messages"
+    explanation: "dmesg outputs kernel messages, tail shows the last 10."
+    points: 25
+    hint: "dmesg shows kernel logs."
+
+  - id: "tail_cb_002"
+    type: "command_builder"
+    command: "tail"
+    difficulty: "essential"
+    question_text: "Show lines from line 100 onwards in data.txt"
+    correct_answer:
+      - "tail -n +100 data.txt"
+      - "tail +100 data.txt"
+    explanation: "+100 means starting from line 100."
+    points: 25
+    hint: "Use plus sign with line number."
+
+  # ============================================================
+  # ADDITIONAL CP QUESTIONS
+  # ============================================================
+
+  - id: "cp_mc_009"
+    type: "multiple_choice"
+    command: "cp"
+    difficulty: "essential"
+    question_text: "What does 'cp -u source dest' do?"
+    options:
+      - "Copies only if source is newer than destination"
+      - "Undoes copy"
+      - "Copies to USB"
+      - "Uploads copy"
+    correct_answer: "Copies only if source is newer than destination"
+    explanation: "-u (update) only copies when source is newer or dest doesn't exist."
+    points: 25
+    hint: "What if you only want to copy newer files?"
+
+  - id: "cp_mc_010"
+    type: "multiple_choice"
+    command: "cp"
+    difficulty: "essential"
+    question_text: "What does 'cp -l file1 file2' do?"
+    options:
+      - "Creates a hard link instead of copying"
+      - "Lists copied files"
+      - "Logs the copy"
+      - "Links symbolically"
+    correct_answer: "Creates a hard link instead of copying"
+    explanation: "-l creates hard links instead of copying file data."
+    points: 30
+    hint: "What if you want to save space by not duplicating data?"
+
+  - id: "cp_mc_011"
+    type: "multiple_choice"
+    command: "cp"
+    difficulty: "essential"
+    question_text: "What does 'cp -s file1 link1' do?"
+    options:
+      - "Creates a symbolic link"
+      - "Shows size after copy"
+      - "Copies silently"
+      - "Copies to system folder"
+    correct_answer: "Creates a symbolic link"
+    explanation: "-s creates a symbolic (soft) link instead of copying."
+    points: 30
+    hint: "What creates a pointer to another file?"
+
+  - id: "cp_mc_012"
+    type: "multiple_choice"
+    command: "cp"
+    difficulty: "essential"
+    question_text: "What does 'cp -a folder/ backup/' do?"
+    options:
+      - "Archives: copies everything preserving all attributes"
+      - "Appends to backup"
+      - "Creates archive file"
+      - "Copies alphabetically"
+    correct_answer: "Archives: copies everything preserving all attributes"
+    explanation: "-a is archive mode: -r, -p, and preserves links and special files."
+    points: 25
+    hint: "What preserves everything during a full backup?"
+
+  - id: "cp_wd_001"
+    type: "what_does_it_do"
+    command: "cp"
+    difficulty: "essential"
+    question_text: "What does 'cp *.txt backups/' do?"
+    options:
+      - "Copies all .txt files to backups folder"
+      - "Creates txt backup"
+      - "Compresses txt files"
+      - "Shows txt file count"
+    correct_answer: "Copies all .txt files to backups folder"
+    explanation: "* matches all .txt files, they're copied to backups/."
+    points: 15
+    hint: "Wildcard matches multiple files."
+
+  - id: "cp_cb_002"
+    type: "command_builder"
+    command: "cp"
+    difficulty: "essential"
+    question_text: "Copy file.txt to /tmp preserving timestamps"
+    correct_answer:
+      - "cp -p file.txt /tmp/"
+      - "cp -p file.txt /tmp"
+    explanation: "-p preserves mode, ownership, and timestamps."
+    points: 20
+    hint: "How do you keep the original file attributes?"
+
+  # ============================================================
+  # ADDITIONAL MV QUESTIONS
+  # ============================================================
+
+  - id: "mv_mc_008"
+    type: "multiple_choice"
+    command: "mv"
+    difficulty: "essential"
+    question_text: "What does 'mv -n source dest' do?"
+    options:
+      - "Does not overwrite existing destination"
+      - "Names the file"
+      - "Moves to next"
+      - "Moves n files"
+    correct_answer: "Does not overwrite existing destination"
+    explanation: "-n (no-clobber) prevents overwriting existing files."
+    points: 20
+    hint: "What if you want to protect existing files?"
+
+  - id: "mv_mc_009"
+    type: "multiple_choice"
+    command: "mv"
+    difficulty: "essential"
+    question_text: "What does 'mv -b file.txt dest/' do?"
+    options:
+      - "Creates backup of destination file before overwriting"
+      - "Moves backwards"
+      - "Moves binary files"
+      - "Moves to bin"
+    correct_answer: "Creates backup of destination file before overwriting"
+    explanation: "-b creates a backup (with ~ suffix) before overwriting."
+    points: 25
+    hint: "What if you want to keep the old version?"
+
+  - id: "mv_mc_010"
+    type: "multiple_choice"
+    command: "mv"
+    difficulty: "essential"
+    question_text: "What does 'mv -t dest/ file1 file2 file3' do?"
+    options:
+      - "Moves all files to dest/ directory"
+      - "Moves file1 to file2 to file3"
+      - "Tests the move"
+      - "Moves with timestamps"
+    correct_answer: "Moves all files to dest/ directory"
+    explanation: "-t specifies target directory, then list source files."
+    points: 25
+    hint: "What if you want to specify destination first?"
+
+  - id: "mv_wd_001"
+    type: "what_does_it_do"
+    command: "mv"
+    difficulty: "essential"
+    question_text: "What does 'mv report{.txt,.bak}' do?"
+    options:
+      - "Renames report.txt to report.bak"
+      - "Moves both files"
+      - "Creates backup"
+      - "Shows error"
+    correct_answer: "Renames report.txt to report.bak"
+    explanation: "Brace expansion creates two arguments: report.txt report.bak."
+    points: 30
+    hint: "Brace expansion is a shell feature."
+
+  - id: "mv_cb_002"
+    type: "command_builder"
+    command: "mv"
+    difficulty: "essential"
+    question_text: "Rename config.txt to config.bak with backup"
+    correct_answer:
+      - "mv -b config.txt config.bak"
+    explanation: "-b creates backup if destination exists."
+    points: 20
+    hint: "How do you keep the old version before overwriting?"
+
+  # ============================================================
+  # ADDITIONAL RM QUESTIONS
+  # ============================================================
+
+  - id: "rm_mc_009"
+    type: "multiple_choice"
+    command: "rm"
+    difficulty: "essential"
+    question_text: "What does 'rm -d empty_dir' do?"
+    options:
+      - "Removes an empty directory"
+      - "Removes directory with contents"
+      - "Shows directory info"
+      - "Downloads directory"
+    correct_answer: "Removes an empty directory"
+    explanation: "-d removes empty directories (like rmdir)."
+    points: 20
+    hint: "What works like rmdir for empty folders?"
+
+  - id: "rm_mc_010"
+    type: "multiple_choice"
+    command: "rm"
+    difficulty: "essential"
+    question_text: "What's safer: 'rm -I' or 'rm -i'?"
+    options:
+      - "rm -I prompts once for many files, -i prompts for each"
+      - "They are the same"
+      - "rm -i is safer"
+      - "rm -I never prompts"
+    correct_answer: "rm -I prompts once for many files, -i prompts for each"
+    explanation: "-I prompts once when removing many files, -i prompts for every file."
+    points: 30
+    hint: "Capital I is less intrusive."
+
+  - id: "rm_mc_011"
+    type: "multiple_choice"
+    command: "rm"
+    difficulty: "essential"
+    question_text: "What does 'rm -- -filename' do?"
+    options:
+      - "Removes a file named -filename"
+      - "Removes two files"
+      - "Shows help"
+      - "Does nothing"
+    correct_answer: "Removes a file named -filename"
+    explanation: "-- signals end of options, so -filename is treated as filename."
+    points: 30
+    hint: "-- separates options from arguments."
+
+  - id: "rm_wd_001"
+    type: "what_does_it_do"
+    command: "rm"
+    difficulty: "essential"
+    question_text: "What does 'rm -rf node_modules/' do?"
+    options:
+      - "Forcefully deletes node_modules and everything inside"
+      - "Removes read-only files only"
+      - "Renames the folder"
+      - "Creates backup"
+    correct_answer: "Forcefully deletes node_modules and everything inside"
+    explanation: "-r recursive, -f force. Deletes everything without prompting."
+    points: 20
+    hint: "Common for deleting dependency folders."
+
+  - id: "rm_cb_002"
+    type: "command_builder"
+    command: "rm"
+    difficulty: "essential"
+    question_text: "Delete all .tmp files with confirmation"
+    correct_answer:
+      - "rm -i *.tmp"
+    explanation: "-i prompts before each deletion."
+    points: 15
+    hint: "How do you get asked before each file is affected?"
+
+  # ============================================================
+  # ADDITIONAL TOUCH QUESTIONS
+  # ============================================================
+
+  - id: "touch_mc_005"
+    type: "multiple_choice"
+    command: "touch"
+    difficulty: "essential"
+    question_text: "What does 'touch -c file.txt' do?"
+    options:
+      - "Updates timestamp only if file exists, doesn't create"
+      - "Creates with confirmation"
+      - "Creates compressed file"
+      - "Clears file contents"
+    correct_answer: "Updates timestamp only if file exists, doesn't create"
+    explanation: "-c (no-create) won't create new files, only updates existing."
+    points: 20
+    hint: "What if you don't want to create new files?"
+
+  - id: "touch_mc_006"
+    type: "multiple_choice"
+    command: "touch"
+    difficulty: "essential"
+    question_text: "What does 'touch -t 202312251200 file.txt' do?"
+    options:
+      - "Sets timestamp to Dec 25, 2023 at 12:00"
+      - "Creates 202312251200 bytes file"
+      - "Touches for 202312251200 seconds"
+      - "Shows error"
+    correct_answer: "Sets timestamp to Dec 25, 2023 at 12:00"
+    explanation: "-t sets specific timestamp in [[CC]YY]MMDDhhmm[.ss] format."
+    points: 30
+    hint: "How do you specify a particular date and time?"
+
+  - id: "touch_mc_007"
+    type: "multiple_choice"
+    command: "touch"
+    difficulty: "essential"
+    question_text: "What does 'touch -r source.txt target.txt' do?"
+    options:
+      - "Copies source.txt's timestamp to target.txt"
+      - "References source in target"
+      - "Removes source and creates target"
+      - "Renames source to target"
+    correct_answer: "Copies source.txt's timestamp to target.txt"
+    explanation: "-r uses another file's timestamp as reference."
+    points: 25
+    hint: "What if you want to match another file's timestamp?"
+
+  - id: "touch_cb_002"
+    type: "command_builder"
+    command: "touch"
+    difficulty: "essential"
+    question_text: "Create .gitkeep files in src/ and tests/ directories"
+    correct_answer:
+      - "touch src/.gitkeep tests/.gitkeep"
+    explanation: "Touch multiple paths at once."
+    points: 15
+    hint: "List all paths after touch."
+
+  # ============================================================
+  # ADDITIONAL MKDIR QUESTIONS
+  # ============================================================
+
+  - id: "mkdir_mc_006"
+    type: "multiple_choice"
+    command: "mkdir"
+    difficulty: "essential"
+    question_text: "What does 'mkdir -m 700 private' do?"
+    options:
+      - "Creates directory with permissions 700"
+      - "Makes 700 directories"
+      - "Moves directory"
+      - "Shows error"
+    correct_answer: "Creates directory with permissions 700"
+    explanation: "-m sets permissions at creation time."
+    points: 25
+    hint: "How do you set permissions at creation time?"
+
+  - id: "mkdir_mc_007"
+    type: "multiple_choice"
+    command: "mkdir"
+    difficulty: "essential"
+    question_text: "What does 'mkdir -v projects' show?"
+    options:
+      - "Prints 'mkdir: created directory projects'"
+      - "Verbose error messages"
+      - "Version information"
+      - "Nothing"
+    correct_answer: "Prints 'mkdir: created directory projects'"
+    explanation: "-v (verbose) prints each directory as it's created."
+    points: 15
+    hint: "How do you see what's happening during the operation?"
+
+  - id: "mkdir_wd_001"
+    type: "what_does_it_do"
+    command: "mkdir"
+    difficulty: "essential"
+    question_text: "What does 'mkdir -p a/b/c && touch a/b/c/file.txt' do?"
+    options:
+      - "Creates nested directories and a file inside"
+      - "Shows error"
+      - "Creates file only"
+      - "Removes directories"
+    correct_answer: "Creates nested directories and a file inside"
+    explanation: "-p creates all parent dirs, && runs touch if mkdir succeeds."
+    points: 25
+    hint: "&& chains commands."
+
+  - id: "mkdir_cb_002"
+    type: "command_builder"
+    command: "mkdir"
+    difficulty: "essential"
+    question_text: "Create a private directory with 700 permissions"
+    correct_answer:
+      - "mkdir -m 700 private"
+      - "mkdir -m700 private"
+    explanation: "-m sets mode at creation."
+    points: 20
+    hint: "How do you specify permissions when creating?"
+
+  # ============================================================
+  # ADDITIONAL GREP QUESTIONS
+  # ============================================================
+
+  - id: "grep_mc_013"
+    type: "multiple_choice"
+    command: "grep"
+    difficulty: "essential"
+    question_text: "What does 'grep -o pattern file' do?"
+    options:
+      - "Shows only the matching part, not the whole line"
+      - "Shows output file"
+      - "Shows only one match"
+      - "Opens in editor"
+    correct_answer: "Shows only the matching part, not the whole line"
+    explanation: "-o (only-matching) outputs just the matched text."
+    points: 25
+    hint: "What if you just want the matched text, not the whole line?"
+
+  - id: "grep_mc_014"
+    type: "multiple_choice"
+    command: "grep"
+    difficulty: "essential"
+    question_text: "What does 'grep -L pattern files' do?"
+    options:
+      - "Lists files that DON'T contain the pattern"
+      - "Lists files that contain pattern"
+      - "Lists last matches"
+      - "Long format output"
+    correct_answer: "Lists files that DON'T contain the pattern"
+    explanation: "-L (files-without-match) lists files lacking the pattern."
+    points: 25
+    hint: "Capital L is opposite of lowercase l."
+
+  - id: "grep_mc_015"
+    type: "multiple_choice"
+    command: "grep"
+    difficulty: "essential"
+    question_text: "What does 'grep -q pattern file' do?"
+    options:
+      - "Searches silently, only returns exit code"
+      - "Quick search"
+      - "Quits on first match"
+      - "Quotes the pattern"
+    correct_answer: "Searches silently, only returns exit code"
+    explanation: "-q (quiet) produces no output, just sets exit status."
+    points: 25
+    hint: "What if you just need to know if there's a match?"
+
+  - id: "grep_mc_016"
+    type: "multiple_choice"
+    command: "grep"
+    difficulty: "essential"
+    question_text: "What does 'grep -e 'pat1' -e 'pat2' file' do?"
+    options:
+      - "Searches for multiple patterns (OR)"
+      - "Excludes patterns"
+      - "Shows errors only"
+      - "Escapes patterns"
+    correct_answer: "Searches for multiple patterns (OR)"
+    explanation: "Multiple -e flags let you specify multiple patterns."
+    points: 25
+    hint: "How do you specify multiple search terms?"
+
+  - id: "grep_mc_017"
+    type: "multiple_choice"
+    command: "grep"
+    difficulty: "essential"
+    question_text: "What does 'grep -f patterns.txt file.txt' do?"
+    options:
+      - "Reads patterns from a file"
+      - "Filters to file"
+      - "Formats output"
+      - "Finds files"
+    correct_answer: "Reads patterns from a file"
+    explanation: "-f takes patterns from a file, one per line."
+    points: 25
+    hint: "How do you search using patterns from another file?"
+
+  - id: "grep_mc_018"
+    type: "multiple_choice"
+    command: "grep"
+    difficulty: "essential"
+    question_text: "What does 'grep -C 2 error log.txt' do?"
+    options:
+      - "Shows 2 lines before AND after each match"
+      - "Counts 2 matches"
+      - "Colors output"
+      - "Creates 2 files"
+    correct_answer: "Shows 2 lines before AND after each match"
+    explanation: "-C (context) shows lines before and after, like -B and -A combined."
+    points: 20
+    hint: "How do you see surrounding lines?"
+
+  - id: "grep_wd_001"
+    type: "what_does_it_do"
+    command: "grep"
+    difficulty: "essential"
+    question_text: "What does 'ps aux | grep python' do?"
+    options:
+      - "Shows running Python processes"
+      - "Searches Python files"
+      - "Runs Python grep"
+      - "Creates Python process"
+    correct_answer: "Shows running Python processes"
+    explanation: "ps lists processes, grep filters for 'python' in the output."
+    points: 20
+    hint: "Pipe connects two commands."
+
+  - id: "grep_wd_002"
+    type: "what_does_it_do"
+    command: "grep"
+    difficulty: "essential"
+    question_text: "What does 'grep -rn 'TODO' src/' do?"
+    options:
+      - "Finds all TODO comments in src/ with line numbers"
+      - "Removes TODOs"
+      - "Runs TODO tasks"
+      - "Creates TODO file"
+    correct_answer: "Finds all TODO comments in src/ with line numbers"
+    explanation: "-r recursive, -n line numbers. Finds all TODOs in source code."
+    points: 20
+    hint: "Common for finding code comments."
+
+  - id: "grep_cb_003"
+    type: "command_builder"
+    command: "grep"
+    difficulty: "essential"
+    question_text: "Find lines NOT containing 'test' in output.log"
+    correct_answer:
+      - "grep -v 'test' output.log"
+      - "grep -v test output.log"
+    explanation: "-v inverts the match."
+    points: 15
+    hint: "Use the invert flag."
+
+  - id: "grep_cb_004"
+    type: "command_builder"
+    command: "grep"
+    difficulty: "essential"
+    question_text: "Find 'ERROR' case-insensitively in all .log files"
+    correct_answer:
+      - "grep -i 'ERROR' *.log"
+      - "grep -i ERROR *.log"
+    explanation: "-i for case-insensitive search."
+    points: 15
+    hint: "Use ignore-case flag."
+
+  - id: "grep_fe_001"
+    type: "fix_error"
+    command: "grep"
+    difficulty: "essential"
+    question_text: "This doesn't find 'Error' and 'error': grep 'error' file.log"
+    correct_answer:
+      - "grep -i 'error' file.log"
+      - "grep -i error file.log"
+    explanation: "Add -i for case-insensitive matching."
+    points: 20
+    hint: "Make it case-insensitive."
+
+  # ============================================================
+  # ADDITIONAL FIND QUESTIONS
+  # ============================================================
+
+  - id: "find_mc_009"
+    type: "multiple_choice"
+    command: "find"
+    difficulty: "essential"
+    question_text: "What does 'find . -iname '*.TXT'' do?"
+    options:
+      - "Case-insensitive search for .txt files"
+      - "Same as -name"
+      - "Shows info about txt files"
+      - "Invalid option"
+    correct_answer: "Case-insensitive search for .txt files"
+    explanation: "-iname is case-insensitive, matches .txt, .TXT, .Txt, etc."
+    points: 20
+    hint: "How do you ignore case differences?"
+
+  - id: "find_mc_010"
+    type: "multiple_choice"
+    command: "find"
+    difficulty: "essential"
+    question_text: "What does 'find . -user john' find?"
+    options:
+      - "Files owned by user john"
+      - "Files containing 'john'"
+      - "Users named john"
+      - "Files in john's home"
+    correct_answer: "Files owned by user john"
+    explanation: "-user filters by file ownership."
+    points: 20
+    hint: "Filter by owner."
+
+  - id: "find_mc_011"
+    type: "multiple_choice"
+    command: "find"
+    difficulty: "essential"
+    question_text: "What does 'find . -perm 755' find?"
+    options:
+      - "Files with exactly 755 permissions"
+      - "Files with at least 755"
+      - "Permanent files"
+      - "Permission errors"
+    correct_answer: "Files with exactly 755 permissions"
+    explanation: "-perm without prefix matches exact permissions."
+    points: 25
+    hint: "Exact permission match."
+
+  - id: "find_mc_012"
+    type: "multiple_choice"
+    command: "find"
+    difficulty: "essential"
+    question_text: "What does 'find . -exec command {} \\;' do?"
+    options:
+      - "Runs command on each file found"
+      - "Excludes command results"
+      - "Executes find"
+      - "Shows executable files"
+    correct_answer: "Runs command on each file found"
+    explanation: "-exec runs a command for each match, {} is replaced with filename."
+    points: 30
+    hint: "{} is a placeholder for the filename."
+
+  - id: "find_mc_013"
+    type: "multiple_choice"
+    command: "find"
+    difficulty: "essential"
+    question_text: "What does 'find . -maxdepth 1 -type f' do?"
+    options:
+      - "Finds files only in current directory (not subdirectories)"
+      - "Finds maximum 1 file"
+      - "Finds deepest file"
+      - "Finds 1 type of file"
+    correct_answer: "Finds files only in current directory (not subdirectories)"
+    explanation: "-maxdepth 1 limits search to current directory only."
+    points: 25
+    hint: "Limits how deep to search."
+
+  - id: "find_mc_014"
+    type: "multiple_choice"
+    command: "find"
+    difficulty: "essential"
+    question_text: "What does 'find . -newer reference.txt' find?"
+    options:
+      - "Files modified more recently than reference.txt"
+      - "Newer version of reference"
+      - "New files only"
+      - "Files named newer"
+    correct_answer: "Files modified more recently than reference.txt"
+    explanation: "-newer compares modification times against a reference file."
+    points: 25
+    hint: "Compare against another file's time."
+
+  - id: "find_wd_001"
+    type: "what_does_it_do"
+    command: "find"
+    difficulty: "essential"
+    question_text: "What does 'find . -name '*.bak' -delete' do?"
+    options:
+      - "Finds and deletes all .bak files"
+      - "Finds but keeps .bak files"
+      - "Creates backup"
+      - "Shows .bak files only"
+    correct_answer: "Finds and deletes all .bak files"
+    explanation: "-delete removes matching files. Very dangerous without testing first!"
+    points: 25
+    hint: "Careful with -delete!"
+
+  - id: "find_wd_002"
+    type: "what_does_it_do"
+    command: "find"
+    difficulty: "essential"
+    question_text: "What does 'find . -type f -name '*.js' | wc -l' do?"
+    options:
+      - "Counts how many .js files exist"
+      - "Writes .js files to disk"
+      - "Word count of .js files"
+      - "Creates .js file"
+    correct_answer: "Counts how many .js files exist"
+    explanation: "find lists .js files, wc -l counts the lines (files)."
+    points: 25
+    hint: "wc -l counts lines."
+
+  - id: "find_cb_003"
+    type: "command_builder"
+    command: "find"
+    difficulty: "essential"
+    question_text: "Find all directories named 'test' in /home"
+    correct_answer:
+      - "find /home -type d -name 'test'"
+      - "find /home -name 'test' -type d"
+    explanation: "-type d for directories, -name for the name."
+    points: 20
+    hint: "Combine type and name."
+
+  - id: "find_cb_004"
+    type: "command_builder"
+    command: "find"
+    difficulty: "essential"
+    question_text: "Find files modified in the last 24 hours"
+    correct_answer:
+      - "find . -mtime -1"
+      - "find . -mtime 0"
+    explanation: "-mtime -1 means less than 1 day ago."
+    points: 25
+    hint: "Use modification time."
+
+  # ============================================================
+  # ADDITIONAL CHMOD QUESTIONS
+  # ============================================================
+
+  - id: "chmod_mc_010"
+    type: "multiple_choice"
+    command: "chmod"
+    difficulty: "essential"
+    question_text: "What does 'chmod u+x file' do?"
+    options:
+      - "Adds execute permission for owner only"
+      - "Adds execute for all users"
+      - "Updates execute permission"
+      - "Removes execute"
+    correct_answer: "Adds execute permission for owner only"
+    explanation: "u means user/owner, +x adds execute permission."
+    points: 20
+    hint: "u = user/owner."
+
+  - id: "chmod_mc_011"
+    type: "multiple_choice"
+    command: "chmod"
+    difficulty: "essential"
+    question_text: "What does 'chmod g+w file' do?"
+    options:
+      - "Adds write permission for group"
+      - "Gives global write"
+      - "Gets write permission"
+      - "Grants all permissions"
+    correct_answer: "Adds write permission for group"
+    explanation: "g means group, +w adds write permission."
+    points: 20
+    hint: "g = group."
+
+  - id: "chmod_mc_012"
+    type: "multiple_choice"
+    command: "chmod"
+    difficulty: "essential"
+    question_text: "What does 'chmod o-r file' do?"
+    options:
+      - "Removes read permission for others"
+      - "Opens read permission"
+      - "Overrides read"
+      - "Outputs read info"
+    correct_answer: "Removes read permission for others"
+    explanation: "o means others, -r removes read permission."
+    points: 20
+    hint: "o = others, - removes."
+
+  - id: "chmod_mc_013"
+    type: "multiple_choice"
+    command: "chmod"
+    difficulty: "essential"
+    question_text: "What does 'chmod a+x file' do?"
+    options:
+      - "Adds execute permission for all (user, group, others)"
+      - "Adds to archive"
+      - "Appends execute"
+      - "Auto execute"
+    correct_answer: "Adds execute permission for all (user, group, others)"
+    explanation: "a means all (everyone), +x adds execute."
+    points: 15
+    hint: "a = all."
+
+  - id: "chmod_mc_014"
+    type: "multiple_choice"
+    command: "chmod"
+    difficulty: "essential"
+    question_text: "What does 'chmod 400 secret.key' do?"
+    options:
+      - "Owner can read only, no one else can access"
+      - "Everyone can read"
+      - "No one can read"
+      - "Creates 400 copies"
+    correct_answer: "Owner can read only, no one else can access"
+    explanation: "4=read for owner, 0=nothing for group and others."
+    points: 25
+    hint: "4 = read only."
+
+  - id: "chmod_wd_001"
+    type: "what_does_it_do"
+    command: "chmod"
+    difficulty: "essential"
+    question_text: "What does 'chmod go-rwx private.txt' do?"
+    options:
+      - "Removes all permissions from group and others"
+      - "Gives group and others all permissions"
+      - "Goes to read-write-execute"
+      - "Shows error"
+    correct_answer: "Removes all permissions from group and others"
+    explanation: "go = group and others, -rwx removes all permissions."
+    points: 25
+    hint: "go affects group and others."
+
+  - id: "chmod_cb_002"
+    type: "command_builder"
+    command: "chmod"
+    difficulty: "essential"
+    question_text: "Make a file readable and writable by owner only"
+    correct_answer:
+      - "chmod 600 file"
+      - "chmod u=rw,go= file"
+    explanation: "600 = rw for owner, nothing for others."
+    points: 20
+    hint: "6 = read + write."
+
+  # ============================================================
+  # ADDITIONAL ECHO QUESTIONS
+  # ============================================================
+
+  - id: "echo_mc_006"
+    type: "multiple_choice"
+    command: "echo"
+    difficulty: "essential"
+    question_text: "What does 'echo -e 'Line1\\nLine2'' show?"
+    options:
+      - "Two lines: Line1 and Line2"
+      - "Line1\\nLine2 literally"
+      - "Only Line1"
+      - "An error"
+    correct_answer: "Two lines: Line1 and Line2"
+    explanation: "-e enables interpretation of backslash escapes like \\n."
+    points: 20
+    hint: "-e enables escape sequences."
+
+  - id: "echo_mc_007"
+    type: "multiple_choice"
+    command: "echo"
+    difficulty: "essential"
+    question_text: "What does 'echo $PATH' display?"
+    options:
+      - "The system path variable (directories to search for commands)"
+      - "The word PATH"
+      - "The current directory"
+      - "All files"
+    correct_answer: "The system path variable (directories to search for commands)"
+    explanation: "$PATH is an environment variable containing executable search paths."
+    points: 20
+    hint: "PATH is an important system variable."
+
+  - id: "echo_mc_008"
+    type: "multiple_choice"
+    command: "echo"
+    difficulty: "essential"
+    question_text: "What's the difference between 'echo \"$HOME\"' and 'echo '$HOME''?"
+    options:
+      - "Double quotes expand variables, single quotes don't"
+      - "They are the same"
+      - "Single quotes expand variables"
+      - "Both show errors"
+    correct_answer: "Double quotes expand variables, single quotes don't"
+    explanation: "Double quotes allow variable expansion, single quotes are literal."
+    points: 25
+    hint: "Quote types behave differently."
+
+  - id: "echo_mc_009"
+    type: "multiple_choice"
+    command: "echo"
+    difficulty: "essential"
+    question_text: "What does 'echo $?' show?"
+    options:
+      - "Exit code of the last command"
+      - "Current process ID"
+      - "Current user"
+      - "Question mark"
+    correct_answer: "Exit code of the last command"
+    explanation: "$? contains the exit status of the previous command (0 = success)."
+    points: 25
+    hint: "It's about command success/failure."
+
+  - id: "echo_wd_001"
+    type: "what_does_it_do"
+    command: "echo"
+    difficulty: "essential"
+    question_text: "What does 'echo Hello > file.txt' do?"
+    options:
+      - "Writes 'Hello' to file.txt"
+      - "Appends Hello to file.txt"
+      - "Shows Hello on screen"
+      - "Creates backup"
+    correct_answer: "Writes 'Hello' to file.txt"
+    explanation: "> redirects echo output to a file, overwriting it."
+    points: 15
+    hint: "> redirects output."
+
+  - id: "echo_wd_002"
+    type: "what_does_it_do"
+    command: "echo"
+    difficulty: "essential"
+    question_text: "What does 'echo $(date)' show?"
+    options:
+      - "The current date and time"
+      - "The word date"
+      - "$(date)"
+      - "An error"
+    correct_answer: "The current date and time"
+    explanation: "$(date) runs the date command and echo displays its output."
+    points: 20
+    hint: "$() runs a command."
+
+  - id: "echo_cb_002"
+    type: "command_builder"
+    command: "echo"
+    difficulty: "essential"
+    question_text: "Print the value of the SHELL environment variable"
+    correct_answer:
+      - "echo $SHELL"
+    explanation: "$SHELL contains the path to your shell."
+    points: 15
+    hint: "Use the SHELL variable."
+
+  # ============================================================
+  # ADDITIONAL MAN QUESTIONS
+  # ============================================================
+
+  - id: "man_mc_006"
+    type: "multiple_choice"
+    command: "man"
+    difficulty: "essential"
+    question_text: "What does 'man -k keyword' do?"
+    options:
+      - "Searches for keyword in all man page descriptions"
+      - "Shows kernel documentation"
+      - "Kills man process"
+      - "Shows key bindings"
+    correct_answer: "Searches for keyword in all man page descriptions"
+    explanation: "-k (apropos) searches the man page index for keywords."
+    points: 25
+    hint: "How do you search for related commands?"
+
+  - id: "man_mc_007"
+    type: "multiple_choice"
+    command: "man"
+    difficulty: "essential"
+    question_text: "What does 'man 5 passwd' show?"
+    options:
+      - "Documentation for passwd file format (section 5)"
+      - "Five password entries"
+      - "Version 5 of passwd"
+      - "Password for user 5"
+    correct_answer: "Documentation for passwd file format (section 5)"
+    explanation: "Section 5 is for file formats. passwd has both a command (1) and file format (5)."
+    points: 30
+    hint: "Section numbers matter."
+
+  - id: "man_mc_008"
+    type: "multiple_choice"
+    command: "man"
+    difficulty: "essential"
+    question_text: "How do you scroll down in a man page?"
+    options:
+      - "Press Space or Page Down or j"
+      - "Press Enter only"
+      - "Press Tab"
+      - "Press Escape"
+    correct_answer: "Press Space or Page Down or j"
+    explanation: "Man uses less-style navigation: Space/PgDn for page, j for line."
+    points: 15
+    hint: "Same as less navigation."
+
+  - id: "man_wd_001"
+    type: "what_does_it_do"
+    command: "man"
+    difficulty: "essential"
+    question_text: "What does 'man -f printf' do?"
+    options:
+      - "Shows one-line descriptions for all printf entries"
+      - "Formats printf output"
+      - "Forces man page display"
+      - "Finds printf files"
+    correct_answer: "Shows one-line descriptions for all printf entries"
+    explanation: "-f (whatis) shows short descriptions of matching commands."
+    points: 25
+    hint: "Like a quick summary."
+
+  - id: "man_cb_002"
+    type: "command_builder"
+    command: "man"
+    difficulty: "essential"
+    question_text: "Search man pages for anything related to 'network'"
+    correct_answer:
+      - "man -k network"
+      - "apropos network"
+    explanation: "-k searches man page descriptions for keywords."
+    points: 20
+    hint: "Use keyword search."
+
+  # ============================================================
+  # LESS COMMAND - 30 Questions
+  # ============================================================
+
+  - id: "less_mc_001"
+    type: "multiple_choice"
+    command: "less"
+    difficulty: "essential"
+    question_text: "What is the main advantage of 'less' over 'cat'?"
+    options:
+      - "Allows scrolling through large files"
+      - "Faster processing"
+      - "Better colors"
+      - "Edits files"
+    correct_answer: "Allows scrolling through large files"
+    explanation: "less lets you view files page by page, scrolling as needed."
+    points: 10
+    hint: "Think about viewing very large files."
+
+  - id: "less_mc_002"
+    type: "multiple_choice"
+    command: "less"
+    difficulty: "essential"
+    question_text: "How do you quit less?"
+    options:
+      - "Press q"
+      - "Press Escape"
+      - "Press Ctrl+C"
+      - "Press Enter"
+    correct_answer: "Press q"
+    explanation: "q quits less, same as in man pages."
+    points: 10
+    hint: "How do you close the viewer?"
+
+  - id: "less_mc_003"
+    type: "multiple_choice"
+    command: "less"
+    difficulty: "essential"
+    question_text: "How do you search forward in less?"
+    options:
+      - "Press / then type search term"
+      - "Press s"
+      - "Press f"
+      - "Press Ctrl+F"
+    correct_answer: "Press / then type search term"
+    explanation: "/ starts forward search, type term and press Enter."
+    points: 15
+    hint: "Same as vim search."
+
+  - id: "less_mc_004"
+    type: "multiple_choice"
+    command: "less"
+    difficulty: "essential"
+    question_text: "How do you search backward in less?"
+    options:
+      - "Press ? then type search term"
+      - "Press b"
+      - "Press Ctrl+B"
+      - "Press r"
+    correct_answer: "Press ? then type search term"
+    explanation: "? searches backward through the file."
+    points: 20
+    hint: "Opposite direction of /."
+
+  - id: "less_mc_005"
+    type: "multiple_choice"
+    command: "less"
+    difficulty: "essential"
+    question_text: "How do you go to the end of file in less?"
+    options:
+      - "Press G (capital G)"
+      - "Press e"
+      - "Press End"
+      - "Press Ctrl+E"
+    correct_answer: "Press G (capital G)"
+    explanation: "G (shift+g) jumps to the end of the file."
+    points: 15
+    hint: "Capital G."
+
+  - id: "less_mc_006"
+    type: "multiple_choice"
+    command: "less"
+    difficulty: "essential"
+    question_text: "How do you go to the beginning of file in less?"
+    options:
+      - "Press g (lowercase g)"
+      - "Press b"
+      - "Press Home"
+      - "Press Ctrl+Home"
+    correct_answer: "Press g (lowercase g)"
+    explanation: "g jumps to the beginning of the file."
+    points: 15
+    hint: "Lowercase g."
+
+  - id: "less_mc_007"
+    type: "multiple_choice"
+    command: "less"
+    difficulty: "essential"
+    question_text: "What does 'less -N file.txt' do?"
+    options:
+      - "Shows line numbers"
+      - "Shows in night mode"
+      - "Shows non-printing characters"
+      - "Shows file name"
+    correct_answer: "Shows line numbers"
+    explanation: "-N displays line numbers on the left side."
+    points: 15
+    hint: "How do you see line positions?"
+
+  - id: "less_mc_008"
+    type: "multiple_choice"
+    command: "less"
+    difficulty: "essential"
+    question_text: "What does 'less +F file.log' do?"
+    options:
+      - "Follows the file like tail -f"
+      - "Forces display"
+      - "Shows first line"
+      - "Filters content"
+    correct_answer: "Follows the file like tail -f"
+    explanation: "+F makes less follow additions to the file in real-time."
+    points: 25
+    hint: "Like tail -f but with less features."
+
+  - id: "less_mc_009"
+    type: "multiple_choice"
+    command: "less"
+    difficulty: "essential"
+    question_text: "What does pressing n do after searching in less?"
+    options:
+      - "Goes to next match"
+      - "Goes to previous match"
+      - "Quits less"
+      - "Shows line numbers"
+    correct_answer: "Goes to next match"
+    explanation: "n repeats the search in the same direction."
+    points: 15
+    hint: "How do you find more occurrences?"
+
+  - id: "less_mc_010"
+    type: "multiple_choice"
+    command: "less"
+    difficulty: "essential"
+    question_text: "What does pressing N do after searching in less?"
+    options:
+      - "Goes to previous match"
+      - "Goes to next match"
+      - "Creates new search"
+      - "Numbers lines"
+    correct_answer: "Goes to previous match"
+    explanation: "N (capital) searches in the opposite direction."
+    points: 15
+    hint: "Opposite of lowercase n."
+
+  - id: "less_fb_001"
+    type: "fill_blank"
+    command: "less"
+    difficulty: "essential"
+    question_text: "View file with line numbers: less ___ file.txt"
+    correct_answer: "-N"
+    explanation: "-N shows line numbers."
+    points: 15
+    hint: "Capital N."
+
+  - id: "less_cb_001"
+    type: "command_builder"
+    command: "less"
+    difficulty: "essential"
+    question_text: "View /var/log/syslog with line numbers"
+    correct_answer:
+      - "less -N /var/log/syslog"
+    explanation: "-N for line numbers."
+    points: 15
+    hint: "Add the line numbers flag."
+
+  # ============================================================
+  # WC COMMAND - 25 Questions
+  # ============================================================
+
+  - id: "wc_mc_001"
+    type: "multiple_choice"
+    command: "wc"
+    difficulty: "essential"
+    question_text: "What does 'wc' stand for?"
+    options:
+      - "Word Count"
+      - "Write Characters"
+      - "Word Check"
+      - "Write Content"
+    correct_answer: "Word Count"
+    explanation: "wc counts lines, words, and characters in files."
+    points: 10
+    hint: "It counts things."
+
+  - id: "wc_mc_002"
+    type: "multiple_choice"
+    command: "wc"
+    difficulty: "essential"
+    question_text: "What does 'wc file.txt' show by default?"
+    options:
+      - "Lines, words, and bytes count"
+      - "Only words"
+      - "Only lines"
+      - "File size"
+    correct_answer: "Lines, words, and bytes count"
+    explanation: "wc without options shows all three: lines, words, bytes."
+    points: 10
+    hint: "It shows multiple counts."
+
+  - id: "wc_mc_003"
+    type: "multiple_choice"
+    command: "wc"
+    difficulty: "essential"
+    question_text: "What does 'wc -l file.txt' show?"
+    options:
+      - "Line count only"
+      - "Word count only"
+      - "Letter count only"
+      - "Last line"
+    correct_answer: "Line count only"
+    explanation: "-l counts lines only."
+    points: 15
+    hint: "How do you count the number of lines?"
+
+  - id: "wc_mc_004"
+    type: "multiple_choice"
+    command: "wc"
+    difficulty: "essential"
+    question_text: "What does 'wc -w file.txt' show?"
+    options:
+      - "Word count only"
+      - "Line count only"
+      - "Width of file"
+      - "Write count"
+    correct_answer: "Word count only"
+    explanation: "-w counts words only."
+    points: 15
+    hint: "How do you count words?"
+
+  - id: "wc_mc_005"
+    type: "multiple_choice"
+    command: "wc"
+    difficulty: "essential"
+    question_text: "What does 'wc -c file.txt' show?"
+    options:
+      - "Byte count only"
+      - "Character count only"
+      - "Column count"
+      - "Change count"
+    correct_answer: "Byte count only"
+    explanation: "-c counts bytes."
+    points: 15
+    hint: "How do you count characters?"
+
+  - id: "wc_mc_006"
+    type: "multiple_choice"
+    command: "wc"
+    difficulty: "essential"
+    question_text: "What does 'wc -m file.txt' show?"
+    options:
+      - "Character count"
+      - "Minute count"
+      - "Memory used"
+      - "Match count"
+    correct_answer: "Character count"
+    explanation: "-m counts characters (different from bytes for multi-byte characters)."
+    points: 20
+    hint: "How do you count actual characters (not bytes)?"
+
+  - id: "wc_mc_007"
+    type: "multiple_choice"
+    command: "wc"
+    difficulty: "essential"
+    question_text: "What does 'ls | wc -l' do?"
+    options:
+      - "Counts the number of files/directories"
+      - "Lists word counts"
+      - "Creates new files"
+      - "Shows line widths"
+    correct_answer: "Counts the number of files/directories"
+    explanation: "ls outputs one item per line, wc -l counts those lines."
+    points: 20
+    hint: "Piping ls to wc."
+
+  - id: "wc_fb_001"
+    type: "fill_blank"
+    command: "wc"
+    difficulty: "essential"
+    question_text: "Count only lines: wc ___ file.txt"
+    correct_answer: "-l"
+    explanation: "-l for lines."
+    points: 10
+    hint: "How do you count the number of lines?"
+
+  - id: "wc_fb_002"
+    type: "fill_blank"
+    command: "wc"
+    difficulty: "essential"
+    question_text: "Count only words: wc ___ file.txt"
+    correct_answer: "-w"
+    explanation: "-w for words."
+    points: 10
+    hint: "How do you count words?"
+
+  - id: "wc_cb_001"
+    type: "command_builder"
+    command: "wc"
+    difficulty: "essential"
+    question_text: "Count how many lines are in access.log"
+    correct_answer:
+      - "wc -l access.log"
+    explanation: "-l counts lines."
+    points: 15
+    hint: "Use the line count flag."
+
+  - id: "wc_wd_001"
+    type: "what_does_it_do"
+    command: "wc"
+    difficulty: "essential"
+    question_text: "What does 'cat *.txt | wc -w' do?"
+    options:
+      - "Counts total words in all .txt files"
+      - "Creates word files"
+      - "Lists txt files"
+      - "Shows txt file sizes"
+    correct_answer: "Counts total words in all .txt files"
+    explanation: "cat combines all files, wc -w counts total words."
+    points: 20
+    hint: "Combining outputs."
+
+  # ============================================================
+  # SORT COMMAND - 25 Questions
+  # ============================================================
+
+  - id: "sort_mc_001"
+    type: "multiple_choice"
+    command: "sort"
+    difficulty: "essential"
+    question_text: "What does 'sort' do by default?"
+    options:
+      - "Sorts lines alphabetically"
+      - "Sorts by file size"
+      - "Sorts by date"
+      - "Sorts randomly"
+    correct_answer: "Sorts lines alphabetically"
+    explanation: "sort orders lines in alphabetical (lexical) order by default."
+    points: 10
+    hint: "Think dictionary order."
+
+  - id: "sort_mc_002"
+    type: "multiple_choice"
+    command: "sort"
+    difficulty: "essential"
+    question_text: "What does 'sort -n' do?"
+    options:
+      - "Sorts numerically"
+      - "Sorts by name"
+      - "Sorts in normal order"
+      - "Shows number of lines"
+    correct_answer: "Sorts numerically"
+    explanation: "-n sorts numbers correctly (10 comes after 9, not after 1)."
+    points: 15
+    hint: "How do you sort numbers correctly (10 after 9)?"
+
+  - id: "sort_mc_003"
+    type: "multiple_choice"
+    command: "sort"
+    difficulty: "essential"
+    question_text: "What does 'sort -r' do?"
+    options:
+      - "Sorts in reverse order"
+      - "Sorts randomly"
+      - "Sorts recursively"
+      - "Removes duplicates"
+    correct_answer: "Sorts in reverse order"
+    explanation: "-r reverses the sort order (Z-A instead of A-Z)."
+    points: 15
+    hint: "How do you flip the order?"
+
+  - id: "sort_mc_004"
+    type: "multiple_choice"
+    command: "sort"
+    difficulty: "essential"
+    question_text: "What does 'sort -u' do?"
+    options:
+      - "Sorts and removes duplicate lines"
+      - "Sorts by user"
+      - "Sorts uppercase first"
+      - "Undoes sort"
+    correct_answer: "Sorts and removes duplicate lines"
+    explanation: "-u (unique) removes duplicate lines after sorting."
+    points: 20
+    hint: "How do you remove duplicates?"
+
+  - id: "sort_mc_005"
+    type: "multiple_choice"
+    command: "sort"
+    difficulty: "essential"
+    question_text: "What does 'sort -k 2' do?"
+    options:
+      - "Sorts by the 2nd column/field"
+      - "Keeps 2 lines"
+      - "Sorts 2 files"
+      - "Shows 2 results"
+    correct_answer: "Sorts by the 2nd column/field"
+    explanation: "-k specifies which field to sort by."
+    points: 25
+    hint: "How do you specify which column to use?"
+
+  - id: "sort_mc_006"
+    type: "multiple_choice"
+    command: "sort"
+    difficulty: "essential"
+    question_text: "What does 'sort -t ',' -k 2' do?"
+    options:
+      - "Sorts CSV by second column"
+      - "Sorts by time"
+      - "Sorts 2 tab-separated files"
+      - "Creates 2 columns"
+    correct_answer: "Sorts CSV by second column"
+    explanation: "-t sets delimiter (comma), -k specifies column to sort by."
+    points: 30
+    hint: "-t sets the field separator."
+
+  - id: "sort_mc_007"
+    type: "multiple_choice"
+    command: "sort"
+    difficulty: "essential"
+    question_text: "What does 'sort -f' do?"
+    options:
+      - "Ignores case when sorting"
+      - "Sorts files"
+      - "Forces sort"
+      - "Formats output"
+    correct_answer: "Ignores case when sorting"
+    explanation: "-f (fold case) treats uppercase and lowercase as equal."
+    points: 20
+    hint: "How do you ignore case when sorting?"
+
+  - id: "sort_fb_001"
+    type: "fill_blank"
+    command: "sort"
+    difficulty: "essential"
+    question_text: "Sort numbers correctly: sort ___ numbers.txt"
+    correct_answer: "-n"
+    explanation: "-n for numeric sort."
+    points: 15
+    hint: "Numeric flag."
+
+  - id: "sort_fb_002"
+    type: "fill_blank"
+    command: "sort"
+    difficulty: "essential"
+    question_text: "Sort and remove duplicates: sort ___ file.txt"
+    correct_answer: "-u"
+    explanation: "-u removes duplicates."
+    points: 15
+    hint: "Unique flag."
+
+  - id: "sort_cb_001"
+    type: "command_builder"
+    command: "sort"
+    difficulty: "essential"
+    question_text: "Sort numbers.txt in reverse numeric order"
+    correct_answer:
+      - "sort -rn numbers.txt"
+      - "sort -nr numbers.txt"
+    explanation: "-n for numeric, -r for reverse."
+    points: 20
+    hint: "Combine reverse and numeric."
+
+  - id: "sort_wd_001"
+    type: "what_does_it_do"
+    command: "sort"
+    difficulty: "essential"
+    question_text: "What does 'du -h | sort -h' do?"
+    options:
+      - "Sorts disk usage by human-readable sizes"
+      - "Sorts directories"
+      - "Deletes unused files"
+      - "Shows help"
+    correct_answer: "Sorts disk usage by human-readable sizes"
+    explanation: "-h understands K, M, G suffixes for proper sorting."
+    points: 25
+    hint: "How do you sort values like 1K, 2M, 3G correctly?"
+
+  # ============================================================
+  # UNIQ COMMAND - 20 Questions
+  # ============================================================
+
+  - id: "uniq_mc_001"
+    type: "multiple_choice"
+    command: "uniq"
+    difficulty: "essential"
+    question_text: "What does 'uniq' do?"
+    options:
+      - "Removes adjacent duplicate lines"
+      - "Makes all lines unique"
+      - "Counts unique files"
+      - "Creates unique IDs"
+    correct_answer: "Removes adjacent duplicate lines"
+    explanation: "uniq only removes ADJACENT duplicates. Sort first for all duplicates."
+    points: 15
+    hint: "Key word: adjacent."
+
+  - id: "uniq_mc_002"
+    type: "multiple_choice"
+    command: "uniq"
+    difficulty: "essential"
+    question_text: "Why do you often use 'sort | uniq'?"
+    options:
+      - "uniq only removes adjacent duplicates, sort groups them first"
+      - "sort makes uniq faster"
+      - "They must be used together"
+      - "uniq requires sorted input"
+    correct_answer: "uniq only removes adjacent duplicates, sort groups them first"
+    explanation: "Sorting brings duplicates together so uniq can find them."
+    points: 20
+    hint: "Think about how uniq works."
+
+  - id: "uniq_mc_003"
+    type: "multiple_choice"
+    command: "uniq"
+    difficulty: "essential"
+    question_text: "What does 'uniq -c' do?"
+    options:
+      - "Shows count of each unique line"
+      - "Checks for duplicates"
+      - "Creates copies"
+      - "Clears duplicates"
+    correct_answer: "Shows count of each unique line"
+    explanation: "-c prefixes lines with their occurrence count."
+    points: 20
+    hint: "What if you just need the number, not the actual lines?"
+
+  - id: "uniq_mc_004"
+    type: "multiple_choice"
+    command: "uniq"
+    difficulty: "essential"
+    question_text: "What does 'uniq -d' do?"
+    options:
+      - "Shows only duplicate lines"
+      - "Deletes duplicates"
+      - "Shows different lines"
+      - "Debug mode"
+    correct_answer: "Shows only duplicate lines"
+    explanation: "-d shows only lines that appear more than once."
+    points: 20
+    hint: "How do you find repeated entries?"
+
+  - id: "uniq_mc_005"
+    type: "multiple_choice"
+    command: "uniq"
+    difficulty: "essential"
+    question_text: "What does 'uniq -u' do?"
+    options:
+      - "Shows only unique lines (appearing once)"
+      - "Undoes uniq"
+      - "Shows uppercase only"
+      - "Updates duplicates"
+    correct_answer: "Shows only unique lines (appearing once)"
+    explanation: "-u shows lines that appear exactly once."
+    points: 20
+    hint: "How do you show only non-repeated lines?"
+
+  - id: "uniq_fb_001"
+    type: "fill_blank"
+    command: "uniq"
+    difficulty: "essential"
+    question_text: "Count occurrences: sort file.txt | uniq ___"
+    correct_answer: "-c"
+    explanation: "-c shows counts."
+    points: 15
+    hint: "Count flag."
+
+  - id: "uniq_cb_001"
+    type: "command_builder"
+    command: "uniq"
+    difficulty: "essential"
+    question_text: "Find and count duplicate IPs in access.log"
+    correct_answer:
+      - "sort access.log | uniq -c"
+      - "cat access.log | sort | uniq -c"
+    explanation: "Sort to group, uniq -c to count."
+    points: 25
+    hint: "Sort then count unique."
+
+  - id: "uniq_wd_001"
+    type: "what_does_it_do"
+    command: "uniq"
+    difficulty: "essential"
+    question_text: "What does 'sort names.txt | uniq -c | sort -rn | head -5' do?"
+    options:
+      - "Shows the 5 most common names"
+      - "Shows 5 unique names"
+      - "Removes 5 duplicates"
+      - "Sorts 5 times"
+    correct_answer: "Shows the 5 most common names"
+    explanation: "Sort groups names, uniq -c counts, sort -rn orders by count, head -5 shows top 5."
+    points: 30
+    hint: "Classic pattern for top-N analysis."

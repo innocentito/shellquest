@@ -1,0 +1,235 @@
+achievements:
+  - id: "first_steps"
+    name: "First Steps"
+    description: "Answer your first question correctly"
+    icon: "🎯"
+    requirement:
+      type: "correct_answers"
+      count: 1
+    rarity: "common"
+    xp_reward: 50
+    credit_reward: 25
+
+  - id: "getting_started"
+    name: "Getting Started"
+    description: "Answer 10 questions correctly"
+    icon: "✨"
+    requirement:
+      type: "correct_answers"
+      count: 10
+    rarity: "common"
+    xp_reward: 100
+    credit_reward: 25
+
+  - id: "streak_starter"
+    name: "Streak Starter"
+    description: "Get 3 correct answers in a row"
+    icon: "🔥"
+    requirement:
+      type: "streak"
+      count: 3
+    rarity: "common"
+    xp_reward: 75
+    credit_reward: 25
+
+  - id: "streak_master"
+    name: "Streak Master"
+    description: "Get 10 correct answers in a row"
+    icon: "🔥"
+    requirement:
+      type: "streak"
+      count: 10
+    rarity: "rare"
+    xp_reward: 200
+    credit_reward: 100
+
+  - id: "unstoppable"
+    name: "Unstoppable"
+    description: "Get 20 correct answers in a row"
+    icon: "💥"
+    requirement:
+      type: "streak"
+      count: 20
+    rarity: "epic"
+    xp_reward: 500
+    credit_reward: 200
+
+  - id: "centurion"
+    name: "Centurion"
+    description: "Answer 100 questions"
+    icon: "💯"
+    requirement:
+      type: "total_questions"
+      count: 100
+    rarity: "rare"
+    xp_reward: 300
+    credit_reward: 100
+
+  - id: "knowledge_seeker"
+    name: "Knowledge Seeker"
+    description: "Answer 50 questions correctly"
+    icon: "📚"
+    requirement:
+      type: "correct_answers"
+      count: 50
+    rarity: "uncommon"
+    xp_reward: 200
+    credit_reward: 50
+
+  - id: "shell_expert"
+    name: "Shell Expert"
+    description: "Answer 100 questions correctly"
+    icon: "🎓"
+    requirement:
+      type: "correct_answers"
+      count: 100
+    rarity: "rare"
+    xp_reward: 400
+    credit_reward: 100
+
+  - id: "night_owl"
+    name: "Night Owl"
+    description: "Play between midnight and 4am"
+    icon: "🦉"
+    requirement:
+      type: "time_of_day"
+      start_hour: 0
+      end_hour: 4
+    rarity: "uncommon"
+    xp_reward: 100
+    credit_reward: 50
+
+  - id: "early_bird"
+    name: "Early Bird"
+    description: "Play between 5am and 7am"
+    icon: "🌅"
+    requirement:
+      type: "time_of_day"
+      start_hour: 5
+      end_hour: 7
+    rarity: "uncommon"
+    xp_reward: 100
+    credit_reward: 50
+
+  - id: "essential_novice"
+    name: "Essential Novice"
+    description: "Master 5 essential commands"
+    icon: "⭐"
+    requirement:
+      type: "mastery"
+      difficulty: "essential"
+      percentage: 50
+    rarity: "common"
+    xp_reward: 150
+    credit_reward: 25
+
+  - id: "essential_expert"
+    name: "Essential Expert"
+    description: "Master all essential commands"
+    icon: "🌟"
+    requirement:
+      type: "mastery"
+      difficulty: "essential"
+      percentage: 100
+    rarity: "epic"
+    xp_reward: 500
+    credit_reward: 200
+
+  - id: "perfectionist"
+    name: "Perfectionist"
+    description: "Get 20 perfect scores (100% in a session)"
+    icon: "💎"
+    requirement:
+      type: "perfect_sessions"
+      count: 20
+    rarity: "legendary"
+    xp_reward: 1000
+    credit_reward: 500
+
+  - id: "quick_learner"
+    name: "Quick Learner"
+    description: "Answer 25 questions correctly"
+    icon: "⚡"
+    requirement:
+      type: "correct_answers"
+      count: 25
+    rarity: "uncommon"
+    xp_reward: 150
+    credit_reward: 50
+
+  - id: "persistent"
+    name: "Persistent"
+    description: "Answer 500 questions"
+    icon: "🏆"
+    requirement:
+      type: "total_questions"
+      count: 500
+    rarity: "epic"
+    xp_reward: 750
+    credit_reward: 200
+
+  - id: "digital_detective"
+    name: "Digital Detective"
+    description: "Solve your first murder mystery case"
+    icon: "🔍"
+    requirement:
+      type: "mystery_solved"
+      count: 1
+    rarity: "rare"
+    xp_reward: 500
+    credit_reward: 100
+
+  - id: "master_detective"
+    name: "Master Detective"
+    description: "Solve all murder mystery cases"
+    icon: "🕵️"
+    requirement:
+      type: "mystery_solved"
+      count: 3
+    rarity: "legendary"
+    xp_reward: 1000
+    credit_reward: 500
+
+  - id: "battle_champion"
+    name: "Battle Champion"
+    description: "Win 10 battles against other players"
+    icon: "⚔️"
+    requirement:
+      type: "battles_won"
+      count: 10
+    rarity: "rare"
+    xp_reward: 400
+    credit_reward: 100
+
+  - id: "story_complete"
+    name: "Story Complete"
+    description: "Complete all story mode chapters"
+    icon: "📖"
+    requirement:
+      type: "chapters_completed"
+      count: 5
+    rarity: "epic"
+    xp_reward: 750
+    credit_reward: 200
+
+  - id: "phantom_hunter"
+    name: "Phantom Hunter"
+    description: "Caught the phantom hacker through log analysis"
+    icon: "👻"
+    requirement:
+      type: "mystery_case"
+      case_id: "case_002"
+    rarity: "rare"
+    xp_reward: 600
+    credit_reward: 100
+
+  - id: "follow_the_money"
+    name: "Follow the Money"
+    description: "Traced a data breach through financial evidence"
+    icon: "💰"
+    requirement:
+      type: "mystery_case"
+      case_id: "case_003"
+    rarity: "epic"
+    xp_reward: 750
+    credit_reward: 200
