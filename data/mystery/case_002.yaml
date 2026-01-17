@@ -78,7 +78,7 @@ scenes:
         question_type: "command_builder"
         question: "Show all running processes with full command details (use ps with aux flags)"
         correct_answers: ["ps aux", "ps -aux", "ps -ef"]
-        hint: "ps with 'aux' shows all processes with details"
+        hint: "What command shows all running processes with full details?"
         success_narrative: |
           The process list reveals something odd:
 
@@ -99,7 +99,7 @@ scenes:
           - "cat /etc/crontab"
           - "crontab -l"
           - "cat /var/spool/cron/crontabs/*"
-        hint: "Cron jobs are stored in /etc/crontab or user-specific crontab files"
+        hint: "Scheduled tasks are stored in system config or per-user files"
         success_narrative: |
           The crontab reveals:
 
@@ -134,7 +134,7 @@ scenes:
           - "grep sudo /var/log/auth.log"
           - "grep 'sudo' /var/log/auth.log"
           - "cat /var/log/auth.log | grep sudo"
-        hint: "Use grep to filter for 'sudo' in the auth log"
+        hint: "Search the authentication log for elevated privilege usage"
         success_narrative: |
           The sudo log shows interesting entries:
 
@@ -153,7 +153,7 @@ scenes:
           - "last kevin.zhang"
           - "last | grep kevin.zhang"
           - "last kevin"
-        hint: "The 'last' command shows login history, you can filter by username"
+        hint: "There's a command that shows login history from the wtmp file"
         success_narrative: |
           Kevin's login history:
 
@@ -192,7 +192,7 @@ scenes:
           - "The hostname of that IP"
           - "The network speed to that IP"
         correct_answer: "The MAC address associated with that IP"
-        hint: "ARP maps IP addresses to hardware (MAC) addresses"
+        hint: "Network protocols map IPs to physical hardware addresses"
         success_narrative: |
           The ARP lookup reveals:
 
@@ -213,7 +213,7 @@ scenes:
         correct_answers:
           - "grep '192.168.1.105' /var/log/dns.log | cut -d' ' -f5 | sort | uniq"
           - "grep 192.168.1.105 /var/log/dns.log | awk '{print $5}' | sort | uniq"
-        hint: "Use grep to filter by IP, cut or awk to extract the domain field, sort and uniq for unique values"
+        hint: "Filter by the IP, extract just the domain column, find unique values"
         success_narrative: |
           DNS queries from Kevin's sessions:
 
@@ -247,7 +247,7 @@ scenes:
           - "tail -50 ~kevin/.bash_history"
           - "tail -n 50 ~kevin/.bash_history"
           - "tail -50 /home/kevin/.bash_history"
-        hint: "Use tail with -50 or -n 50 to show the last 50 lines"
+        hint: "How do you view the end of a file with a specific line count?"
         success_narrative: |
           Kevin's recent commands:
 
@@ -269,7 +269,7 @@ scenes:
           - "grep -r 'revenge\\|sabotage' ~kevin/"
           - "grep -rE 'revenge|sabotage' ~kevin/"
           - "grep -ri 'revenge' ~kevin/ && grep -ri 'sabotage' ~kevin/"
-        hint: "Use grep -r for recursive search, and \\| or -E for OR patterns"
+        hint: "Search recursively for files containing either pattern"
         success_narrative: |
           Found in ~kevin/Documents/.personal/plan.txt:
 
@@ -309,7 +309,7 @@ scenes:
           - "sudo crontab -e"
           - "sudo vim /etc/crontab"
           - "sudo nano /etc/crontab"
-        hint: "Use sudo with crontab -e or directly edit /etc/crontab"
+        hint: "How do you edit scheduled tasks as the system administrator?"
         success_narrative: |
           As you explain how to neutralize his attack, Kevin's smirk fades.
 
@@ -331,7 +331,7 @@ scenes:
           - "tar -czvf evidence.tar.gz /var/log/auth.log ~kevin/.bash_history"
           - "tar czvf evidence.tar.gz /var/log/auth.log ~kevin/.bash_history"
           - "tar -czf evidence.tar.gz /var/log/auth.log ~kevin/.bash_history"
-        hint: "tar with -c (create), -z (gzip), -v (verbose), -f (file) followed by the archive name and files"
+        hint: "Create a compressed archive with the files you need to preserve"
         success_narrative: |
           Evidence archived and secured.
 

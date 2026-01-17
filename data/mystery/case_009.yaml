@@ -79,7 +79,7 @@ scenes:
         correct_answers:
           - "grep -i clone /var/log/git/access.log"
           - "grep 'clone' /var/log/git/access.log"
-        hint: "Use grep to filter for clone operations"
+        hint: "Search the log for the operation type you're looking for"
         success_narrative: |
           Clone operations in the last month:
 
@@ -100,7 +100,7 @@ scenes:
         correct_answers:
           - "grep 'Mar 10.*zoe.chen' /var/log/git/access.log | awk '{print $NF}'"
           - "grep 'zoe.chen' /var/log/git/access.log | grep 'Mar 10'"
-        hint: "Filter by date and user, IP is usually the last field"
+        hint: "Filter the log by date and user, then look for the connection info"
         success_narrative: |
           Zoe's connections on March 10:
 
@@ -135,7 +135,7 @@ scenes:
         correct_answers:
           - "wc -l /git/users/zoe.chen/.ssh/authorized_keys"
           - "cat /git/users/zoe.chen/.ssh/authorized_keys | wc -l"
-        hint: "wc -l counts lines in a file, each key is one line"
+        hint: "Each SSH key is stored on a separate line in the file"
         success_narrative: |
           Key count: 3
 
@@ -152,7 +152,7 @@ scenes:
         correct_answers:
           - "grep 'zoe.chen.*key.*add' /var/log/git/auth_audit.log"
           - "grep -E 'zoe.chen.*(key|ssh)' /var/log/git/auth_audit.log"
-        hint: "Search the auth audit log for key-related operations"
+        hint: "The authentication audit log tracks key changes"
         success_narrative: |
           Key addition history:
 
@@ -184,7 +184,7 @@ scenes:
         correct_answers:
           - "grep 'Mar 08' /var/log/git/admin_actions.log | grep -i 'user\\|key'"
           - "grep 'Mar 08' /var/log/git/admin_actions.log"
-        hint: "Filter admin actions by date, look for user modifications"
+        hint: "Check what administrators did on that specific date"
         success_narrative: |
           Admin actions on March 8:
 
@@ -204,7 +204,7 @@ scenes:
         correct_answers:
           - "git log --author='kyle' --since='2024-03-01' --format='%h %ad %s'"
           - "git log --author='kyle.barnes' --oneline --since='1 month ago'"
-        hint: "git log with --author filters by committer"
+        hint: "Git can show commits from a specific person"
         success_narrative: |
           Kyle's recent commits:
 
@@ -238,7 +238,7 @@ scenes:
         correct_answers:
           - "cat /evidence/leaked_repo/.git/config"
           - "git config --list --file /evidence/leaked_repo/.git/config"
-        hint: "Git config is stored in .git/config"
+        hint: "Git stores configuration in a hidden folder"
         success_narrative: |
           Leaked repo git config:
 
@@ -259,7 +259,7 @@ scenes:
         correct_answers:
           - "git reflog --date=iso"
           - "cat /evidence/leaked_repo/.git/logs/HEAD"
-        hint: "git reflog shows the history of HEAD, including clone time"
+        hint: "Git keeps a reference log of all HEAD changes"
         success_narrative: |
           Reflog from leaked repo:
 
@@ -290,7 +290,7 @@ scenes:
         correct_answers:
           - "find /home/kyle.barnes -name '*.pdf' -o -name '*.doc*' -mtime -30"
           - "find /home/kyle.barnes \\( -name '*.pdf' -o -name '*.docx' \\) -mtime -30"
-        hint: "Use find with -name for extensions and -mtime for recent files"
+        hint: "Search for files by name pattern and modification time"
         success_narrative: |
           Recent documents found:
 
@@ -311,7 +311,7 @@ scenes:
         correct_answers:
           - "pdftotext /home/kyle.barnes/Desktop/payment_schedule.pdf -"
           - "pdftotext /home/kyle.barnes/Desktop/payment_schedule.pdf - | cat"
-        hint: "pdftotext converts PDF to plain text, - outputs to stdout"
+        hint: "There are tools to extract text from PDF files"
         success_narrative: |
           Payment Schedule:
 

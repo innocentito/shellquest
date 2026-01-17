@@ -81,7 +81,7 @@ scenes:
           - "find /var/log/ -mtime -1 -type f"
           - "find /var/log -mtime -1 -type f"
           - "find /var/log/ -mtime 0 -type f"
-        hint: "Use find with -mtime -1 for files modified in the last day"
+        hint: "How do you find recently modified files?"
         success_narrative: |
           Recent log files:
 
@@ -102,7 +102,7 @@ scenes:
           - "grep -iE 'rm|delete' /var/log/backup.log"
           - "grep -i 'rm\\|delete' /var/log/backup.log"
           - "grep -i -E 'rm|delete' /var/log/backup.log"
-        hint: "Use grep -i for case insensitive, -E for extended regex with |"
+        hint: "Search for either keyword, ignoring case"
         success_narrative: |
           Found deletion commands:
 
@@ -135,7 +135,7 @@ scenes:
           - "sudo crontab -l"
           - "crontab -l -u root"
           - "sudo crontab -u root -l"
-        hint: "Use crontab -l to list cron jobs, sudo for root's crontab"
+        hint: "How do you list scheduled tasks for the system?"
         success_narrative: |
           Root's crontab:
 
@@ -168,7 +168,7 @@ scenes:
           - "Cleans up temporary log files"
           - "Syncs backups to AWS"
         correct_answer: "Deletes all backups and then destroys itself"
-        hint: "shred -u securely deletes a file after overwriting it"
+        hint: "One command securely overwrites and then removes a file"
         success_narrative: |
           A self-destructing script! It:
           1. Deletes local daily, weekly, and monthly backups
@@ -199,7 +199,7 @@ scenes:
           - "grep -r 'crontab\\|cleanup' /home/*/.bash_history"
           - "grep -rE 'crontab|cleanup' /home/*/.bash_history"
           - "grep -r -E 'crontab|cleanup' /home/*/.bash_history"
-        hint: "Use grep -r to search recursively, check .bash_history files in /home/"
+        hint: "Search through all users' command histories"
         success_narrative: |
           Found in /home/victor.nash/.bash_history:
 
@@ -220,7 +220,7 @@ scenes:
         correct_answers:
           - "stat /home/victor.nash/.bash_history"
           - "ls -la /home/victor.nash/.bash_history"
-        hint: "stat shows detailed file information including all timestamps"
+        hint: "What command shows all file metadata including timestamps?"
         success_narrative: |
           File timestamps:
 
@@ -255,7 +255,7 @@ scenes:
         correct_answers:
           - "grep -riC 2 'bitcoin\\|payment\\|wallet' /home/victor.nash/mail/"
           - "grep -ri -C 2 -E 'bitcoin|payment|wallet' /home/victor.nash/mail/"
-        hint: "Use grep -r for recursive, -i for case insensitive, -C 2 for context lines"
+        hint: "Search recursively with some surrounding context"
         success_narrative: |
           Found in /home/victor.nash/mail/sent/draft_03_10:
 
@@ -277,7 +277,7 @@ scenes:
         correct_answers:
           - "grep -rohE '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}' /home/victor.nash/mail/sent/"
           - "grep -roh -E '[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}' /home/victor.nash/mail/sent/"
-        hint: "Use grep -o to output only matches, -E for extended regex to match email pattern"
+        hint: "Extract just the email addresses using pattern matching"
         success_narrative: |
           Email addresses found:
 
@@ -310,7 +310,7 @@ scenes:
           - "tar -cvpzf victor_evidence.tar.gz /home/victor.nash/"
           - "tar -czvpf victor_evidence.tar.gz /home/victor.nash/"
           - "tar --preserve-permissions -czvf victor_evidence.tar.gz /home/victor.nash/"
-        hint: "Use tar with -p to preserve permissions, -z for gzip compression"
+        hint: "Create a compressed archive that keeps file permissions intact"
         success_narrative: |
           Evidence archived:
 
@@ -328,7 +328,7 @@ scenes:
           - "pkill -u victor.nash"
           - "killall -u victor.nash"
           - "pkill -U victor.nash"
-        hint: "pkill -u kills all processes owned by a specific user"
+        hint: "How do you terminate all processes for a user at once?"
         success_narrative: |
           All of Victor's processes terminated.
 

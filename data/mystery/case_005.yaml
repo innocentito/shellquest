@@ -80,7 +80,7 @@ scenes:
           - "ps aux --sort=-%cpu | head"
           - "ps aux --sort=-%cpu"
           - "top -bn1 | head -20"
-        hint: "ps aux with --sort=-%cpu sorts by CPU descending"
+        hint: "How do you sort processes by resource usage?"
         success_narrative: |
           Top processes:
 
@@ -101,7 +101,7 @@ scenes:
         correct_answers:
           - "ps aux --sort=-%cpu | head -5"
           - "ps -eo pid,user,%cpu,cmd --sort=-%cpu | head"
-        hint: "ps with -o cmd or aux shows the full command path"
+        hint: "Get more details about what the process is actually running"
         success_narrative: |
           Process details:
 
@@ -133,7 +133,7 @@ scenes:
         correct_answers:
           - "ls -la /tmp/.cache/.hidden/"
           - "ls -lah /tmp/.cache/.hidden/"
-        hint: "ls -la shows all files with details including hidden ones"
+        hint: "Show everything in the directory with full details"
         success_narrative: |
           Contents of /tmp/.cache/.hidden/:
 
@@ -152,7 +152,7 @@ scenes:
         question: "Display the contents of pool_wallet.txt"
         correct_answers:
           - "cat /tmp/.cache/.hidden/pool_wallet.txt"
-        hint: "Use cat to display file contents"
+        hint: "What command shows the contents of a text file?"
         success_narrative: |
           Wallet configuration:
 
@@ -185,7 +185,7 @@ scenes:
           - "grep 'Mar 10' /var/log/ansible.log"
           - "grep 'Mar  10' /var/log/ansible.log"
           - "grep '2024-03-10' /var/log/ansible.log"
-        hint: "Use grep to filter for the specific date"
+        hint: "Filter the log file by the date you're interested in"
         success_narrative: |
           Ansible log entries:
 
@@ -216,7 +216,7 @@ scenes:
           - "Updates system maintenance scripts"
           - "Backs up configuration files"
         correct_answer: "Downloads and runs a hidden cryptocurrency miner"
-        hint: "Look at the curl download, the hidden path, and xmrig being run in background"
+        hint: "Analyze each step: downloading, hiding, and running in background"
         success_narrative: |
           The playbook:
           1. Creates a hidden directory
@@ -246,7 +246,7 @@ scenes:
         correct_answers:
           - "ps -eo pid,etime,cmd | grep xmrig"
           - "ps -o pid,etime,comm -C xmrig"
-        hint: "ps with -o etime shows elapsed time since process started"
+        hint: "How do you see how long a process has been running?"
         success_narrative: |
           Process runtime:
 
@@ -268,7 +268,7 @@ scenes:
           - "netstat -an | grep minexmr"
           - "ss -an | grep minexmr"
           - "lsof -i | grep minexmr"
-        hint: "netstat or ss shows network connections, grep for the pool name"
+        hint: "Check active network connections for the mining pool"
         success_narrative: |
           Active connections to mining pool:
 
@@ -300,7 +300,7 @@ scenes:
           - "pkill xmrig"
           - "killall xmrig"
           - "pkill -f xmrig"
-        hint: "pkill or killall can kill processes by name"
+        hint: "How do you stop a process by its name?"
         success_narrative: |
           Executing on all 500 nodes...
 
@@ -322,7 +322,7 @@ scenes:
         correct_answers:
           - "tar -czvf brad_evidence.tar.gz /home/brad.morrison/ /tmp/.cache/.hidden/"
           - "tar czvf brad_evidence.tar.gz /home/brad.morrison /tmp/.cache/.hidden"
-        hint: "tar can archive multiple directories in one command"
+        hint: "You can bundle multiple directories into one archive"
         success_narrative: |
           Evidence archived:
 
